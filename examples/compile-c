@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+for src in $(ls *.c)
+do
+    obj="$(echo "$src" | cut -d. -f1)"
+    gcc "$src" $(pkg-config --cflags --libs ncursesw) -o "$obj"
+done
+
+exit 0
