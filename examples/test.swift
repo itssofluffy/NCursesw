@@ -3,9 +3,9 @@ import Foundation
 
 do {
     do {
-        let boxDrawingType = BoxDrawingType.Light(type: .Normal)
-
         let window = try Terminal.initialiseWindows()
+
+        let boxDrawingType = BoxDrawingType.Light(detail: .Normal)
 
         try window.border(boxDrawingType)
 

@@ -22,30 +22,30 @@
 
 public enum BoxDrawingType {
     case Ascii
-    case Light(type: BoxDrawingTypeDetail)
-    case Heavy(type: BoxDrawingTypeDetail)
+    case Light(detail: BoxDrawingTypeDetail)
+    case Heavy(detail: BoxDrawingTypeDetail)
     case Double
     case UserDefined(graphics: UserDefinedBoxDrawing)
 
     internal static let _allValues = Array<BoxDrawingType>(arrayLiteral: .Ascii,
-                                                                         .Light(type: .Normal),
-                                                                         .Light(type: .DoubleDash),
-                                                                         .Light(type: .TripleDash),
-                                                                         .Light(type: .QuadrupleDash),
-                                                                         .Heavy(type: .Normal),
-                                                                         .Heavy(type: .DoubleDash),
-                                                                         .Heavy(type: .TripleDash),
-                                                                         .Heavy(type: .QuadrupleDash),
+                                                                         .Light(detail: .Normal),
+                                                                         .Light(detail: .DoubleDash),
+                                                                         .Light(detail: .TripleDash),
+                                                                         .Light(detail: .QuadrupleDash),
+                                                                         .Heavy(detail: .Normal),
+                                                                         .Heavy(detail: .DoubleDash),
+                                                                         .Heavy(detail: .TripleDash),
+                                                                         .Heavy(detail: .QuadrupleDash),
                                                                          .Double)
 
     public var rawValue: Int {
         switch self {
             case .Ascii:
                 return 0
-            case .Light(let type):
-                return 1 + type.rawValue
-            case .Heavy(let type):
-                return 10 + type.rawValue
+            case .Light(let detail):
+                return 1 + detail.rawValue
+            case .Heavy(let detail):
+                return 10 + detail.rawValue
             case .Double:
                 return 20
             case .UserDefined:
@@ -59,10 +59,10 @@ extension BoxDrawingType: CustomStringConvertible {
         switch self {
             case .Ascii:
                 return "ascii"
-            case .Light(let type):
-                return "light \(type)"
-            case .Heavy(let type):
-                return "heavy \(type)"
+            case .Light(let detail):
+                return "light \(detail)"
+            case .Heavy(let detail):
+                return "heavy \(detail)"
             case .Double:
                 return "double"
             case .UserDefined(let graphics):

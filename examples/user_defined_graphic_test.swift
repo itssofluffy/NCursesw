@@ -5,7 +5,7 @@ do {
     do {
         let window = try Terminal.initialiseWindows()
 
-        var userDefinedGraphics = try UserDefinedBoxDrawing(base: .Light(type: .Normal))
+        var userDefinedGraphics = try UserDefinedBoxDrawing(base: .Light(detail: .Normal))
 
         userDefinedGraphics.graphic[.UpperLeftCorner] = try ComplexCharacter(0x256d)
         userDefinedGraphics.graphic[.UpperRightCorner] = try ComplexCharacter(0x256e)

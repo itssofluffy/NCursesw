@@ -330,7 +330,7 @@ extension Terminal {
 
 extension Terminal {
     public class func border(handle: WindowHandle,
-                             boxDrawingType: BoxDrawingType = .Light(type: .Normal),
+                             boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
                              attributes: Attributes = .Normal,
                              colourPair: ColourPair = ColourPair()) throws {
         let boxDrawings = try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair)
@@ -350,7 +350,7 @@ extension Terminal {
     }
 
     public class func horizontalLine(handle: WindowHandle,
-                                     boxDrawingType: BoxDrawingType = .Light(type: .Normal),
+                                     boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
                                      attributes: Attributes = .Normal,
                                      colourPair: ColourPair = ColourPair(),
                                      length: Int) throws {
@@ -363,7 +363,7 @@ extension Terminal {
 
     public class func horizontalLine(handle: WindowHandle,
                                      origin: Coordinate,
-                                     boxDrawingType: BoxDrawingType = .Light(type: .Normal),
+                                     boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
                                      attributes: Attributes = .Normal,
                                      colourPair: ColourPair = ColourPair(),
                                      length: Int) throws {
@@ -373,7 +373,7 @@ extension Terminal {
     }
 
     public class func verticalLine(handle: WindowHandle,
-                                   boxDrawingType: BoxDrawingType = .Light(type: .Normal),
+                                   boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
                                    attributes: Attributes = .Normal,
                                    colourPair: ColourPair = ColourPair(),
                                    length: Int) throws {
@@ -386,7 +386,7 @@ extension Terminal {
 
     public class func verticalLine(handle: WindowHandle,
                                    origin: Coordinate,
-                                   boxDrawingType: BoxDrawingType = .Light(type: .Normal),
+                                   boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
                                    attributes: Attributes = .Normal,
                                    colourPair: ColourPair = ColourPair(),
                                    length: Int) throws {
