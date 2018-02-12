@@ -72,11 +72,9 @@ extension Terminal {
             throw NCurseswError.AssumeDefaultColours
         }
 
-        /* TODO: this is causing a segmentation fault when calling wborder_set() probabbly not initialising colour properly?
         if (hasColours) {
             try startColours()
         }
-        */
 
         defer {
             _initialWindowHandle = handle
