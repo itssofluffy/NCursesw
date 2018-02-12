@@ -397,7 +397,7 @@ extension Terminal {
 }
 
 extension Terminal {
-    public class func put(handle: WindowHandle, character: ComplexCharacter) throws {
+    public class func print(handle: WindowHandle, character: ComplexCharacter) throws {
         var wch = character._rawValue
 
         guard (wadd_wch(handle, &wch) == OK) else {
@@ -405,10 +405,10 @@ extension Terminal {
         }
     }
 
-    public class func put(handle: WindowHandle, character: ComplexCharacter, origin: Coordinate) throws {
+    public class func print(handle: WindowHandle, character: ComplexCharacter, origin: Coordinate) throws {
         try setCursor(handle: handle, origin: origin)
 
-        try put(handle: handle, character: character)
+        try print(handle: handle, character: character)
     }
 
     public class func echo(handle: WindowHandle, character: ComplexCharacter) throws {
@@ -426,20 +426,19 @@ extension Terminal {
     }
 }
 
-/*
 extension Terminal {
-    public class func put(handle: WindowHandle, character: Character) throws {
-        try put(handle: handle, character: ComplexCharacter(wideCharacter: character))
+    public class func print(handle: WindowHandle, character: Character) throws {
+        try print(handle: handle, character: ComplexCharacter(character.unicodeScalarCodePoint))
     }
 
-    public class func put(handle: WindowHandle, character: Character, origin: Coordinate) throws {
+    public class func print(handle: WindowHandle, character: Character, origin: Coordinate) throws {
         try setCursor(handle: handle, origin: origin)
 
-        try put(handle: handle, character: character)
+        try print(handle: handle, character: character)
     }
 
     public class func echo(handle: WindowHandle, character: Character) throws {
-        try echo(handle: handle, character: ComplexCharacter(wideCharacter: CWideChar(String(character))!))
+        try echo(handle: handle, character: ComplexCharacter(character.unicodeScalarCodePoint))
     }
 
     public class func echo(handle: WindowHandle, character: Character, origin: Coordinate) throws {
@@ -448,7 +447,6 @@ extension Terminal {
         try echo(handle: handle, character: character)
     }
 }
-*/
 
 extension Terminal {
     public class func insert(handle: WindowHandle, character: ComplexCharacter) throws {
@@ -481,7 +479,7 @@ extension Terminal {
 */
 
 extension Terminal {
-    public class func put(handle: WindowHandle, string: String, length: Int = -1) throws {
+    public class func print(handle: WindowHandle, string: String, length: Int = -1) throws {
         let length = (length < 0) ? string.utf8.count : length
         var wch = string.unicodeScalars.flatMap { wchar_t($0.value) }
 
@@ -490,10 +488,10 @@ extension Terminal {
         }
     }
 
-    public class func put(handle: WindowHandle, string: String, origin: Coordinate, length: Int = -1) throws {
+    public class func print(handle: WindowHandle, string: String, origin: Coordinate, length: Int = -1) throws {
         try setCursor(handle: handle, origin: origin)
 
-        try put(handle: handle, string: string, length: length)
+        try print(handle: handle, string: string, length: length)
     }
 }
 
@@ -537,10 +535,8 @@ extension Terminal {
         return try read(handle: handle)
     }
 
-    public class func unRead(character: UnicodeScalar) throws {
-        let wch = wchar_t(UInt32(character))
-
-        guard (unget_wch(wch) == OK) else {
+    public class func unRead(character: wchar_t) throws {
+        guard (unget_wch(character) == OK) else {
             throw NCurseswError.UnReadCharacter(character: character)
         }
     }
@@ -560,9 +556,7 @@ extension Terminal {
     }
 
     public class func unRead(character: Character) throws {
-        let scalars = String(character).unicodeScalars
-
-        try unRead(character: scalars[scalars.startIndex])
+        try unRead(character: character.unicodeScalarCodePoint)
     }
 }
 

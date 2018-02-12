@@ -225,12 +225,12 @@ extension Window {
 }
 
 extension Window {
-    public func put(character: ComplexCharacter) throws {
-        try Terminal.put(handle: _handle, character: character)
+    public func print(character: ComplexCharacter) throws {
+        try Terminal.print(handle: _handle, character: character)
     }
 
-    public func put(character: ComplexCharacter, origin: Coordinate) throws {
-        try Terminal.put(handle: _handle, character: character, origin: origin)
+    public func print(character: ComplexCharacter, origin: Coordinate) throws {
+        try Terminal.print(handle: _handle, character: character, origin: origin)
     }
 
     public func echo(character: ComplexCharacter) throws {
@@ -241,12 +241,12 @@ extension Window {
         try Terminal.echo(handle: _handle, character: character, origin: origin)
     }
 
-    public func put(string: String, length: Int = -1) throws {
-        try Terminal.put(handle: _handle, string: string, length: length)
+    public func print(string: String, length: Int = -1) throws {
+        try Terminal.print(handle: _handle, string: string, length: length)
     }
 
-    public func put(string: String, origin: Coordinate, length: Int = -1) throws {
-        try Terminal.put(handle: _handle, string: string, origin: origin, length: length)
+    public func print(string: String, origin: Coordinate, length: Int = -1) throws {
+        try Terminal.print(handle: _handle, string: string, origin: origin, length: length)
     }
 }
 
