@@ -203,23 +203,23 @@ extension Window {
 }
 
 extension Window {
-    public func border(_ boxDrawingType: BoxDrawingType = .Light) throws {
+    public func border(_ boxDrawingType: BoxDrawingType = .Light(type: .Normal)) throws {
         try Terminal.border(handle: _handle, boxDrawingType: boxDrawingType)
     }
 
-    public func horizontalLine(_ boxDrawingType: BoxDrawingType = .Light, length: Int) throws {
+    public func horizontalLine(_ boxDrawingType: BoxDrawingType = .Light(type: .Normal), length: Int) throws {
         try Terminal.horizontalLine(handle: _handle, boxDrawingType: boxDrawingType, length: length)
     }
 
-    public func horizontalLine(origin: Coordinate, _ boxDrawingType: BoxDrawingType = .Light, length: Int) throws {
+    public func horizontalLine(origin: Coordinate, _ boxDrawingType: BoxDrawingType = .Light(type: .Normal), length: Int) throws {
         try Terminal.horizontalLine(handle: _handle, origin: origin, boxDrawingType: boxDrawingType, length: length)
     }
 
-    public func verticalLine(_ boxDrawingType: BoxDrawingType = .Light, length: Int) throws {
+    public func verticalLine(_ boxDrawingType: BoxDrawingType = .Light(type: .Normal), length: Int) throws {
         try Terminal.verticalLine(handle: _handle, boxDrawingType: boxDrawingType, length: length)
     }
 
-    public func verticalLine(origin: Coordinate, _ boxDrawingType: BoxDrawingType = .Light, length: Int) throws {
+    public func verticalLine(origin: Coordinate, _ boxDrawingType: BoxDrawingType = .Light(type: .Normal), length: Int) throws {
         try Terminal.verticalLine(handle: _handle, origin: origin, boxDrawingType: boxDrawingType, length: length)
     }
 }

@@ -3,7 +3,7 @@ import Foundation
 
 do {
     do {
-        let boxDrawingType = BoxDrawingType.Light
+        let boxDrawingType = BoxDrawingType.Light(type: .Normal)
 
         let window = try Terminal.initialiseWindows()
 

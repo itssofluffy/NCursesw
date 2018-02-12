@@ -22,29 +22,32 @@
 
 public enum BoxDrawingType {
     case Ascii
-    case Light
-    case LightRounded
+    case Light(type: BoxDrawingLightType)
+    case Heavy(type: BoxDrawingHeavyType)
     case Double
-    case Thick
 
     public static let allValues = Array<BoxDrawingType>(arrayLiteral: .Ascii,
-                                                                      .Light,
-                                                                      .LightRounded,
-                                                                      .Double,
-                                                                      .Thick)
+                                                                      .Light(type: .Normal),
+                                                                      .Light(type: .Rounded),
+                                                                      .Light(type: .DoubleDash),
+                                                                      .Light(type: .TripleDash),
+                                                                      .Light(type: .QuadrupleDash),
+                                                                      .Heavy(type: .Normal),
+                                                                      .Heavy(type: .DoubleDash),
+                                                                      .Heavy(type: .TripleDash),
+                                                                      .Heavy(type: .QuadrupleDash),
+                                                                      .Double)
 
     public var rawValue: Int {
         switch self {
             case .Ascii:
                 return 0
-            case .Light:
-                return 1
-            case .LightRounded:
-                return 2
+            case .Light(let type):
+                return 1 + type.rawValue
+            case .Heavy(let type):
+                return 10 + type.rawValue
             case .Double:
-                return 3
-            case .Thick:
-                return 4
+                return 20
         }
     }
 }
@@ -54,14 +57,12 @@ extension BoxDrawingType: CustomStringConvertible {
         switch self {
             case .Ascii:
                 return "ascii"
-            case .Light:
-                return "light"
-            case .LightRounded:
-                return "light rounded"
+            case .Light(let type):
+                return "light \(type)"
+            case .Heavy(let type):
+                return "heavy \(type)"
             case .Double:
                 return "double"
-            case .Thick:
-                return "thick"
         }
     }
 }
