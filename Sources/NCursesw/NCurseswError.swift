@@ -56,6 +56,8 @@ public enum NCurseswError: Error {
     case Flash
 
     case NewWindow(size: Size, origin: Coordinate)
+    case SubWindow(size: Size, origin: Coordinate)
+    case DerWindow(size: Size, relative: Coordinate)
     case DeleteWindow
     case KeyPad(on: Bool)
     case Meta(on: Bool)
@@ -191,6 +193,10 @@ extension NCurseswError: CustomStringConvertible {
 
             case .NewWindow(let size, let origin):
                 return "newwin(\(size),\(origin)) \(errorCode)"
+            case .SubWindow(let size, let origin):
+                return "subwin(\(size),\(origin)) \(errorCode)"
+            case .DerWindow(let size, let relative):
+                return "derwin(\(size),\(relative)) \(errorCode)"
             case .DeleteWindow:
                 return "delwin() \(errorCode)"
             case .KeyPad(let on):

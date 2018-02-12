@@ -1,5 +1,5 @@
 /*
-    Window.swift
+    SubWindow.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -24,46 +24,35 @@ import CNCursesw
 import Foundation
 import ISFLibrary
 
-public class Window: WindowProtocol {
+public class SubWindow: WindowProtocol {
     internal var _handle: WindowHandle
-    private let _initialWindow: Bool
-
-    public var subWindow: SubWindow? = nil
 
     // http://invisible-island.net/ncurses/man/curs_window.3x.html
-    public init(size: Size, origin: Coordinate) throws {
-        guard (Terminal.initialised) else {
-            throw NCurseswError.WindowsNotInitialised
-        }
-
-        guard let handle = newwin(size._height, size._width, origin._y, origin._x) else {
-            throw NCurseswError.NewWindow(size: size, origin: origin)
+    public init(window: Window, size: Size, origin: Coordinate) throws {
+        guard let handle = subwin(window._handle, size._height, size._width, origin._y, origin._x) else {
+            throw NCurseswError.SubWindow(size: size, origin: origin)
         }
 
         self._handle = handle
-
-        _initialWindow = false
     }
 
-    internal init(handle: WindowHandle) {
-        self._handle = handle
+    public init(window: Window, size: Size, relative: Coordinate) throws {
+        guard let handle = derwin(window._handle, size._height, size._width, relative._y, relative._x) else {
+            throw NCurseswError.DerWindow(size: size, relative: relative)
+        }
 
-        _initialWindow = true
+        self._handle = handle
     }
 
     internal init(handle: WindowHandle, size: Size) {
         self._handle = handle
-
-        _initialWindow = false
     }
 
     //http://invisible-island.net/ncurses/man/curs_window.3x.html
     deinit {
         wrapper(do: {
-                    if (!self._initialWindow) {
-                        guard (delwin(self._handle) == OK) else {
-                            throw NCurseswError.DeleteWindow
-                        }
+                    guard (delwin(self._handle) == OK) else {
+                        throw NCurseswError.DeleteWindow
                     }
                 },
                 catch: { failure in
@@ -72,14 +61,14 @@ public class Window: WindowProtocol {
     }
 }
 
-extension Window: Hashable {
+extension SubWindow: Hashable {
     public var hashValue: Int {
         return _handle.hashValue
     }
 }
 
-extension Window: Equatable {
-    public static func ==(lhs: Window, rhs: Window) -> Bool {
+extension SubWindow: Equatable {
+    public static func ==(lhs: SubWindow, rhs: SubWindow) -> Bool {
         return (lhs._handle == rhs._handle)
     }
 }
