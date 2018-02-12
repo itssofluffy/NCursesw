@@ -1,5 +1,5 @@
 /*
-    BoxDrawingLightType.swift
+    BoxDrawingTypeDetail.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -20,42 +20,36 @@
     IN THE SOFTWARE.
 */
 
-public enum BoxDrawingLightType {
+public enum BoxDrawingTypeDetail {
     case Normal
-    case Rounded
     case DoubleDash
     case TripleDash
     case QuadrupleDash
 
-    public static let allValues = Array<BoxDrawingLightType>(arrayLiteral: .Normal,
-                                                                           .Rounded,
-                                                                           .DoubleDash,
-                                                                           .TripleDash,
-                                                                           .QuadrupleDash)
+    public static let allValues = Array<BoxDrawingTypeDetail>(arrayLiteral: .Normal,
+                                                                            .DoubleDash,
+                                                                            .TripleDash,
+                                                                            .QuadrupleDash)
 
     public var rawValue: Int {
         switch self {
             case .Normal:
                 return 0
-            case .Rounded:
-                return 1
             case .DoubleDash:
-                return 2
+                return 1
             case .TripleDash:
-                return 3
+                return 2
             case .QuadrupleDash:
-                return 4
+                return 3
         }
     }
 }
 
-extension BoxDrawingLightType: CustomStringConvertible {
+extension BoxDrawingTypeDetail: CustomStringConvertible {
     public var description: String {
         switch self {
             case .Normal:
                 return "normal"
-            case .Rounded:
-                return "rounded"
             case .DoubleDash:
                 return "double dash"
             case .TripleDash:

@@ -22,21 +22,21 @@
 
 public enum BoxDrawingType {
     case Ascii
-    case Light(type: BoxDrawingLightType)
-    case Heavy(type: BoxDrawingHeavyType)
+    case Light(type: BoxDrawingTypeDetail)
+    case Heavy(type: BoxDrawingTypeDetail)
     case Double
+    case UserDefined(graphics: UserDefinedBoxDrawing)
 
-    public static let allValues = Array<BoxDrawingType>(arrayLiteral: .Ascii,
-                                                                      .Light(type: .Normal),
-                                                                      .Light(type: .Rounded),
-                                                                      .Light(type: .DoubleDash),
-                                                                      .Light(type: .TripleDash),
-                                                                      .Light(type: .QuadrupleDash),
-                                                                      .Heavy(type: .Normal),
-                                                                      .Heavy(type: .DoubleDash),
-                                                                      .Heavy(type: .TripleDash),
-                                                                      .Heavy(type: .QuadrupleDash),
-                                                                      .Double)
+    internal static let _allValues = Array<BoxDrawingType>(arrayLiteral: .Ascii,
+                                                                         .Light(type: .Normal),
+                                                                         .Light(type: .DoubleDash),
+                                                                         .Light(type: .TripleDash),
+                                                                         .Light(type: .QuadrupleDash),
+                                                                         .Heavy(type: .Normal),
+                                                                         .Heavy(type: .DoubleDash),
+                                                                         .Heavy(type: .TripleDash),
+                                                                         .Heavy(type: .QuadrupleDash),
+                                                                         .Double)
 
     public var rawValue: Int {
         switch self {
@@ -48,6 +48,8 @@ public enum BoxDrawingType {
                 return 10 + type.rawValue
             case .Double:
                 return 20
+            case .UserDefined:
+                return 30
         }
     }
 }
@@ -63,6 +65,8 @@ extension BoxDrawingType: CustomStringConvertible {
                 return "heavy \(type)"
             case .Double:
                 return "double"
+            case .UserDefined(let graphics):
+                return "user defined (\(graphics))"
         }
     }
 }

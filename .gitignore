@@ -3,6 +3,7 @@
 /Packages
 /*.xcodeproj
 /Package.resolved
-/examples/test
-/examples/test-c
-/examples/unicode-test
+examples/test
+examples/test-c
+examples/unicode-test
+examples/user_defined_graphic_test

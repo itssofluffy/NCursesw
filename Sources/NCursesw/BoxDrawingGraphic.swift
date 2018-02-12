@@ -37,21 +37,21 @@ public enum BoxDrawingGraphic {
     case RightVerticalLine
     case Plus
 
-    public static let allValues = Array<BoxDrawingGraphic>(arrayLiteral: .UpperLeftCorner,
-                                                                         .LowerLeftCorner,
-                                                                         .UpperRightCorner,
-                                                                         .LowerRightCorner,
-                                                                         .RightTee,
-                                                                         .LeftTee,
-                                                                         .LowerTee,
-                                                                         .UpperTee,
-                                                                         .HorizontalLine,
-                                                                         .UpperHorizontalLine,
-                                                                         .LowerHorizontalLine,
-                                                                         .VerticalLine,
-                                                                         .LeftVerticalLine,
-                                                                         .RightVerticalLine,
-                                                                         .Plus)
+    internal static let _allValues = Array<BoxDrawingGraphic>(arrayLiteral: .UpperLeftCorner,
+                                                                            .LowerLeftCorner,
+                                                                            .UpperRightCorner,
+                                                                            .LowerRightCorner,
+                                                                            .RightTee,
+                                                                            .LeftTee,
+                                                                            .LowerTee,
+                                                                            .UpperTee,
+                                                                            .HorizontalLine,
+                                                                            .UpperHorizontalLine,
+                                                                            .LowerHorizontalLine,
+                                                                            .VerticalLine,
+                                                                            .LeftVerticalLine,
+                                                                            .RightVerticalLine,
+                                                                            .Plus)
 
     public var rawValue: Int {
         switch self {

@@ -77,22 +77,6 @@ private let __graphicsMatrix: Dictionary<GraphicsMatrixKey, wchar_t> =
      GraphicsMatrixKey(.Light(type: .Normal),        .RightVerticalLine   ) : 0x2502,
      GraphicsMatrixKey(.Light(type: .Normal),        .Plus                ) : 0x253c,
 
-     GraphicsMatrixKey(.Light(type: .Rounded),       .UpperLeftCorner     ) : 0x256d,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .LowerLeftCorner     ) : 0x2570,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .UpperRightCorner    ) : 0x256e,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .LowerRightCorner    ) : 0x256f,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .RightTee            ) : 0x2524,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .LeftTee             ) : 0x251c,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .LowerTee            ) : 0x2534,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .UpperTee            ) : 0x252c,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .HorizontalLine      ) : 0x2500,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .UpperHorizontalLine ) : 0x2500,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .LowerHorizontalLine ) : 0x2500,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .VerticalLine        ) : 0x2502,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .LeftVerticalLine    ) : 0x2502,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .RightVerticalLine   ) : 0x2502,
-     GraphicsMatrixKey(.Light(type: .Rounded),       .Plus                ) : 0x253c,
-
      GraphicsMatrixKey(.Light(type: .DoubleDash),    .UpperLeftCorner     ) : 0x250c,
      GraphicsMatrixKey(.Light(type: .DoubleDash),    .LowerLeftCorner     ) : 0x2514,
      GraphicsMatrixKey(.Light(type: .DoubleDash),    .UpperRightCorner    ) : 0x2510,
@@ -234,8 +218,8 @@ public struct BoxDrawing {
         _boxDrawingType = boxDrawingType
 
         if (!_initialised) {
-            try BoxDrawingType.allValues.forEach { boxDrawingType in
-                try BoxDrawingGraphic.allValues.forEach { boxDrawingGraphic in
+            try BoxDrawingType._allValues.forEach { boxDrawingType in
+                try BoxDrawingGraphic._allValues.forEach { boxDrawingGraphic in
                     let matrixKey = GraphicsMatrixKey(boxDrawingType, boxDrawingGraphic)
 
                     _graphicsMatrix[matrixKey] = try ComplexCharacter(__graphicsMatrix[matrixKey]!,
@@ -249,10 +233,15 @@ public struct BoxDrawing {
     }
 
     public func graphic(_ graphic: BoxDrawingGraphic) -> ComplexCharacter {
-        return _graphicsMatrix[GraphicsMatrixKey(_boxDrawingType, graphic)]!
+        switch _boxDrawingType {
+            case .UserDefined(let userDefined):
+                return userDefined.graphic[graphic]!
+            default:
+                return _graphicsMatrix[GraphicsMatrixKey(_boxDrawingType, graphic)]!
+        }
     }
 
     internal func _graphic(_ graphic: BoxDrawingGraphic) -> cchar_t {
-        return _graphicsMatrix[GraphicsMatrixKey(_boxDrawingType, graphic)]!._rawValue
+        return self.graphic(graphic)._rawValue
     }
 }
