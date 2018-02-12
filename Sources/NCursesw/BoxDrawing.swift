@@ -147,7 +147,7 @@ public struct BoxDrawing {
         return _graphicsMatrix[GraphicsMatrixKey(_boxDrawingType, graphic)]!
     }
 
-    internal func _graphic(_ graphic: BoxDrawingGraphic) -> CChar_t {
-        return withUnsafePointer(to: &_graphicsMatrix[GraphicsMatrixKey(_boxDrawingType, graphic)]!._rawValue) { CChar_t($0) }
+    internal func _graphic(_ graphic: BoxDrawingGraphic) -> cchar_t {
+        return _graphicsMatrix[GraphicsMatrixKey(_boxDrawingType, graphic)]!._rawValue
     }
 }

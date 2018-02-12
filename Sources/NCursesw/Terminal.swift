@@ -337,15 +337,16 @@ extension Terminal {
                              colourPair: ColourPair = ColourPair()) throws {
         let boxDrawings = try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair)
 
-let cchar = boxDrawings._graphic(.UpperLeftCorner).pointee
-let complexCharacter = try ComplexCharacter(rawValue: cchar)
+        var ls = boxDrawings._graphic(.LeftVerticalLine)
+        var rs = boxDrawings._graphic(.RightVerticalLine)
+        var ts = boxDrawings._graphic(.UpperHorizontalLine)
+        var bs = boxDrawings._graphic(.LowerHorizontalLine)
+        var ul = boxDrawings._graphic(.UpperLeftCorner)
+        var ur = boxDrawings._graphic(.UpperRightCorner)
+        var ll = boxDrawings._graphic(.LowerLeftCorner)
+        var lr = boxDrawings._graphic(.LowerRightCorner)
 
-print(complexCharacter)
-
-        guard (wborder_set(handle, boxDrawings._graphic(.LeftVerticalLine),    boxDrawings._graphic(.RightVerticalLine),
-                                   boxDrawings._graphic(.UpperHorizontalLine), boxDrawings._graphic(.LowerHorizontalLine),
-                                   boxDrawings._graphic(.UpperLeftCorner),     boxDrawings._graphic(.UpperRightCorner),
-                                   boxDrawings._graphic(.LowerLeftCorner),     boxDrawings._graphic(.LowerRightCorner)) == OK) else {
+        guard (wborder_set(handle, &ls, &rs, &ts, &bs, &ul, &ur, &ll, &lr) == OK) else {
             throw NCurseswError.Border(boxDrawingType: boxDrawingType, attributes: attributes, colourPair: colourPair)
         }
     }
@@ -355,7 +356,9 @@ print(complexCharacter)
                                      attributes: Attributes = .Normal,
                                      colourPair: ColourPair = ColourPair(),
                                      length: Int) throws {
-        guard (whline_set(handle, try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair)._graphic(.HorizontalLine), CInt(length)) == OK) else {
+        var hl = try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair)._graphic(.HorizontalLine)
+
+        guard (whline_set(handle, &hl, CInt(length)) == OK) else {
             throw NCurseswError.HorizontalLine(boxDrawingType: boxDrawingType, attributes: attributes, colourPair: colourPair, length: length)
         }
     }
@@ -376,7 +379,9 @@ print(complexCharacter)
                                    attributes: Attributes = .Normal,
                                    colourPair: ColourPair = ColourPair(),
                                    length: Int) throws {
-        guard (wvline_set(handle, try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair)._graphic(.VerticalLine), CInt(length)) == OK) else {
+        var vl = try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair)._graphic(.VerticalLine)
+
+        guard (wvline_set(handle, &vl, CInt(length)) == OK) else {
             throw NCurseswError.VerticalLine(boxDrawingType: boxDrawingType, attributes: attributes, colourPair: colourPair, length: length)
         }
     }
