@@ -21,7 +21,6 @@
 */
 
 import CNCursesw
-import Foundation
 import ISFLibrary
 
 public class Window: WindowProtocol {

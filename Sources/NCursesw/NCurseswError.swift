@@ -58,13 +58,14 @@ public enum NCurseswError: Error {
     case NewWindow(size: Size, origin: Coordinate)
     case SubWindowAlreadyExists
     case SubWindow(size: Size, origin: Coordinate)
-    case DerWindow(size: Size, relative: Coordinate)
+    case DerivedWindow(size: Size, relative: Coordinate)
     case DeleteWindow
     case KeyPad(on: Bool)
     case Meta(on: Bool)
     case NoDelay(on: Bool)
     case NoTimeout(on: Bool)
     case MoveWindow(origin: Coordinate)
+    case MoveDerivedWindow(origin: Coordinate)
     case Duplicate
     case Overlay
     case OverWrite
@@ -101,7 +102,10 @@ public enum NCurseswError: Error {
     case AttributesOff(attributes: Attributes)
     case SetColour(colourPair: ColourPair)
     case ChangeAttributes(count: Int, windowAttributes: WindowAttributes)
-
+    case TouchWindow
+    case TouchLine(start: Int, count: Int)
+    case UnTouchWindow
+    case WTouchLine(start: Int, count: Int, change: Bool)
 
     case StartColours
     case InitialisePair(pair: CShort, palette: ColourPalette)
@@ -198,7 +202,7 @@ extension NCurseswError: CustomStringConvertible {
                 return "sub window already defined"
             case .SubWindow(let size, let origin):
                 return "subwin(\(size),\(origin)) \(errorCode)"
-            case .DerWindow(let size, let relative):
+            case .DerivedWindow(let size, let relative):
                 return "derwin(\(size),\(relative)) \(errorCode)"
             case .DeleteWindow:
                 return "delwin() \(errorCode)"
@@ -212,6 +216,8 @@ extension NCurseswError: CustomStringConvertible {
                 return "notimeout(\(on) \(errorCode)"
             case .MoveWindow(let origin):
                 return "mvwin(\(origin)) \(errorCode)"
+            case .MoveDerivedWindow(let origin):
+                return "mvderwin(\(origin)) \(errorCode)"
             case .Duplicate:
                 return "dupwin() \(errorCode)"
             case .Overlay:
@@ -284,6 +290,14 @@ extension NCurseswError: CustomStringConvertible {
                 return "wcolor_set(\(colourPair)) \(errorCode)"
             case .ChangeAttributes(let count, let windowAttributes):
                 return "wchgat(\(count),\(windowAttributes)) \(errorCode)"
+            case .TouchWindow:
+                return "touchwin() \(errorCode)"
+            case .TouchLine(let start, let count):
+                return "touchline(\(start),\(count)) \(errorCode)"
+            case .UnTouchWindow:
+                return "untouchwin() \(errorCode)"
+            case .WTouchLine(let start, let count, let change):
+                return "wtouchln(\(start),\(count),\(change)) \(errorCode)"
 
             case .StartColours:
                 return "start_colour() \(errorCode)"

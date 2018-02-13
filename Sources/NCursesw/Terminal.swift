@@ -723,7 +723,40 @@ extension Terminal {
 
         try changeAttributes(handle: handle, count: count, windowAttributes: windowAttributes)
     }
+}
 
+extension Terminal {
+    public class func touch(handle: WindowHandle) throws {
+        guard (touchwin(handle) == OK) else {
+            throw NCurseswError.TouchWindow
+        }
+    }
+
+    public class func touchLine(handle: WindowHandle, start: Int, count: Int) throws {
+        guard (touchline(handle, CInt(start), CInt(count)) == OK) else {
+            throw NCurseswError.TouchLine(start: start, count: count)
+        }
+    }
+
+    public class func unTouch(handle: WindowHandle) throws {
+        guard (untouchwin(handle) == OK) else {
+            throw NCurseswError.UnTouchWindow
+        }
+    }
+
+    public class func touchLine(handle: WindowHandle, start: Int, count: Int, change: Bool) throws {
+        guard (wtouchln(handle, CInt(start), CInt(count), NCursesw._ncurseswBool(change)) == OK) else {
+            throw NCurseswError.WTouchLine(start: start, count: count, change: change)
+        }
+    }
+
+    public class func isTouched(handle: WindowHandle, line: Int) -> Bool {
+        return is_linetouched(handle, CInt(line))
+    }
+
+    public class func isTouched(handle: WindowHandle) -> Bool {
+        return is_wintouched(handle)
+    }
 }
 
 // http://invisible-island.net/ncurses/man/curs_variables.3x.html
