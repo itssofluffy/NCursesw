@@ -22,9 +22,12 @@ do {
             try window.refresh()
         }
 
+        let colourPair = try ColourPair(palette: ColourPalette(foreground: .Yellow, background: .Blue))
         let boxDrawingType = BoxDrawingType.Light(detail: .Normal)
 
-        try window.border(boxDrawingType)
+        try window.setBackground(character: ComplexCharacter(0x20, colourPair: colourPair))
+
+        try window.border(boxDrawingType, colourPair: colourPair)
 
         try window.print(string: "\(window.size)", origin: Coordinate(y: 1, x: 1))
         try window.print(character: BoxDrawing(boxDrawingType).graphic(.UpperLeftCorner), origin: Coordinate(y: 2, x: 1))

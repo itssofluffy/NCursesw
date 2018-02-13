@@ -307,41 +307,6 @@ extension Terminal {
     public static var canChangeColours: Bool {
         return can_change_color()
     }
-
-    public class func initialisePair(pair: CShort, palette: ColourPalette) throws {
-        guard (init_pair(pair, palette.foreground.rawValue, palette.background.rawValue) == OK) else {
-            throw NCurseswError.InitialisePair(pair: pair, palette: palette)
-        }
-    }
-
-    public class func initialiseColour(colour: Colour, rgb: RGB) throws {
-        guard (init_color(colour.rawValue, rgb._red, rgb._green, rgb._blue) == OK) else {
-            throw NCurseswError.InitialiseColour(colour: colour, rgb: rgb)
-        }
-    }
-
-    public class func colourContent(colour: Colour) throws -> RGB {
-        var red: CShort = 0
-        var green: CShort = 0
-        var blue: CShort = 0
-
-        guard (color_content(colour.rawValue, &red, &green, &blue) == OK) else {
-            throw NCurseswError.ColourContent(colour: colour)
-        }
-
-        return try RGB(red: red, green: green, blue: blue)
-    }
-
-    public class func pairContent(pair: CShort) throws -> ColourPalette {
-        var foreground: CShort = 0
-        var background: CShort = 0
-
-        guard (pair_content(pair, &foreground, &background) == OK) else {
-            throw NCurseswError.PairContent(pair: pair)
-        }
-
-        return ColourPalette(foreground: Colour(rawValue: foreground), background: Colour(rawValue: background))
-    }
 }
 
 // http://invisible-island.net/ncurses/man/curs_refresh.3x.html

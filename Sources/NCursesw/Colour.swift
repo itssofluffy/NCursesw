@@ -21,6 +21,7 @@
 */
 
 import CNCursesw
+import ISFLibrary
 
 public enum Colour {
     case Default
@@ -134,10 +135,32 @@ public enum Colour {
 
     public var rgb: RGB {
         get {
-            return try! Terminal.colourContent(colour: self)
+            return wrapper(do: {
+                               var red: CShort = 0
+                               var green: CShort = 0
+                               var blue: CShort = 0
+
+                               guard (color_content(self.rawValue, &red, &green, &blue) == OK) else {
+                                   throw NCurseswError.ColourContent(colour: self)
+                               }
+
+                               return try RGB(red: red, green: green, blue: blue)
+                           },
+                           catch: { failure in
+                               ncurseswErrorLogger(failure)
+                           })!
         }
-        set {
-            try! Terminal.initialiseColour(colour: self, rgb: newValue)
+        set (rgb) {
+            let this = self
+
+            wrapper(do: {
+                        guard (init_color(this.rawValue, rgb._red, rgb._green, rgb._blue) == OK) else {
+                            throw NCurseswError.InitialiseColour(colour: this, rgb: rgb)
+                        }
+                    },
+                    catch: { failure in
+                        ncurseswErrorLogger(failure)
+                    })
         }
     }
 }

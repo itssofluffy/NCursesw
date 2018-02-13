@@ -23,6 +23,11 @@
 public struct ColourPalette {
     public let foreground: Colour
     public let background: Colour
+
+    public init(foreground: Colour, background: Colour) {
+        self.foreground = foreground
+        self.background = background
+    }
 }
 
 extension ColourPalette: Equatable {

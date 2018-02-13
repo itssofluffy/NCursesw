@@ -111,7 +111,6 @@ public enum NCurseswError: Error {
     case InitialisePair(pair: CShort, palette: ColourPalette)
     case InitialiseColour(colour: Colour, rgb: RGB)
     case ColourContent(colour: Colour)
-    case PairContent(pair: CShort)
 
     case RGB(red: Int, green: Int, blue: Int)
 
@@ -307,8 +306,6 @@ extension NCurseswError: CustomStringConvertible {
                 return "init_color(\(colour),\(rgb)) \(errorCode)"
             case .ColourContent(let colour):
                 return "color_content(\(colour)) \(errorCode)"
-            case .PairContent(let pair):
-                return "pair_content(\(pair)) \(errorCode)"
 
             case .RGB(let red, let green, let blue):
                 return "invalid RGB value using red: \(red), green: \(green), blue: \(blue)"

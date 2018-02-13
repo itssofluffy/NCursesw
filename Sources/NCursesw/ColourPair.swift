@@ -43,37 +43,51 @@ public func findColourPair(with palette: ColourPalette) -> ColourPair? {
     return nil
 }
 
+private func _findColourPair(_ palette: ColourPalette) -> CShort? {
+    if let colourPair = findColourPair(with: palette) {
+        return CShort(colourPair.rawValue)
+    }
+
+    return nil
+}
+
 public struct ColourPair {
-    public let number: Int
+    private let _pair: CShort
     public let palette: ColourPalette
 
     public init() {
-        number = 0
+        _pair = 0
         palette = ColourPalette(foreground: .Default, background: .Default)
     }
 
     public init(palette: ColourPalette) throws {
-        guard (_pairNumber <= Terminal.colourPairs) else {
-            throw NCurseswError.ColourPair
+        if let pair = _findColourPair(palette) {
+            _pair = pair
+            self.palette = palette
+        } else {
+            guard (_pairNumber <= Terminal.colourPairs) else {
+                throw NCurseswError.ColourPair
+            }
+
+            guard (init_pair(_pairNumber, palette.foreground.rawValue, palette.background.rawValue) == OK) else {
+                throw NCurseswError.InitialisePair(pair: _pairNumber, palette: palette)
+            }
+
+            _pair = _pairNumber
+            self.palette = palette
+
+            _colourPairs[_pairNumber] = self
+            _pairNumber = _pairNumber + 1
         }
-
-        try Terminal.initialisePair(pair: _pairNumber, palette: palette)
-
-        number = Int(_pairNumber)
-        self.palette = palette
-
-        _colourPairs[_pairNumber] = self
-
-        _pairNumber = _pairNumber + 1
     }
 
     public var rawValue: CInt {
-        return CInt(number)
+        return CInt(_pair)
     }
 }
 
 extension ColourPair: CustomStringConvertible {
     public var description: String {
-        return "pair: \(number), palette: (\(palette))"
+        return "pair: \(_pair), palette: (\(palette))"
     }
 }
