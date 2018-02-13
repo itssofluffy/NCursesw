@@ -23,8 +23,7 @@
 import CNCursesw
 import ISFLibrary
 
-public class SubWindow: WindowProtocol {
-    internal var _handle: WindowHandle
+public class SubWindow: NCurseswWindow {
     private let _parent:  Window
 
     // http://invisible-island.net/ncurses/man/curs_window.3x.html
@@ -33,8 +32,9 @@ public class SubWindow: WindowProtocol {
             throw NCurseswError.SubWindow(size: size, origin: origin)
         }
 
-        self._handle = handle
         _parent = window
+
+        super.init(handle: handle)
     }
 
     internal init(window: Window, size: Size, relative: Coordinate) throws {
@@ -42,8 +42,9 @@ public class SubWindow: WindowProtocol {
             throw NCurseswError.DerivedWindow(size: size, relative: relative)
         }
 
-        self._handle = handle
         _parent = window
+
+        super.init(handle: handle)
     }
 
     //http://invisible-island.net/ncurses/man/curs_window.3x.html
@@ -57,10 +58,8 @@ public class SubWindow: WindowProtocol {
                     ncurseswErrorLogger(failure)
                 })
     }
-}
 
-extension SubWindow {
-    public func move(to origin: Coordinate) throws {
+    public override func move(to origin: Coordinate) throws {
         guard (mvderwin(_handle, origin._y, origin._x) == OK) else {
             throw NCurseswError.MoveDerivedWindow(origin: origin)
         }

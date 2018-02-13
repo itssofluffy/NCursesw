@@ -1,5 +1,5 @@
 /*
-    WindowProtocol.swift
+    NCurseswWindow.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -24,11 +24,21 @@ import CNCursesw
 import Foundation
 import ISFLibrary
 
-internal protocol WindowProtocol {
-    var _handle: WindowHandle { get }
+public class NCurseswWindow {
+    internal var _handle: WindowHandle
+
+    public init(handle: WindowHandle) {
+        _handle = handle
+    }
+
+    public func move(to origin: Coordinate) throws {
+        guard (mvwin(_handle, origin._y, origin._x) == OK) else {
+            throw NCurseswError.MoveWindow(origin: origin)
+        }
+    }
 }
 
-extension WindowProtocol {
+extension NCurseswWindow {
     public var size: Size {
         return Terminal.getSize(handle: _handle)
     }
@@ -72,12 +82,6 @@ extension WindowProtocol {
 
     public func timeout(delay: TimeInterval) {
         wtimeout(_handle, CInt(delay.milliseconds))
-    }
-
-    public func move(to origin: Coordinate) throws {
-        guard (mvwin(_handle, origin._y, origin._x) == OK) else {
-            throw NCurseswError.MoveWindow(origin: origin)
-        }
     }
 
     public func duplicate() throws -> Window {

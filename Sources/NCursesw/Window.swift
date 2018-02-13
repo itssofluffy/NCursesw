@@ -23,8 +23,7 @@
 import CNCursesw
 import ISFLibrary
 
-public class Window: WindowProtocol {
-    internal var _handle: WindowHandle
+public class Window: NCurseswWindow {
     private let _initialWindow: Bool
 
     public var subWindow: SubWindow? = nil
@@ -46,21 +45,21 @@ public class Window: WindowProtocol {
             throw NCurseswError.NewWindow(size: size, origin: origin)
         }
 
-        self._handle = handle
-
         _initialWindow = false
+
+        super.init(handle: handle)
     }
 
-    internal init(handle: WindowHandle) {
-        self._handle = handle
-
+    internal override init(handle: WindowHandle) {
         _initialWindow = true
+
+        super.init(handle: handle)
     }
 
     internal init(handle: WindowHandle, size: Size) {
-        self._handle = handle
-
         _initialWindow = false
+
+        super.init(handle: handle)
     }
 
     //http://invisible-island.net/ncurses/man/curs_window.3x.html

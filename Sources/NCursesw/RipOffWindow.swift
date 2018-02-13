@@ -20,10 +20,8 @@
     IN THE SOFTWARE.
 */
 
-public struct RipOffWindow: WindowProtocol {
-    internal let _handle: WindowHandle
-
-    public init(handle: WindowHandle) {
-        _handle = handle
+public class RipOffWindow: NCurseswWindow {
+    public override init(handle: WindowHandle) {
+        super.init(handle: handle)
     }
 }
