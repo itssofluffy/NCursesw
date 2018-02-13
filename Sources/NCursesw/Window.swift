@@ -77,7 +77,7 @@ extension Window {
         subWindow = try SubWindow(window: self, size: size, origin: origin)
     }
 
-    public func createSubWindow(window: Window, size: Size, relative: Coordinate) throws {
+    public func createSubWindow(size: Size, relative: Coordinate) throws {
         subWindow = try SubWindow(window: self, size: size, relative: relative)
     }
 }
