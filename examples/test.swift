@@ -17,6 +17,11 @@ do {
     do {
         let window = try Terminal.initialiseWindows()
 
+        func doRefresh() throws {
+            try ripLine!.refresh()
+            try window.refresh()
+        }
+
         let boxDrawingType = BoxDrawingType.Light(detail: .Normal)
 
         try window.border(boxDrawingType)
@@ -24,16 +29,14 @@ do {
         try window.print(string: "\(window.size)", origin: Coordinate(y: 1, x: 1))
         try window.print(character: BoxDrawing(boxDrawingType).graphic(.UpperLeftCorner), origin: Coordinate(y: 2, x: 1))
 
-        try ripLine!.refresh()
-        try window.refresh()
+        try doRefresh()
 
         let _: UIResult<Character?> = try window.read(origin: Coordinate(y: 2, x: 2))
 
         try ripLine!.clear()
         try ripLine!.print(string: "and now the rip-off line has changed!!!", origin: Coordinate(y: 0, x: 0))
 
-        try ripLine!.refresh()
-        try window.refresh()
+        try doRefresh()
 
         let _: UIResult<Character?> = try window.read(origin: Coordinate(y: 2, x: 2))
     } catch {

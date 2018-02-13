@@ -142,6 +142,9 @@ extension NCurseswWindow {
     }
 
     public func redraw(from line: Int, lines count: Int) throws {
+        precondition(line >= 0, "line must be positive")
+        precondition(count > 0, "count must be greater than 0")
+
         guard (wredrawln(_handle, CInt(line), CInt(count)) == OK) else {
             throw NCurseswError.ReDrawLine(from: line, lines: count)
         }
@@ -439,6 +442,8 @@ extension NCurseswWindow {
 
 extension NCurseswWindow {
     public func read(length: Int) throws -> Array<UnicodeScalar?> {
+        precondition(length > 0, "length must be greater than 0")
+
         var wstr = Array<wint_t>()
 
         let returnCode = wgetn_wstr(_handle, &wstr, CInt(length))
@@ -451,6 +456,8 @@ extension NCurseswWindow {
     }
 
     public func read(origin: Coordinate, length: Int) throws -> Array<UnicodeScalar?> {
+        precondition(length > 0, "length must be greater than 0")
+
         cursor = origin
 
         return try read(length: length)
@@ -459,12 +466,16 @@ extension NCurseswWindow {
 
 extension NCurseswWindow {
     public func read(length: Int) throws -> Array<Character?> {
+        precondition(length > 0, "length must be greater than 0")
+
         let unicodeScalars: Array<UnicodeScalar?> = try read(length: length)
 
         return unicodeScalars.map { Character($0!) }
     }
 
     public func read(origin: Coordinate, length: Int) throws -> Array<Character?> {
+        precondition(length > 0, "length must be greater than 0")
+
         cursor = origin
 
         return try read(length: length)
@@ -498,16 +509,26 @@ extension NCurseswWindow {
         try insertLine()
     }
 
-    public func insertDelete(lines: Int) throws {
-        guard (winsdelln(_handle, CInt(lines)) == OK) else {
+    public func insertLine(_ from: Orientation, lines: Int) throws {
+        precondition(lines > 0, "lines must be greater than 0")
+
+        var lineCount = CInt(lines)
+
+        if (from == .Lower) {
+            lineCount *= -1
+        }
+
+        guard (winsdelln(_handle, lineCount) == OK) else {
             throw NCurseswError.InsertDelete(lines: lines)
         }
     }
 
-    public func insertDelete(lines: Int, origin: Coordinate) throws {
+    public func insertLine(_ from: Orientation, lines: Int, origin: Coordinate) throws {
+        precondition(lines > 0, "lines must be greater than 0")
+
         cursor = origin
 
-        try insertDelete(lines: lines)
+        try insertLine(from, lines: lines)
     }
 
     public func deleteLine() throws {
@@ -610,6 +631,9 @@ extension NCurseswWindow {
     }
 
     public func touchLine(start: Int, count: Int) throws {
+        precondition(start >= 0, "start must be positive")
+        precondition(count > 0, "count must be greater than 0")
+
         guard (touchline(_handle, CInt(start), CInt(count)) == OK) else {
             throw NCurseswError.TouchLine(start: start, count: count)
         }
@@ -622,12 +646,17 @@ extension NCurseswWindow {
     }
 
     public func touchLine(start: Int, count: Int, change: Bool) throws {
+        precondition(start >= 0, "start must be positive")
+        precondition(count > 0, "count must be greater than 0")
+
         guard (wtouchln(_handle, CInt(start), CInt(count), NCursesw._ncurseswBool(change)) == OK) else {
             throw NCurseswError.WTouchLine(start: start, count: count, change: change)
         }
     }
 
     public func isTouched(line: Int) -> Bool {
+        precondition(line >= 0, "line must be positive")
+
         return is_linetouched(_handle, CInt(line))
     }
 
