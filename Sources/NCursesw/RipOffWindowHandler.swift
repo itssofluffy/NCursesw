@@ -1,5 +1,5 @@
 /*
-    RipOffWindowHandle.swift
+    RipOffWindowHandler.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -20,4 +20,4 @@
     IN THE SOFTWARE.
 */
 
-public typealias RipOffWindowHandle = @convention(c)(WindowHandle?, CInt) -> CInt
+public typealias RipOffWindowHandler = @convention(c)(WindowHandle?, CInt) -> CInt

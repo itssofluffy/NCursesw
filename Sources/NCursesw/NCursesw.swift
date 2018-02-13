@@ -20,10 +20,6 @@
     IN THE SOFTWARE.
 */
 
-import CNCursesw
-
-internal let _maxRipOffLines = 5
-
 internal func _ncurseswBool(_ value: Bool) -> CInt {
     return (value) ? 1 : 0
 }

@@ -42,7 +42,8 @@ public class Terminal {
 
     public private(set) static var locale: String = ""
 
-    public private(set) static var ripOffCount = 0
+    public static let maximumRipOffWindows = 5
+    public private(set) static var numberOfRipOffWindows = 0
 
     public static let origin = Coordinate(y: 0, x: 0)
 
@@ -93,7 +94,7 @@ extension Terminal {
         }
 
         _initialWindowHandle = nil
-        ripOffCount = 0
+        numberOfRipOffWindows = 0
         coloursStarted = false
     }
 
@@ -205,16 +206,25 @@ extension Terminal {
         }
     }
 
-    public class func ripOffLine(lines: Int, ripWindow: @escaping RipOffWindowHandle) throws {
-        guard (ripOffCount < NCursesw._maxRipOffLines) else {
-            throw NCurseswError.MaxRipOffLines(count: NCursesw._maxRipOffLines)
+    public class func ripOff(from: Orientation, lines: Int, function: @escaping RipOffWindowHandler) throws {
+        precondition(!initialised, "must be called before Terminal.initialiseWindows()")
+        precondition(lines > 0, "lines must be greater than 0")
+
+        guard (numberOfRipOffWindows < maximumRipOffWindows) else {
+            throw NCurseswError.MaxRipOffLines(count: maximumRipOffWindows)
         }
 
-        guard (ripoffline(CInt(lines), ripWindow) == OK) else {
-            throw NCurseswError.RipOffLine(lines: lines)
+        var lineCount = CInt(lines)
+
+        if (from == .Lower) {
+            lineCount *= -1
         }
 
-        ripOffCount = ripOffCount + 1
+        guard (ripoffline(lineCount, function) == OK) else {
+            throw NCurseswError.RipOffLine(from: from, lines: lines)
+        }
+
+        numberOfRipOffWindows = numberOfRipOffWindows + 1
     }
 
     public class func setCursor(to: CursorType) throws {

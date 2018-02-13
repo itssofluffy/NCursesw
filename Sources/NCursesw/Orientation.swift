@@ -1,5 +1,5 @@
 /*
-    RipOffWindow.swift
+    Orientation.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -20,8 +20,7 @@
     IN THE SOFTWARE.
 */
 
-public class RipOffWindow: NCurseswWindow {
-    public override init(handle: WindowHandle) {
-        super.init(handle: handle)
-    }
+public enum Orientation {
+    case Upper
+    case Lower
 }

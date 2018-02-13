@@ -50,7 +50,7 @@ public enum NCurseswError: Error {
     case ResetTTY
     case SaveTTY
     case MaxRipOffLines(count: Int)
-    case RipOffLine(lines: Int)
+    case RipOffLine(from: Orientation, lines: Int)
     case SetCursor(to: CursorType)
     case Beep
     case Flash
@@ -187,8 +187,8 @@ extension NCurseswError: CustomStringConvertible {
                 return "savetty() \(errorCode)"
             case .MaxRipOffLines(let count):
                 return "Maximum number of \(count) rip-off lines reached"
-            case .RipOffLine(let lines):
-                return "ripoffline(\(lines)) \(errorCode)"
+            case .RipOffLine(let from, let lines):
+                return "ripoffline(\(from),\(lines)) \(errorCode)"
             case .SetCursor(let to):
                 return "curs_set(\(to) \(errorCode)"
             case .Beep:
