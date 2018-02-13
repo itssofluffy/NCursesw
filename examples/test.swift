@@ -1,12 +1,17 @@
 import NCursesw
 import Foundation
+import ISFLibrary
 
 var ripLine: NCurseswWindow?
 
 func ripWindow(_ handle: WindowHandle?, _ columns: CInt) -> CInt {
     ripLine = NCurseswWindow(handle: handle!)
 
-    try! ripLine!.print(string: "this is a rip-off line and has \(columns) columns...", origin: Coordinate(y: 0, x:0))
+    do {
+        try ripLine!.print(string: "this is a rip-off line and has \(columns) columns...", origin: Coordinate(y: 0, x: 0))
+    } catch {
+        ncurseswErrorLogger(ErrorLoggerResult(error: error))
+    }
 
     return EXIT_SUCCESS
 }
