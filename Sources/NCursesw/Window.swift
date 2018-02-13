@@ -29,6 +29,13 @@ public class Window: WindowProtocol {
     private let _initialWindow: Bool
 
     public var subWindow: SubWindow? = nil
+    public var hasSubWindow: Bool {
+        if let _  = subWindow {
+            return true
+        }
+
+        return false
+    }
 
     // http://invisible-island.net/ncurses/man/curs_window.3x.html
     public init(size: Size, origin: Coordinate) throws {
@@ -74,10 +81,18 @@ public class Window: WindowProtocol {
 
 extension Window {
     public func createSubWindow(size: Size, origin: Coordinate) throws {
+        guard (!hasSubWindow) else {
+            throw NCurseswError.SubWindowAlreadyExists
+        }
+
         subWindow = try SubWindow(window: self, size: size, origin: origin)
     }
 
     public func createSubWindow(size: Size, relative: Coordinate) throws {
+        guard (!hasSubWindow) else {
+            throw NCurseswError.SubWindowAlreadyExists
+        }
+
         subWindow = try SubWindow(window: self, size: size, relative: relative)
     }
 }

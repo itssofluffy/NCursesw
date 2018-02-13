@@ -56,6 +56,7 @@ public enum NCurseswError: Error {
     case Flash
 
     case NewWindow(size: Size, origin: Coordinate)
+    case SubWindowAlreadyExists
     case SubWindow(size: Size, origin: Coordinate)
     case DerWindow(size: Size, relative: Coordinate)
     case DeleteWindow
@@ -193,6 +194,8 @@ extension NCurseswError: CustomStringConvertible {
 
             case .NewWindow(let size, let origin):
                 return "newwin(\(size),\(origin)) \(errorCode)"
+            case .SubWindowAlreadyExists:
+                return "sub window already defined"
             case .SubWindow(let size, let origin):
                 return "subwin(\(size),\(origin)) \(errorCode)"
             case .DerWindow(let size, let relative):
