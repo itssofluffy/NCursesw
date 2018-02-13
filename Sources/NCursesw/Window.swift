@@ -72,6 +72,16 @@ public class Window: WindowProtocol {
     }
 }
 
+extension Window {
+    public func createSubWindow(size: Size, origin: Coordinate) throws {
+        subWindow = try SubWindow(window: self, size: size, origin: origin)
+    }
+
+    public func createSubWindow(window: Window, size: Size, relative: Coordinate) throws {
+        subWindow = try SubWindow(window: self, size: size, relative: relative)
+    }
+}
+
 extension Window: Hashable {
     public var hashValue: Int {
         return _handle.hashValue

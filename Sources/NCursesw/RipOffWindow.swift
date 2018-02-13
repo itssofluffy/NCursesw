@@ -1,5 +1,5 @@
 /*
-    RawWindow.swift
+    RipOffWindow.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -20,8 +20,8 @@
     IN THE SOFTWARE.
 */
 
-public struct RawWindow {
-    private let _handle: WindowHandle
+public struct RipOffWindow: WindowProtocol {
+    internal let _handle: WindowHandle
 
     public init(handle: WindowHandle) {
         _handle = handle
