@@ -23,7 +23,7 @@
 import CNCursesw
 import ISFLibrary
 
-public class SubWindow: NCurseswWindow {
+public class SubWindow: NCurseswWindow, MoveableWindow {
     private let _parent:  Window
 
     // http://invisible-island.net/ncurses/man/curs_window.3x.html
@@ -58,8 +58,10 @@ public class SubWindow: NCurseswWindow {
                     ncurseswErrorLogger(failure)
                 })
     }
+}
 
-    public override func move(to origin: Coordinate) throws {
+extension SubWindow {
+    public func move(to origin: Coordinate) throws {
         guard (mvderwin(_handle, origin._y, origin._x) == OK) else {
             throw NCurseswError.MoveDerivedWindow(origin: origin)
         }

@@ -23,7 +23,7 @@
 import CNCursesw
 import ISFLibrary
 
-public class Window: NCurseswWindow {
+public class Window: NCurseswWindow, MoveableWindow {
     private let _initialWindow: Bool
 
     public var subWindow: SubWindow? = nil
@@ -78,6 +78,14 @@ public class Window: NCurseswWindow {
 }
 
 extension Window {
+    public func move(to origin: Coordinate) throws {
+        guard (mvwin(_handle, origin._y, origin._x) == OK) else {
+            throw NCurseswError.MoveWindow(origin: origin)
+        }
+    }
+}
+
+extension Window {
     public func createSubWindow(size: Size, origin: Coordinate) throws {
         guard (!hasSubWindow) else {
             throw NCurseswError.SubWindowAlreadyExists
@@ -92,17 +100,5 @@ extension Window {
         }
 
         subWindow = try SubWindow(window: self, size: size, relative: relative)
-    }
-}
-
-extension Window: Hashable {
-    public var hashValue: Int {
-        return _handle.hashValue
-    }
-}
-
-extension Window: Equatable {
-    public static func ==(lhs: Window, rhs: Window) -> Bool {
-        return (lhs._handle == rhs._handle)
     }
 }

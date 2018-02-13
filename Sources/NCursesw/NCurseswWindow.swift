@@ -30,12 +30,6 @@ public class NCurseswWindow {
     public init(handle: WindowHandle) {
         _handle = handle
     }
-
-    public func move(to origin: Coordinate) throws {
-        guard (mvwin(_handle, origin._y, origin._x) == OK) else {
-            throw NCurseswError.MoveWindow(origin: origin)
-        }
-    }
 }
 
 // http://invisible-island.net/ncurses/man/curs_getyx.3x.html
@@ -53,12 +47,14 @@ extension NCurseswWindow {
             return Coordinate(y: getcury(_handle), x: getcurx(_handle))
         }
         set (origin) {
-            wmove(_handle, origin._y, origin._x)
-            /*
-            guard (wmove(_handle, origin._y, origin._x) == OK) else {
-                throw NCurseswError.MoveCursor(cursor: origin)
-            }
-            */
+            wrapper(do: {
+                        guard (wmove(self._handle, origin._y, origin._x) == OK) else {
+                            throw NCurseswError.MoveCursor(cursor: origin)
+                        }
+                    },
+                    catch: { failure in
+                        ncurseswErrorLogger(failure)
+                    })
         }
     }
 }
@@ -91,29 +87,35 @@ extension NCurseswWindow {
     public func timeout(delay: TimeInterval) {
         wtimeout(_handle, CInt(delay.milliseconds))
     }
+}
 
-    public func duplicate() throws -> Window {
+extension NCurseswWindow {
+    public func duplicate() throws -> NCurseswWindow {
         guard let handle = dupwin(_handle) else {
             throw NCurseswError.Duplicate
         }
 
-        return Window(handle: handle, size: size)
+        return NCurseswWindow(handle: handle)
     }
 
-    public func overlay(with window: Window) throws {
+    public func overlay(with window: NCurseswWindow) throws {
         guard (CNCursesw.overlay(window._handle, _handle) == OK) else {
             throw NCurseswError.Overlay
         }
     }
 
-    public func overWrite(with window: Window) throws {
+    public func overWrite(with window: NCurseswWindow) throws {
         guard (overwrite(window._handle, _handle) == OK) else {
             throw NCurseswError.OverWrite
         }
     }
 
-    public func copy(with window: Window, origin: Coordinate, withOrigin: Coordinate, withSize: Size, destructive: Bool = true) throws {
-        guard (copywin(window._handle, _handle, origin._y, origin._y, withOrigin._y, withOrigin._x, withSize._height, withSize._width, NCursesw._ncurseswBool(destructive)) == OK) else {
+    public func copy(with window: NCurseswWindow, origin: Coordinate, withOrigin: Coordinate, withSize: Size, destructive: Bool = true) throws {
+        guard (copywin(window._handle, _handle,
+                       origin._y, origin._y,
+                       withOrigin._y, withOrigin._x,
+                       withSize._height, withSize._width,
+                       NCursesw._ncurseswBool(destructive)) == OK) else {
             throw NCurseswError.Copy(origin: origin, withOrigin: withOrigin, withSize: withSize, destructive: destructive)
         }
     }
@@ -631,5 +633,17 @@ extension NCurseswWindow {
 
     public func isTouched() -> Bool {
         return is_wintouched(_handle)
+    }
+}
+
+extension NCurseswWindow: Hashable {
+    public var hashValue: Int {
+        return _handle.hashValue
+    }
+}
+
+extension NCurseswWindow: Equatable {
+    public static func ==(lhs: NCurseswWindow, rhs: NCurseswWindow) -> Bool {
+        return (lhs._handle == rhs._handle)
     }
 }

@@ -14,7 +14,7 @@ do {
 
         try window.refresh()
 
-        sleep(10)
+        let _: UIResult<Character?> = try window.read()
     } catch {
         print(error)
     }
