@@ -28,4 +28,4 @@ else
     export LD_LIBRARY_PATH="$base_dir/.build/debug"
 fi
 
-./$@
+./$@ 2>"$1.stderr"

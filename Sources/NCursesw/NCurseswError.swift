@@ -60,10 +60,10 @@ public enum NCurseswError: Error {
     case SubWindow(size: Size, origin: Coordinate)
     case DerivedWindow(size: Size, relative: Coordinate)
     case DeleteWindow
-    case KeyPad(on: Bool)
-    case Meta(on: Bool)
-    case NoDelay(on: Bool)
-    case NoTimeout(on: Bool)
+    case KeyPad(to: Bool)
+    case Meta(to: Bool)
+    case NoDelay(to: Bool)
+    case NoTimeout(to: Bool)
     case MoveWindow(origin: Coordinate)
     case MoveDerivedWindow(origin: Coordinate)
     case Duplicate
@@ -205,14 +205,14 @@ extension NCurseswError: CustomStringConvertible {
                 return "derwin(\(size),\(relative)) \(errorCode)"
             case .DeleteWindow:
                 return "delwin() \(errorCode)"
-            case .KeyPad(let on):
-                return "keypad(\(on) \(errorCode)"
-            case .Meta(let on):
-                return "meta(\(on) \(errorCode)"
-            case .NoDelay(let on):
-                return "nodelay(\(on) \(errorCode)"
-            case .NoTimeout(let on):
-                return "notimeout(\(on) \(errorCode)"
+            case .KeyPad(let to):
+                return "keypad(\(to) \(errorCode)"
+            case .Meta(let to):
+                return "meta(\(to) \(errorCode)"
+            case .NoDelay(let to):
+                return "nodelay(\(to) \(errorCode)"
+            case .NoTimeout(let to):
+                return "notimeout(\(to) \(errorCode)"
             case .MoveWindow(let origin):
                 return "mvwin(\(origin)) \(errorCode)"
             case .MoveDerivedWindow(let origin):

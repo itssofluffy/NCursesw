@@ -22,6 +22,8 @@ do {
     do {
         let window = try Terminal.initialiseWindows()
 
+        try window.keypad(to: true)
+
         func doRefresh() throws {
             try ripLine!.refresh()
             try window.refresh()
@@ -39,21 +41,25 @@ do {
 
         try doRefresh()
 
-        let _: UICharacter = try window.read(origin: Coordinate(y: 2, x: 2))
+        var result: UICharacter
+
+        result = try window.read(origin: Coordinate(y: 2, x: 2))
+        print("result=\(result)", to: &errorStream)
 
         try ripLine!.clear()
         try ripLine!.print(string: "and now the rip-off line has changed!!!", origin: Coordinate(y: 0, x: 0))
 
         try doRefresh()
 
-        let _: UICharacter = try window.read(origin: Coordinate(y: 2, x: 2))
+        result = try window.read(origin: Coordinate(y: 2, x: 2))
+        print("result=\(result)", to: &errorStream)
     } catch {
         throw error
     }
 
     try Terminal.endWindows()
 } catch {
-    print(error)
+    print(error, to: &errorStream)
 }
 
 exit(EXIT_SUCCESS)

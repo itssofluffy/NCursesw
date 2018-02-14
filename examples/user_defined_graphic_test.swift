@@ -1,5 +1,6 @@
 import NCursesw
 import Foundation
+import ISFLibrary
 
 do {
     do {
@@ -23,12 +24,12 @@ do {
 
         sleep(10)
     } catch {
-        print(error)
+        throw error
     }
 
     try Terminal.endWindows()
 } catch {
-    print(error)
+    print(error, to: &errorStream)
 }
 
 exit(EXIT_SUCCESS)

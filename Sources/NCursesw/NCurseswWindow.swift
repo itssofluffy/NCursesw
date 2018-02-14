@@ -60,27 +60,27 @@ extension NCurseswWindow {
 }
 
 extension NCurseswWindow {
-    public func keypad(_ on: Bool) throws {
-        guard (CNCursesw.keypad(_handle, on) == OK) else {
-            throw NCurseswError.KeyPad(on: on)
+    public func keypad(to: Bool) throws {
+        guard (CNCursesw.keypad(_handle, to) == OK) else {
+            throw NCurseswError.KeyPad(to: to)
         }
     }
 
-    public func meta(_ on: Bool) throws {
-        guard (CNCursesw.meta(_handle, on) == OK) else {
-            throw NCurseswError.Meta(on: on)
+    public func meta(to: Bool) throws {
+        guard (CNCursesw.meta(_handle, to) == OK) else {
+            throw NCurseswError.Meta(to: to)
         }
     }
 
-    public func noDelay(_ on: Bool) throws {
-        guard (nodelay(_handle, on) == OK) else {
-            throw NCurseswError.NoDelay(on: on)
+    public func noDelay(to: Bool) throws {
+        guard (nodelay(_handle, to) == OK) else {
+            throw NCurseswError.NoDelay(to: to)
         }
     }
 
-    public func noTimeout(_ on: Bool) throws {
-        guard (notimeout(_handle, on) == OK) else {
-            throw NCurseswError.NoTimeout(on: on)
+    public func noTimeout(to: Bool) throws {
+        guard (notimeout(_handle, to) == OK) else {
+            throw NCurseswError.NoTimeout(to: to)
         }
     }
 

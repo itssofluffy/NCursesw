@@ -3,6 +3,8 @@
 /Packages
 /*.xcodeproj
 /Package.resolved
+*.stderr
+*.stdout
 examples/test
 examples/test-c
 examples/unicode-test
