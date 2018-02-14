@@ -11,6 +11,8 @@ func ripWindow(_ handle: WindowHandle?, _ columns: CInt) -> CInt {
         try ripLine!.print(string: "this is a rip-off line and has \(columns) columns...", origin: Coordinate(y: 0, x: 0))
     } catch {
         ncurseswErrorLogger(ErrorLoggerResult(error: error))
+
+        return EXIT_FAILURE
     }
 
     return EXIT_SUCCESS
@@ -60,6 +62,8 @@ do {
     try Terminal.endWindows()
 } catch {
     print(error, to: &errorStream)
+
+    exit(EXIT_FAILURE)
 }
 
 exit(EXIT_SUCCESS)
