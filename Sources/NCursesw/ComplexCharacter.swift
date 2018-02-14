@@ -24,12 +24,9 @@ import CNCursesw
 
 public struct ComplexCharacter {
     public let wideCharacter: wchar_t
-    public var unicodeScalar: UnicodeScalar? {
-        return UnicodeScalar(UInt32(wideCharacter))
-    }
     public var character: Character? {
-        if let unicode = unicodeScalar {
-            return Character(unicode)
+        if let unicodeScalar = UnicodeScalar(UInt32(wideCharacter)) {
+            return Character(unicodeScalar)
         }
 
         return nil
@@ -74,6 +71,6 @@ public struct ComplexCharacter {
 
 extension ComplexCharacter: CustomStringConvertible {
     public var description: String {
-        return "wideCharacter: \(wideCharacter), unicodeScalar: \(String(describing: unicodeScalar)), character: \(character!), attributes: (\(attributes)), colourPair: (\(colourPair))"
+        return "wideCharacter: \(wideCharacter), character: \(character!), attributes: (\(attributes)), colourPair: (\(colourPair))"
     }
 }

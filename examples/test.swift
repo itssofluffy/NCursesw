@@ -39,16 +39,16 @@ do {
 
         try doRefresh()
 
-        let _: UIResult<Character?> = try window.read(origin: Coordinate(y: 2, x: 2))
+        let _: UICharacter = try window.read(origin: Coordinate(y: 2, x: 2))
 
         try ripLine!.clear()
         try ripLine!.print(string: "and now the rip-off line has changed!!!", origin: Coordinate(y: 0, x: 0))
 
         try doRefresh()
 
-        let _: UIResult<Character?> = try window.read(origin: Coordinate(y: 2, x: 2))
+        let _: UICharacter = try window.read(origin: Coordinate(y: 2, x: 2))
     } catch {
-        print(error)
+        throw error
     }
 
     try Terminal.endWindows()

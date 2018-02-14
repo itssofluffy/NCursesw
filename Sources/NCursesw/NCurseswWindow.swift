@@ -423,13 +423,13 @@ extension NCurseswWindow {
 }
 
 extension NCurseswWindow {
-    public func read() throws -> UIResult<Character?> {
+    public func read() throws -> UICharacter {
         let result: UIResult<UnicodeScalar?> = try read()
 
-        return (result.isKeyCode) ? UIResult(result.keyCode!) : UIResult(result.value.map { Character($0!) })
+        return (result.isKeyCode) ? UICharacter(result.keyCode!) : UICharacter(result.value.map { Character($0!) })
     }
 
-    public func read(origin: Coordinate) throws -> UIResult<Character?> {
+    public func read(origin: Coordinate) throws -> UICharacter {
         cursor = origin
 
         return try read()
