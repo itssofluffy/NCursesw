@@ -276,18 +276,6 @@ extension Terminal {
     public static var tabSize: Int {
         return Int(TABSIZE)
     }
-
-    public static var currentScreen: WindowHandle {
-        return CNCursesw.curscr
-    }
-
-    public static var newScreen: WindowHandle {
-        return CNCursesw.newscr
-    }
-
-    public static var standardScreen: WindowHandle {
-        return CNCursesw.stdscr
-    }
 }
 
 // http://invisible-island.net/ncurses/man/curs_color.3x.html

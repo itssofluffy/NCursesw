@@ -22,4 +22,4 @@
 
 import CNCursesw
 
-public typealias PanelHandle = UnsafeMutablePointer<PANEL>
+internal typealias PanelHandle = UnsafeMutablePointer<PANEL>
