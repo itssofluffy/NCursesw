@@ -5,6 +5,7 @@
 /Package.resolved
 *.stderr
 *.stdout
+*.swp
 examples/test
 examples/test-c
 examples/unicode-test

@@ -117,7 +117,7 @@ extension Panel {
         }
     }
 
-    public func move(to origin: Coordinate) throws {
+    public func move(origin: Coordinate) throws {
         guard (move_panel(_handle, origin._y, origin._x) == OK) else {
             throw NCurseswError.MovePanel(origin: origin)
         }
@@ -132,11 +132,19 @@ extension Panel {
     }
 
     public var isTopPanel: Bool {
-        return (topPanel == self) ? true : false
+        if let top = topPanel {
+            return (self == top)
+        }
+
+        return false
     }
 
     public var isBottomPanel: Bool {
-        return (bottomPanel == self) ? true : false
+        if let bottom = bottomPanel {
+            return (self == bottom)
+        }
+
+        return false
     }
 
     public var above: Panel? {
