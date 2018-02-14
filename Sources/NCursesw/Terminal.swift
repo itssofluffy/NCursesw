@@ -206,7 +206,7 @@ extension Terminal {
         }
     }
 
-    public class func ripOff(from: Orientation, lines: Int, function: @escaping RipOffWindowHandler) throws {
+    public class func ripOff(from: Orientation, lines: Int, initialiser: @escaping RipOffWindowHandler) throws {
         precondition(!initialised, "must be called before Terminal.initialiseWindows()")
         precondition(lines > 0, "lines must be greater than 0")
 
@@ -220,7 +220,7 @@ extension Terminal {
             lineCount *= -1
         }
 
-        guard (ripoffline(lineCount, function) == OK) else {
+        guard (ripoffline(lineCount, initialiser) == OK) else {
             throw NCurseswError.RipOffLine(from: from, lines: lines)
         }
 

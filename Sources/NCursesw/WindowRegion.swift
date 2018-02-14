@@ -1,5 +1,5 @@
 /*
-    SubWindow.swift
+    WindowRegion.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -23,13 +23,13 @@
 import CNCursesw
 import ISFLibrary
 
-public class SubWindow: NCurseswWindow, MoveableWindow {
-    private let _parent:  Window
+public class WindowRegion: NCurseswWindow, MoveableWindow {
+    private let _parent:  NCurseswWindow
 
     // http://invisible-island.net/ncurses/man/curs_window.3x.html
-    internal init(window: Window, size: Size, origin: Coordinate) throws {
+    internal init(window: NCurseswWindow, size: Size, origin: Coordinate) throws {
         guard let handle = subwin(window._handle, size._height, size._width, origin._y, origin._x) else {
-            throw NCurseswError.SubWindow(size: size, origin: origin)
+            throw NCurseswError.WindowRegion(size: size, origin: origin)
         }
 
         _parent = window
@@ -37,9 +37,9 @@ public class SubWindow: NCurseswWindow, MoveableWindow {
         super.init(handle: handle)
     }
 
-    internal init(window: Window, size: Size, relative: Coordinate) throws {
+    internal init(window: NCurseswWindow, size: Size, relative: Coordinate) throws {
         guard let handle = derwin(window._handle, size._height, size._width, relative._y, relative._x) else {
-            throw NCurseswError.DerivedWindow(size: size, relative: relative)
+            throw NCurseswError.DerivedWindowRegion(size: size, relative: relative)
         }
 
         _parent = window
@@ -60,7 +60,7 @@ public class SubWindow: NCurseswWindow, MoveableWindow {
     }
 }
 
-extension SubWindow {
+extension WindowRegion {
     public func move(to origin: Coordinate) throws {
         guard (mvderwin(_handle, origin._y, origin._x) == OK) else {
             throw NCurseswError.MoveDerivedWindow(origin: origin)

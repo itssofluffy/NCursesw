@@ -27,8 +27,35 @@ import ISFLibrary
 public class NCurseswWindow {
     internal var _handle: WindowHandle
 
+    public var windowRegion: WindowRegion? = nil
+    public var hasWindowRegion: Bool {
+        if let _  = windowRegion {
+            return true
+        }
+
+        return false
+    }
+
     public init(handle: WindowHandle) {
         _handle = handle
+    }
+}
+
+extension NCurseswWindow {
+    public func createWindowRegion(size: Size, origin: Coordinate) throws {
+        guard (!hasWindowRegion) else {
+            throw NCurseswError.WindowRegionAlreadyExists
+        }
+
+        windowRegion = try WindowRegion(window: self, size: size, origin: origin)
+    }
+
+    public func createWindowRegion(size: Size, relative: Coordinate) throws {
+        guard (!hasWindowRegion) else {
+            throw NCurseswError.WindowRegionAlreadyExists
+        }
+
+        windowRegion = try WindowRegion(window: self, size: size, relative: relative)
     }
 }
 

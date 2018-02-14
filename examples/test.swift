@@ -4,22 +4,20 @@ import ISFLibrary
 
 var ripLine: NCurseswWindow?
 
-func ripWindow(_ handle: WindowHandle?, _ columns: CInt) -> CInt {
-    ripLine = NCurseswWindow(handle: handle!)
-
-    do {
-        try ripLine!.print(string: "this is a rip-off line and has \(columns) columns...", origin: Coordinate(y: 0, x: 0))
-    } catch {
-        ncurseswErrorLogger(ErrorLoggerResult(error: error))
-
-        return EXIT_FAILURE
-    }
-
-    return EXIT_SUCCESS
-}
-
 do {
-    try Terminal.ripOff(from: .Lower, lines: 1, function: ripWindow)
+    try Terminal.ripOff(from: .Lower, lines: 1, initialiser: {
+        ripLine = NCurseswWindow(handle: $0!)
+
+        do {
+            try ripLine!.print(string: "this is a rip-off line and has \($1) columns...", origin: Coordinate(y: 0, x: 0))
+        } catch {
+            ncurseswErrorLogger(ErrorLoggerResult(error: error))
+
+            return EXIT_FAILURE
+        }
+
+        return EXIT_SUCCESS
+    })
 
     do {
         let window = try Terminal.initialiseWindows()
