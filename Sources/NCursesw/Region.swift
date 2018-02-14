@@ -1,5 +1,5 @@
 /*
-    WindowRegion.swift
+    Region.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -23,26 +23,26 @@
 import CNCursesw
 import ISFLibrary
 
-public class WindowRegion: NCurseswWindow, MoveableWindow {
-    private let _parent:  NCurseswWindow
+public class Region: NCurseswWindow, Moveable {
+    private let _parent: NCurseswWindow
 
     // http://invisible-island.net/ncurses/man/curs_window.3x.html
-    internal init(window: NCurseswWindow, size: Size, origin: Coordinate) throws {
-        guard let handle = subwin(window._handle, size._height, size._width, origin._y, origin._x) else {
-            throw NCurseswError.WindowRegion(size: size, origin: origin)
+    internal init(parent: NCurseswWindow, size: Size, origin: Coordinate) throws {
+        guard let handle = subwin(parent._handle, size._height, size._width, origin._y, origin._x) else {
+            throw NCurseswError.Region(size: size, origin: origin)
         }
 
-        _parent = window
+        _parent = parent
 
         super.init(handle: handle)
     }
 
-    internal init(window: NCurseswWindow, size: Size, relative: Coordinate) throws {
-        guard let handle = derwin(window._handle, size._height, size._width, relative._y, relative._x) else {
-            throw NCurseswError.DerivedWindowRegion(size: size, relative: relative)
+    internal init(parent: NCurseswWindow, size: Size, relative: Coordinate) throws {
+        guard let handle = derwin(parent._handle, size._height, size._width, relative._y, relative._x) else {
+            throw NCurseswError.DerivedRegion(size: size, relative: relative)
         }
 
-        _parent = window
+        _parent = parent
 
         super.init(handle: handle)
     }
@@ -60,7 +60,7 @@ public class WindowRegion: NCurseswWindow, MoveableWindow {
     }
 }
 
-extension WindowRegion {
+extension Region {
     public func move(to origin: Coordinate) throws {
         guard (mvderwin(_handle, origin._y, origin._x) == OK) else {
             throw NCurseswError.MoveDerivedWindow(origin: origin)

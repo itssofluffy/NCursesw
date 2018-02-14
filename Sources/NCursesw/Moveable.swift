@@ -1,5 +1,5 @@
 /*
-    MoveableWindow.swift
+    Moveable.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -20,6 +20,6 @@
     IN THE SOFTWARE.
 */
 
-public protocol MoveableWindow {
+public protocol Moveable {
     func move(to origin: Coordinate) throws
 }

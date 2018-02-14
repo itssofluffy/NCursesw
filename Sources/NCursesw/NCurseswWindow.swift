@@ -25,11 +25,11 @@ import Foundation
 import ISFLibrary
 
 public class NCurseswWindow {
-    internal var _handle: WindowHandle
+    internal private(set) var _handle: WindowHandle
 
-    public var windowRegion: WindowRegion? = nil
-    public var hasWindowRegion: Bool {
-        if let _  = windowRegion {
+    public private(set) var region: Region? = nil
+    public var hasRegion: Bool {
+        if let _  = region {
             return true
         }
 
@@ -42,20 +42,20 @@ public class NCurseswWindow {
 }
 
 extension NCurseswWindow {
-    public func createWindowRegion(size: Size, origin: Coordinate) throws {
-        guard (!hasWindowRegion) else {
-            throw NCurseswError.WindowRegionAlreadyExists
+    public func createRegion(size: Size, origin: Coordinate) throws {
+        guard (!hasRegion) else {
+            throw NCurseswError.RegionAlreadyExists
         }
 
-        windowRegion = try WindowRegion(window: self, size: size, origin: origin)
+        region = try Region(parent: self, size: size, origin: origin)
     }
 
-    public func createWindowRegion(size: Size, relative: Coordinate) throws {
-        guard (!hasWindowRegion) else {
-            throw NCurseswError.WindowRegionAlreadyExists
+    public func createRegion(size: Size, relative: Coordinate) throws {
+        guard (!hasRegion) else {
+            throw NCurseswError.RegionAlreadyExists
         }
 
-        windowRegion = try WindowRegion(window: self, size: size, relative: relative)
+        region = try Region(parent: self, size: size, relative: relative)
     }
 }
 

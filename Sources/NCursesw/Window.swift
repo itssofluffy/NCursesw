@@ -23,7 +23,7 @@
 import CNCursesw
 import ISFLibrary
 
-public class Window: NCurseswWindow, MoveableWindow {
+public class Window: NCurseswWindow, Moveable {
     private let _initialWindow: Bool
 
     // http://invisible-island.net/ncurses/man/curs_window.3x.html

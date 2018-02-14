@@ -56,9 +56,9 @@ public enum NCurseswError: Error {
     case Flash
 
     case NewWindow(size: Size, origin: Coordinate)
-    case WindowRegionAlreadyExists
-    case WindowRegion(size: Size, origin: Coordinate)
-    case DerivedWindowRegion(size: Size, relative: Coordinate)
+    case RegionAlreadyExists
+    case Region(size: Size, origin: Coordinate)
+    case DerivedRegion(size: Size, relative: Coordinate)
     case DeleteWindow
     case KeyPad(to: Bool)
     case Meta(to: Bool)
@@ -197,11 +197,11 @@ extension NCurseswError: CustomStringConvertible {
 
             case .NewWindow(let size, let origin):
                 return "newwin(\(size),\(origin)) \(errorCode)"
-            case .WindowRegionAlreadyExists:
-                return "sub window already defined"
-            case .WindowRegion(let size, let origin):
+            case .RegionAlreadyExists:
+                return "region already defined"
+            case .Region(let size, let origin):
                 return "subwin(\(size),\(origin)) \(errorCode)"
-            case .DerivedWindowRegion(let size, let relative):
+            case .DerivedRegion(let size, let relative):
                 return "derwin(\(size),\(relative)) \(errorCode)"
             case .DeleteWindow:
                 return "delwin() \(errorCode)"
