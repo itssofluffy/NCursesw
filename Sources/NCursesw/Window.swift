@@ -24,8 +24,6 @@ import CNCursesw
 import ISFLibrary
 
 public class Window: NCurseswWindow, Moveable {
-    private let _initialWindow: Bool
-
     // http://invisible-island.net/ncurses/man/curs_window.3x.html
     public init(size: Size, origin: Coordinate) throws {
         guard (Terminal.initialised) else {
@@ -36,30 +34,14 @@ public class Window: NCurseswWindow, Moveable {
             throw NCurseswError.NewWindow(size: size, origin: origin)
         }
 
-        _initialWindow = false
-
-        super.init(handle: handle)
-    }
-
-    internal override init(handle: WindowHandle) {
-        _initialWindow = true
-
-        super.init(handle: handle)
-    }
-
-    internal init(handle: WindowHandle, size: Size) {
-        _initialWindow = false
-
         super.init(handle: handle)
     }
 
     //http://invisible-island.net/ncurses/man/curs_window.3x.html
     deinit {
         wrapper(do: {
-                    if (!self._initialWindow) {
-                        guard (delwin(self._handle) == OK) else {
-                            throw NCurseswError.DeleteWindow
-                        }
+                    guard (delwin(self._handle) == OK) else {
+                        throw NCurseswError.DeleteWindow
                     }
                 },
                 catch: { failure in

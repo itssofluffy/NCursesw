@@ -56,7 +56,7 @@ public class Terminal {
 
 // http://invisible-island.net/ncurses/man/ncurses.3x.html#h3-Initialization
 extension Terminal {
-    public class func initialiseWindows() throws -> Window {
+    public class func initialiseWindows() throws -> NCurseswWindow {
         guard (!initialised) else {
             throw NCurseswError.WindowsAlreadyInitialised
         }
@@ -83,7 +83,7 @@ extension Terminal {
             _initialWindowHandle = handle
         }
 
-        return Window(handle: handle)
+        return NCurseswWindow(handle: handle)
     }
 
     public class func endWindows() throws {
