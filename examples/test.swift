@@ -29,14 +29,27 @@ do {
             try window.refresh()
         }
 
-        let colourPair = try ColourPair(palette: ColourPalette(foreground: .Yellow, background: .Blue))
-        let boxDrawingType = BoxDrawingType.Light(detail: .Normal)
+        let windowForeground = Colour.Yellow
+        let windowBackground = Colour.Blue
 
-        try window.setBackground(character: ComplexCharacter(0x20, colourPair: colourPair))
+        let windowPalette    = ColourPalette(foreground: windowForeground, background: windowBackground)
+        let windowColourPair = try ColourPair(palette: windowPalette)
+        let boxDrawingType   = BoxDrawingType.Light(detail: .Normal)
 
-        try window.border(boxDrawingType, colourPair: colourPair)
+        try window.setBackground(character: ComplexCharacter(0x20, colourPair: windowColourPair))
 
-        try window.print(string: "\(window.size)", origin: Coordinate(y: 1, x: 1))
+        try window.border(boxDrawingType, colourPair: windowColourPair)
+
+        let origin = Coordinate(y: 1, x: 1)
+
+        try window.setColour(to: ColourPair(palette: ColourPalette(foreground: .Red, background: windowBackground)), origin: origin)
+        try window.setAttributes(on: .Bold, origin: origin)
+
+        try window.print(string: "\(window.size)", origin: origin)
+
+        try window.setAttributes(off: .Bold)
+        try window.setColour(to: windowColourPair)
+
         try window.print(character: BoxDrawing(boxDrawingType).graphic(.UpperLeftCorner), origin: Coordinate(y: 2, x: 1))
 
         try doRefresh()
