@@ -22,10 +22,20 @@
 
 import CNCursesw
 
-private var _pairNumber: CShort = 1
-private var _colourPairs: Dictionary<CShort, ColourPair> = [0 : ColourPair()]
+private var _pairNumber:  CInt = 1
+private var _colourPairs: Dictionary<CInt, ColourPair> = [0 : ColourPair()]
 
-public func getColour(pair: CShort) throws -> ColourPair {
+public func resetColourPairs() {
+    reset_color_pairs()
+
+    _pairNumber = 1
+    _colourPairs.removeAll()
+    _colourPairs[0] = ColourPair()
+}
+
+internal func _getColourPair(with: CShort) throws -> ColourPair {
+    let pair = CInt(with)
+
     if let colourPair = _colourPairs[pair] {
         return colourPair
     }
@@ -33,7 +43,7 @@ public func getColour(pair: CShort) throws -> ColourPair {
     throw NCurseswError.ColourPairNotDefined(pair: pair)
 }
 
-public func findColourPair(with palette: ColourPalette) -> ColourPair? {
+public func getColourPair(with palette: ColourPalette) -> ColourPair? {
     for pair in _colourPairs {
         if (pair.value.palette == palette) {
             return pair.value
@@ -43,37 +53,36 @@ public func findColourPair(with palette: ColourPalette) -> ColourPair? {
     return nil
 }
 
-private func _findColourPair(_ palette: ColourPalette) -> CShort? {
-    if let colourPair = findColourPair(with: palette) {
-        return CShort(colourPair.rawValue)
+public func getColourPair(with attribute: attr_t) -> ColourPair? {
+    if let colourPair = _colourPairs[PAIR_NUMBER(CInt(attribute))] {
+        return colourPair
     }
 
     return nil
 }
 
 public struct ColourPair {
-    private let _pair: CShort
     public let palette: ColourPalette
 
     public init() {
-        _pair = 0
+        rawValue = 0
         palette = ColourPalette(foreground: .Default, background: .Default)
     }
 
     public init(palette: ColourPalette) throws {
-        if let pair = _findColourPair(palette) {
-            _pair = pair
+        if let colourPair = getColourPair(with: palette) {
+            rawValue = colourPair.rawValue
             self.palette = palette
         } else {
             guard (_pairNumber <= Terminal.colourPairs) else {
                 throw NCurseswError.ColourPair
             }
 
-            guard (init_pair(_pairNumber, palette.foreground.rawValue, palette.background.rawValue) == OK) else {
+            guard (init_extended_pair(_pairNumber, palette.foreground.rawValue, palette.background.rawValue) == OK) else {
                 throw NCurseswError.InitialisePair(pair: _pairNumber, palette: palette)
             }
 
-            _pair = _pairNumber
+            rawValue = _pairNumber
             self.palette = palette
 
             _colourPairs[_pairNumber] = self
@@ -81,13 +90,15 @@ public struct ColourPair {
         }
     }
 
-    public var rawValue: CInt {
-        return CInt(_pair)
+    public private(set) var rawValue: CInt
+
+    public var attribute: attr_t {
+        return attr_t(COLOR_PAIR(rawValue))
     }
 }
 
 extension ColourPair: CustomStringConvertible {
     public var description: String {
-        return "pair: \(_pair), palette: (\(palette))"
+        return "pair: \(rawValue), palette: (\(palette))"
     }
 }

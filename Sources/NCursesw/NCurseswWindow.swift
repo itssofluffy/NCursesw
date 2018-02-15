@@ -580,7 +580,7 @@ extension NCurseswWindow {
             throw NCurseswError.GetAttributes
         }
 
-        return try WindowAttributes(attributes: Attributes(rawValue: attrs), colourPair: getColour(pair: pair))
+        return try WindowAttributes(attributes: Attributes(rawValue: attrs), colourPair: _getColourPair(with: pair))
     }
 
     public func getAttributes(origin: Coordinate) throws -> WindowAttributes {
@@ -589,64 +589,40 @@ extension NCurseswWindow {
         return try getAttributes()
     }
 
-    public func setAttributes(attributes: Attributes, colourPair: ColourPair) throws {
-        guard (wattr_set(_handle, attributes.rawValue, CShort(colourPair.rawValue), nil) == OK) else {
-            throw NCurseswError.SetAttributes(attributes: attributes, colourPair: colourPair)
-        }
-    }
-
-    public func setAttributes(attributes: Attributes, colourPair: ColourPair, origin: Coordinate) throws {
-        cursor = origin
-
-        try setAttributes(attributes: attributes, colourPair: colourPair)
-    }
-
-    public func attributesOn(attributes: Attributes) throws {
+    public func setAttributes(on attributes: Attributes) throws {
         guard (wattr_on(_handle, attributes.rawValue, nil) == OK) else {
             throw NCurseswError.AttributesOn(attributes: attributes)
         }
     }
 
-    public func attributesOn(attributes: Attributes, origin: Coordinate) throws {
+    public func setAttributes(on attributes: Attributes, origin: Coordinate) throws {
         cursor = origin
 
-        try attributesOn(attributes: attributes)
+        try setAttributes(on: attributes)
     }
 
-    public func attributesOff(attributes: Attributes) throws {
+    public func setAttributes(off attributes: Attributes) throws {
         guard (wattr_off(_handle, attributes.rawValue, nil) == OK) else {
             throw NCurseswError.AttributesOn(attributes: attributes)
         }
     }
 
-    public func attributesOff(attributes: Attributes, origin: Coordinate) throws {
+    public func setAttributes(off attributes: Attributes, origin: Coordinate) throws {
         cursor = origin
 
-        try attributesOff(attributes: attributes)
+        try setAttributes(off: attributes)
     }
 
-    public func setColour(colourPair: ColourPair) throws {
+    public func setColour(to colourPair: ColourPair) throws {
         guard (wcolor_set(_handle, CShort(colourPair.rawValue), nil) == OK) else {
             throw NCurseswError.SetColour(colourPair: colourPair)
         }
     }
 
-    public func setColour(colourPair: ColourPair, origin: Coordinate) throws {
+    public func setColour(to colourPair: ColourPair, origin: Coordinate) throws {
         cursor = origin
 
-        try setColour(colourPair: colourPair)
-    }
-
-    public func changeAttributes(count: Int, windowAttributes: WindowAttributes) throws {
-        guard (wchgat(_handle, CInt(count), windowAttributes.attributes.rawValue, CShort(windowAttributes.colourPair.rawValue), nil) == OK) else {
-            throw NCurseswError.ChangeAttributes(count: count, windowAttributes: windowAttributes)
-        }
-    }
-
-    public func changeAttributes(count: Int, windowAttributes: WindowAttributes, origin: Coordinate) throws {
-        cursor = origin
-
-        try changeAttributes(count: count, windowAttributes: windowAttributes)
+        try setColour(to: colourPair)
     }
 }
 

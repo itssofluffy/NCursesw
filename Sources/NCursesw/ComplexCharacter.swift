@@ -63,7 +63,7 @@ public struct ComplexCharacter {
 
         self.wideCharacter = wch
         self.attributes = Attributes(rawValue: attrs)
-        self.colourPair = try getColour(pair: colourPair)
+        self.colourPair = try _getColourPair(with: colourPair)
 
         _rawValue = wcval
     }

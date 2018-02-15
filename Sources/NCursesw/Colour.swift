@@ -43,41 +43,41 @@ public enum Colour {
     case WHITE
     case UserDefined(code: Int)
 
-    public init(rawValue: CShort) {
+    public init(rawValue: CInt) {
         switch rawValue {
             case -1:
                 self = .Default
-            case CShort(COLOR_BLACK):
+            case COLOR_BLACK:
                 self = .Black
-            case CShort(COLOR_RED):
+            case COLOR_RED:
                 self = .Red
-            case CShort(COLOR_GREEN):
+            case COLOR_GREEN:
                 self = .Green
-            case CShort(COLOR_YELLOW):
+            case COLOR_YELLOW:
                 self = .Yellow
-            case CShort(COLOR_BLUE):
+            case COLOR_BLUE:
                 self = .Blue
-            case CShort(COLOR_MAGENTA):
+            case COLOR_MAGENTA:
                 self = .Magenta
-            case CShort(COLOR_CYAN):
+            case COLOR_CYAN:
                 self = .Cyan
-            case CShort(COLOR_WHITE):
+            case COLOR_WHITE:
                 self = .White
-            case CShort(COLOR_BLACK + 8):
+            case COLOR_BLACK + 8:
                 self = .BLACK
-            case CShort(COLOR_RED + 8):
+            case COLOR_RED + 8:
                 self = .RED
-            case CShort(COLOR_GREEN + 8):
+            case COLOR_GREEN + 8:
                 self = .GREEN
-            case CShort(COLOR_YELLOW + 8):
+            case COLOR_YELLOW + 8:
                 self = .YELLOW
-            case CShort(COLOR_BLUE + 8):
+            case COLOR_BLUE + 8:
                 self = .BLUE
-            case CShort(COLOR_MAGENTA + 8):
+            case COLOR_MAGENTA + 8:
                 self = .MAGENTA
-            case CShort(COLOR_CYAN + 8):
+            case COLOR_CYAN + 8:
                 self = .CYAN
-            case CShort(COLOR_WHITE + 8):
+            case COLOR_WHITE + 8:
                 self = .WHITE
             default:
                 guard (rawValue > 255) else {
@@ -88,59 +88,59 @@ public enum Colour {
         }
     }
 
-    public var rawValue: CShort {
+    public var rawValue: CInt {
         switch self {
             case .Default:
                 return -1
             case .Black:
-                return CShort(COLOR_BLACK)
+                return COLOR_BLACK
             case .Red:
-                return CShort(COLOR_RED)
+                return COLOR_RED
             case .Green:
-                return CShort(COLOR_GREEN)
+                return COLOR_GREEN
             case .Yellow:
-                return CShort(COLOR_YELLOW)
+                return COLOR_YELLOW
             case .Blue:
-                return CShort(COLOR_BLUE)
+                return COLOR_BLUE
             case .Magenta:
-                return CShort(COLOR_MAGENTA)
+                return COLOR_MAGENTA
             case .Cyan:
-                return CShort(COLOR_CYAN)
+                return COLOR_CYAN
             case .White:
-                return CShort(COLOR_WHITE)
+                return COLOR_WHITE
             case .BLACK:
-                return CShort(COLOR_BLACK + 8)
+                return COLOR_BLACK + 8
             case .RED:
-                return CShort(COLOR_RED + 8)
+                return COLOR_RED + 8
             case .GREEN:
-                return CShort(COLOR_GREEN + 8)
+                return COLOR_GREEN + 8
             case .YELLOW:
-                return CShort(COLOR_YELLOW + 8)
+                return COLOR_YELLOW + 8
             case .BLUE:
-                return CShort(COLOR_BLUE + 8)
+                return COLOR_BLUE + 8
             case .MAGENTA:
-                return CShort(COLOR_MAGENTA + 8)
+                return COLOR_MAGENTA + 8
             case .CYAN:
-                return CShort(COLOR_CYAN + 8)
+                return COLOR_CYAN + 8
             case .WHITE:
-                return CShort(COLOR_WHITE + 8)
+                return COLOR_WHITE + 8
             case .UserDefined(let code):
                 guard (code >= 0 && code <= 239) else {
                     fatalError("user defined colour code must be between 0 and 239")
                 }
 
-                return CShort(code + Int(COLOR_WHITE) + 8)
+                return CInt(code + Int(COLOR_WHITE) + 8)
         }
     }
 
     public var rgb: RGB {
         get {
             return wrapper(do: {
-                               var red: CShort = 0
-                               var green: CShort = 0
-                               var blue: CShort = 0
+                               var red:   CInt = 0
+                               var green: CInt = 0
+                               var blue:  CInt = 0
 
-                               guard (color_content(self.rawValue, &red, &green, &blue) == OK) else {
+                               guard (extended_color_content(self.rawValue, &red, &green, &blue) == OK) else {
                                    throw NCurseswError.ColourContent(colour: self)
                                }
 
@@ -154,7 +154,7 @@ public enum Colour {
             let this = self
 
             wrapper(do: {
-                        guard (init_color(this.rawValue, rgb._red, rgb._green, rgb._blue) == OK) else {
+                        guard (init_extended_color(this.rawValue, rgb._red, rgb._green, rgb._blue) == OK) else {
                             throw NCurseswError.InitialiseColour(colour: this, rgb: rgb)
                         }
                     },

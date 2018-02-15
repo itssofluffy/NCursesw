@@ -35,20 +35,20 @@ public struct RGB {
         self.blue = blue
     }
 
-    internal init(red: CShort, green: CShort, blue: CShort) throws {
+    internal init(red: CInt, green: CInt, blue: CInt) throws {
         try self.init(red: Int(red), green: Int(green), blue: Int(blue))
     }
 
-    internal var _red: CShort {
-        return CShort(red)
+    internal var _red: CInt {
+        return CInt(red)
     }
 
-    internal var _green: CShort {
-        return CShort(green)
+    internal var _green: CInt {
+        return CInt(green)
     }
 
-    internal var _blue: CShort {
-        return CShort(blue)
+    internal var _blue: CInt {
+        return CInt(blue)
     }
 }
 

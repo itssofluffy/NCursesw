@@ -108,7 +108,7 @@ public enum NCurseswError: Error {
     case WTouchLine(start: Int, count: Int, change: Bool)
 
     case StartColours
-    case InitialisePair(pair: CShort, palette: ColourPalette)
+    case InitialisePair(pair: CInt, palette: ColourPalette)
     case InitialiseColour(colour: Colour, rgb: RGB)
     case ColourContent(colour: Colour)
 
@@ -126,7 +126,7 @@ public enum NCurseswError: Error {
     case MovePanel(origin: Coordinate)
     case ReplacePanel
 
-    case ColourPairNotDefined(pair: CShort)
+    case ColourPairNotDefined(pair: CInt)
 
     case SetComplexCharacter(wideCharacter: wchar_t, attributes: Attributes, colourPair: ColourPair)
     case GetComplexCharacter
