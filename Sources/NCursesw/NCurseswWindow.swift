@@ -328,7 +328,7 @@ extension NCurseswWindow {
 }
 
 extension NCurseswWindow {
-    public func print(character: ComplexCharacter) throws {
+    public func print(_ character: ComplexCharacter) throws {
         var wch = character._rawValue
 
         guard (wadd_wch(_handle, &wch) == OK) else {
@@ -336,13 +336,13 @@ extension NCurseswWindow {
         }
     }
 
-    public func print(character: ComplexCharacter, origin: Coordinate) throws {
+    public func print(_ character: ComplexCharacter, origin: Coordinate) throws {
         cursor = origin
 
-        try print(character: character)
+        try print(character)
     }
 
-    public func echo(character: ComplexCharacter) throws {
+    public func echo(_ character: ComplexCharacter) throws {
         var wch = character._rawValue
 
         guard (wecho_wchar(_handle, &wch) == OK) else {
@@ -350,37 +350,37 @@ extension NCurseswWindow {
         }
     }
 
-    public func echo(character: ComplexCharacter, origin: Coordinate) throws {
+    public func echo(_ character: ComplexCharacter, origin: Coordinate) throws {
         cursor = origin
 
-        try echo(character: character)
+        try echo(character)
     }
 }
 
 extension NCurseswWindow {
-    public func print(character: Character) throws {
-        try print(character: ComplexCharacter(character.unicodeScalarCodePoint))
+    public func print(_ character: Character) throws {
+        try print(ComplexCharacter(character.unicodeScalarCodePoint))
     }
 
-    public func print(character: Character, origin: Coordinate) throws {
+    public func print(_ character: Character, origin: Coordinate) throws {
         cursor = origin
 
-        try print(character: character)
+        try print(character)
     }
 
-    public func echo(character: Character) throws {
-        try echo(character: ComplexCharacter(character.unicodeScalarCodePoint))
+    public func echo(_ character: Character) throws {
+        try echo(ComplexCharacter(character.unicodeScalarCodePoint))
     }
 
-    public func echo(character: Character, origin: Coordinate) throws {
+    public func echo(_ character: Character, origin: Coordinate) throws {
         cursor = origin
 
-        try echo(character: character)
+        try echo(character)
     }
 }
 
 extension NCurseswWindow {
-    public func insert(character: ComplexCharacter) throws {
+    public func insert(_ character: ComplexCharacter) throws {
         var wch = character._rawValue
 
         guard (wins_wch(_handle, &wch) == OK) else {
@@ -388,29 +388,29 @@ extension NCurseswWindow {
         }
     }
 
-    public func insert(character: ComplexCharacter, origin: Coordinate) throws {
+    public func insert(_ character: ComplexCharacter, origin: Coordinate) throws {
         cursor = origin
 
-        try insert(character: character)
+        try insert(character)
     }
 }
 
 /*
 extension NCurseswWindow {
-    public func insert(character: Character) throws {
-        try insert(character: ComplexCharacter(wideCharacter: CWideChar(String(character))!))
+    public func insert(_ character: Character) throws {
+        try insert(ComplexCharacter(wideCharacter: CWideChar(String(character))!))
     }
 
-    public func insert(character: Character, origin: Coordinate) throws {
+    public func insert(_ character: Character, origin: Coordinate) throws {
         cursor = origin
 
-        try insert(character: character)
+        try insert(character)
     }
 }
 */
 
 extension NCurseswWindow {
-    public func print(string: String, length: Int = -1) throws {
+    public func print(_ string: String, length: Int = -1) throws {
         let length = (length < 0) ? string.utf8.count : length
         var wch = string.unicodeScalars.flatMap { wchar_t($0.value) }
 
@@ -419,10 +419,10 @@ extension NCurseswWindow {
         }
     }
 
-    public func print(string: String, origin: Coordinate, length: Int = -1) throws {
+    public func print(_ string: String, origin: Coordinate, length: Int = -1) throws {
         cursor = origin
 
-        try print(string: string, length: length)
+        try print(string, length: length)
     }
 }
 

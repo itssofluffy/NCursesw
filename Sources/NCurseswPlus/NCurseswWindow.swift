@@ -42,10 +42,10 @@ extension NCurseswWindow {
         let lineWidth = (upperRight.x - origin.x) - 1
         let lineHeight = (lowerLeft.y - origin.y) - 1
 
-        try print(character: boxDrawingGraphics.graphic(.UpperLeftCorner), origin: origin)
-        try print(character: boxDrawingGraphics.graphic(.UpperRightCorner), origin: upperRight)
-        try print(character: boxDrawingGraphics.graphic(.LowerLeftCorner), origin: lowerLeft)
-        try print(character: boxDrawingGraphics.graphic(.LowerRightCorner), origin: lowerRight)
+        try print(boxDrawingGraphics.graphic(.UpperLeftCorner), origin: origin)
+        try print(boxDrawingGraphics.graphic(.UpperRightCorner), origin: upperRight)
+        try print(boxDrawingGraphics.graphic(.LowerLeftCorner), origin: lowerLeft)
+        try print(boxDrawingGraphics.graphic(.LowerRightCorner), origin: lowerRight)
 
         if (lineWidth > 1) {
             try horizontalLine(boxDrawingGraphics.graphic(.HorizontalLine), origin: Coordinate(y: origin.y, x: origin.x + 1), length: lineWidth)

@@ -10,7 +10,7 @@ do {
         ripLine = NCurseswWindow(handle: $0!)
 
         do {
-            try ripLine!.print(string: "this is a rip-off line and has \($1) columns...", origin: Coordinate(y: 0, x: 0))
+            try ripLine!.print("this is a rip-off line and has \($1) columns...", origin: Coordinate(y: 0, x: 0))
         } catch {
             ncurseswErrorLogger(ErrorLoggerResult(error: error))
 
@@ -48,13 +48,13 @@ do {
                                                                                                     background: windowBackground))),
                                  origin: origin)
 
-        try window.print(string: "\(window.size)", origin: origin)
+        try window.print("\(window.size)", origin: origin)
 
         //try window.setAttributes(off: WindowAttributes(attributes: .Bold, colourPair: windowColourPair))
         try window.setAttributes(off: .Bold)
         try window.setColour(to: windowColourPair)
 
-        try window.print(character: BoxDrawing(boxDrawingType).graphic(.UpperLeftCorner), origin: Coordinate(y: 2, x: 1))
+        try window.print(BoxDrawing(boxDrawingType).graphic(.UpperLeftCorner), origin: Coordinate(y: 2, x: 1))
         try window.box(boxDrawingType, origin: Coordinate(y: 5, x: 10), size: Size(height: 5, width: 20))
 
         try doRefresh()
@@ -65,7 +65,7 @@ do {
         print("result=\(result)", to: &errorStream)
 
         try ripLine!.clear()
-        try ripLine!.print(string: "and now the rip-off line has changed!!!", origin: Coordinate(y: 0, x: 0))
+        try ripLine!.print("and now the rip-off line has changed!!!", origin: Coordinate(y: 0, x: 0))
 
         try doRefresh()
 
