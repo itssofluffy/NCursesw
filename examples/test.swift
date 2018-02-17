@@ -49,7 +49,9 @@ do {
 
         try window.print(string: "\(window.size)", origin: origin)
 
-        try window.setAttributes(off: WindowAttributes(attributes: .Bold, colourPair: windowColourPair))
+        //try window.setAttributes(off: WindowAttributes(attributes: .Bold, colourPair: windowColourPair))
+        try window.setAttributes(off: .Bold)
+        try window.setColour(to: windowColourPair)
 
         try window.print(character: BoxDrawing(boxDrawingType).graphic(.UpperLeftCorner), origin: Coordinate(y: 2, x: 1))
 

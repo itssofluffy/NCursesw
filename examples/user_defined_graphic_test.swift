@@ -6,12 +6,14 @@ do {
     do {
         let window = try Terminal.initialiseWindows()
 
-        var userDefinedGraphics = try UserDefinedBoxDrawing(base: .Light(detail: .Normal))
+        let graphicsColourPair = try ColourPair(palette: ColourPalette(foreground: .Green, background: .Default))
 
-        userDefinedGraphics.graphic[.UpperLeftCorner] = try ComplexCharacter(0x256d)
-        userDefinedGraphics.graphic[.UpperRightCorner] = try ComplexCharacter(0x256e)
-        userDefinedGraphics.graphic[.LowerLeftCorner] = try ComplexCharacter(0x2570)
-        userDefinedGraphics.graphic[.LowerRightCorner] = try ComplexCharacter(0x256f)
+        var userDefinedGraphics = try UserDefinedBoxDrawing(base: .Light(detail: .Normal), colourPair: graphicsColourPair)
+
+        userDefinedGraphics.graphic[.UpperLeftCorner] = try ComplexCharacter(0x256d, colourPair: graphicsColourPair)
+        userDefinedGraphics.graphic[.UpperRightCorner] = try ComplexCharacter(0x256e, colourPair: graphicsColourPair)
+        userDefinedGraphics.graphic[.LowerLeftCorner] = try ComplexCharacter(0x2570, colourPair: graphicsColourPair)
+        userDefinedGraphics.graphic[.LowerRightCorner] = try ComplexCharacter(0x256f, colourPair: graphicsColourPair)
 
         let boxDrawingType = BoxDrawingType.UserDefined(graphics: userDefinedGraphics)
 

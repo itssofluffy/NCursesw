@@ -44,7 +44,7 @@ extension GraphicsMatrixKey: Equatable {
     }
 }
 
-private let __graphicsMatrix: Dictionary<GraphicsMatrixKey, wchar_t> =
+private let _graphicsMatrix: Dictionary<GraphicsMatrixKey, wchar_t> =
     [GraphicsMatrixKey(.Ascii,                         .UpperLeftCorner     ) : 0x002b,
      GraphicsMatrixKey(.Ascii,                         .LowerLeftCorner     ) : 0x002b,
      GraphicsMatrixKey(.Ascii,                         .UpperRightCorner    ) : 0x002b,
@@ -205,40 +205,31 @@ private let __graphicsMatrix: Dictionary<GraphicsMatrixKey, wchar_t> =
      GraphicsMatrixKey(.Double,                        .RightVerticalLine   ) : 0x2551,
      GraphicsMatrixKey(.Double,                        .Plus                ) : 0x256c]
 
-private var _graphicsMatrix = Dictionary<GraphicsMatrixKey, ComplexCharacter>()
-
-private var _initialised = false
-
 public struct BoxDrawing {
     private let _boxDrawingType: BoxDrawingType
+    private var _boxDrawingGraphic = Dictionary<BoxDrawingGraphic, ComplexCharacter>()
 
     public init(_ boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
                 attributes:       Attributes = .Normal,
                 colourPair:       ColourPair = ColourPair()) throws {
         _boxDrawingType = boxDrawingType
 
-        if (!_initialised) {
-            try BoxDrawingType._allValues.forEach { boxDrawingType in
-                try BoxDrawingGraphic._allValues.forEach { boxDrawingGraphic in
-                    let matrixKey = GraphicsMatrixKey(boxDrawingType, boxDrawingGraphic)
+        switch _boxDrawingType {
+            case .UserDefined(let userdefined):
+                _boxDrawingGraphic = userdefined.graphic
+            default:
+                try BoxDrawingGraphic._allValues.forEach {
+                    let matrixKey = GraphicsMatrixKey(_boxDrawingType, $0)
 
-                    _graphicsMatrix[matrixKey] = try ComplexCharacter(__graphicsMatrix[matrixKey]!,
-                                                                      attributes: attributes,
-                                                                      colourPair: colourPair)
+                    _boxDrawingGraphic[$0] = try ComplexCharacter(_graphicsMatrix[matrixKey]!,
+                                                                  attributes: attributes,
+                                                                  colourPair: colourPair)
                 }
-            }
-
-            _initialised = true
         }
     }
 
     public func graphic(_ graphic: BoxDrawingGraphic) -> ComplexCharacter {
-        switch _boxDrawingType {
-            case .UserDefined(let userDefined):
-                return userDefined.graphic[graphic]!
-            default:
-                return _graphicsMatrix[GraphicsMatrixKey(_boxDrawingType, graphic)]!
-        }
+        return _boxDrawingGraphic[graphic]!
     }
 
     internal func _graphic(_ graphic: BoxDrawingGraphic) -> cchar_t {
