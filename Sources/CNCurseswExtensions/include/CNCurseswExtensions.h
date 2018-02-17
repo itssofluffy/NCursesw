@@ -31,6 +31,7 @@
 #include <ncurses.h>
 
 bool ncursesw_setup();
+bool valid_capability(const char *);
 
 attr_t wa_attributes;            // attributes
 attr_t wa_normal;                // normal attribute

@@ -28,6 +28,8 @@ public struct ColourPalette {
         self.foreground = foreground
         self.background = background
     }
+
+    public static let `default` = ColourPalette(foreground: .Default, background: .Default)
 }
 
 extension ColourPalette: Equatable {

@@ -1,5 +1,5 @@
 /*
-    CNCurseswExtensions.c
+    ncursesw_setup.c
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -22,7 +22,7 @@
 
 #include "include/CNCurseswExtensions.h"
 
-attr_t ncurses_bits(unsigned, int);
+attr_t  ncurses_bits(unsigned, int);
 mmask_t ncurses_mouse_mask(mmask_t, mmask_t);
 
 bool _initialised = false;
@@ -79,21 +79,20 @@ bool ncursesw_setup() {
         button5_double_clicked = ncurses_mouse_mask(5, NCURSES_DOUBLE_CLICKED);   // Equivalent of complex macro BUTTON5_DOUBLE_CLICKED
         button5_triple_clicked = ncurses_mouse_mask(5, NCURSES_TRIPLE_CLICKED);   // Equivalent of complex macro BUTTON5_TRIPLE_CLICKED
 
-        button_shift           = ncurses_mouse_mask(6, 0002L);                    // Equivalent of complex macro BUTTON_SHIFT
-        button_ctrl            = ncurses_mouse_mask(6, 0001L);                    // Equivalent of complex macro BUTTON_CTRL
-        button_alt             = ncurses_mouse_mask(6, 0004L);                    // Equivalent of complex macro BUTTON_ALT
-        report_mouse_position  = ncurses_mouse_mask(6, 0010L);                    // Equivalent of complex macro REPORT_MOUSE_POSITION
+	mmask_t b = 6;
 #else
         button1_reserved_event = ncurses_mouse_mask(1, NCURSES_RESERVED_EVENT);   // Equivalent of complex macro BUTTON1_RESERVED_EVENT
         button2_reserved_event = ncurses_mouse_mask(2, NCURSES_RESERVED_EVENT);   // Equivalent of complex macro BUTTON2_RESERVED_EVENT
         button3_reserved_event = ncurses_mouse_mask(3, NCURSES_RESERVED_EVENT);   // Equivalent of complex macro BUTTON3_RESERVED_EVENT
         button4_reserved_event = ncurses_mouse_mask(4, NCURSES_RESERVED_EVENT);   // Equivalent of complex macro BUTTON4_RESERVED_EVENT
 
-        button_shift           = ncurses_mouse_mask(5, 0002L);                    // Equivalent of complex macro BUTTON_SHIFT
-        button_ctrl            = ncurses_mouse_mask(5, 0001L);                    // Equivalent of complex macro BUTTON_CTRL
-        button_alt             = ncurses_mouse_mask(5, 0004L);                    // Equivalent of complex macro BUTTON_ALT
-        report_mouse_position  = ncurses_mouse_mask(5, 0010L);                    // Equivalent of complex macro REPORT_MOUSE_POSITION
+	mmask_t b = 5;
 #endif
+
+        button_shift           = ncurses_mouse_mask(b, 0002L);                    // Equivalent of complex macro BUTTON_SHIFT
+        button_ctrl            = ncurses_mouse_mask(b, 0001L);                    // Equivalent of complex macro BUTTON_CTRL
+        button_alt             = ncurses_mouse_mask(b, 0004L);                    // Equivalent of complex macro BUTTON_ALT
+        report_mouse_position  = ncurses_mouse_mask(b, 0010L);                    // Equivalent of complex macro REPORT_MOUSE_POSITION
 
         all_mouse_events       = report_mouse_position - 1;                       // Equivalent of complex macro ALL_MOUSE_EVENTS
 
@@ -103,14 +102,16 @@ bool ncursesw_setup() {
     return _initialised;
 };
 
+// Equivalent of ncurses complex macro NCURSES_BITS
 attr_t ncurses_bits(unsigned mask, int shift) {
-    return (chtype)(mask) << ((shift + NCURSES_ATTR_SHIFT));
+    return (chtype)(mask) << (shift + NCURSES_ATTR_SHIFT);
 }
 
+// Equivalent of ncurses complex macro NCURSES_MOUSE_MASK
 mmask_t ncurses_mouse_mask(mmask_t b, mmask_t m) {
 #if NCURSES_MOUSE_VERSION > 1
-    return ((m) << (((b) - 1) * 5));
+    return m << ((b - 1) * 5);
 #else
-    return ((m) << (((b) - 1) * 6));
+    return m << ((b - 1) * 6);
 #endif
-};
+}

@@ -57,8 +57,10 @@ public class Terminal {
 // http://invisible-island.net/ncurses/man/ncurses.3x.html#h3-Initialization
 extension Terminal {
     public class func initialiseWindows() throws -> NCurseswWindow {
+        precondition(NCursesw.ncursesVersion >= SemanticVersion(rawValue: "6.1.20180210")!, "ncurses version must be 6.1 patch 20180210 or greater")
+
         guard (!initialised) else {
-            throw NCurseswError.WindowsAlreadyInitialised
+            throw NCurseswError.AlreadyInitialised
         }
 
         locale = String(cString: setlocale(LC_ALL, ""))
@@ -207,12 +209,9 @@ extension Terminal {
     }
 
     public class func ripOff(from: Orientation, lines: Int, initialiser: @escaping RipOffWindowHandler) throws {
+        precondition(numberOfRipOffWindows < maximumRipOffWindows, "cannot rip off more than \(maximumRipOffWindows) regions")
         precondition(!initialised, "must be called before Terminal.initialiseWindows()")
         precondition(lines > 0, "lines must be greater than 0")
-
-        guard (numberOfRipOffWindows < maximumRipOffWindows) else {
-            throw NCurseswError.MaxRipOffLines(count: maximumRipOffWindows)
-        }
 
         var lineCount = CInt(lines)
 
@@ -300,8 +299,54 @@ extension Terminal {
 // http://invisible-island.net/ncurses/man/curs_refresh.3x.html
 extension Terminal {
     public class func doUpdate() throws {
+        precondition(initialised, "Terminal.initialiseWindows() not called")
+
         guard (doupdate() == OK) else {
             throw NCurseswError.DoUpdate
         }
+    }
+}
+
+extension Terminal {
+    public class var hasStandout: Bool {
+        precondition(initialised, "Terminal.initialiseWindows() not called")
+
+        return valid_capability("smso")
+    }
+
+    public class var hasUnderline: Bool {
+        precondition(initialised, "Terminal.initialiseWindows() not called")
+
+        return valid_capability("smul")
+    }
+
+    public class var hasReverse: Bool {
+        precondition(initialised, "Terminal.initialiseWindows() not called")
+
+        return valid_capability("rev")
+    }
+
+    public class var hasBlink: Bool {
+        precondition(initialised, "Terminal.initialiseWindows() not called")
+
+        return valid_capability("blink")
+    }
+
+    public class var hasDim: Bool {
+        precondition(initialised, "Terminal.initialiseWindows() not called")
+
+        return valid_capability("dim")
+    }
+
+    public class var hasBold: Bool {
+        precondition(initialised, "Terminal.initialiseWindows() not called")
+
+        return valid_capability("bold")
+    }
+
+    public class var hasInvisible: Bool {
+        precondition(initialised, "Terminal.initialiseWindows() not called")
+
+        return valid_capability("invis")
     }
 }

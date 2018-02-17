@@ -22,7 +22,7 @@
 
 public struct Size {
     public let height: Int
-    public let width: Int
+    public let width:  Int
 
     public init(height: Int, width: Int) {
         self.height = height

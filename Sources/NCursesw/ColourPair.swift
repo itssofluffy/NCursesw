@@ -21,72 +21,89 @@
 */
 
 import CNCursesw
+import ISFLibrary
 
-private var _pairNumber:  CInt = 1
-private var _colourPairs: Dictionary<CInt, ColourPair> = [0 : ColourPair()]
-
-public func resetColourPairs() {
-    reset_color_pairs()
-
-    _pairNumber = 1
-    _colourPairs.removeAll()
-    _colourPairs[0] = ColourPair()
-}
+public private(set) var colourPairs: Dictionary<CInt, ColourPair> = [0 : ColourPair()]
 
 internal func _getColourPair(with: CShort) throws -> ColourPair {
     let pair = CInt(with)
 
-    if let colourPair = _colourPairs[pair] {
+    if let colourPair = colourPairs[pair] {
         return colourPair
     }
 
     throw NCurseswError.ColourPairNotDefined(pair: pair)
 }
 
-public func getColourPair(with palette: ColourPalette) -> ColourPair? {
-    for pair in _colourPairs {
-        if (pair.value.palette == palette) {
-            return pair.value
-        }
-    }
+public func resetColourPairs() {
+    precondition(Terminal.initialised, "Terminal.initialiseWindows() not called")
 
-    return nil
+    reset_color_pairs()
+
+    colourPairs.removeAll()
+    colourPairs[0] = ColourPair()
+}
+
+public func getColourPair(with palette: ColourPalette) -> ColourPair? {
+    precondition(Terminal.initialised, "Terminal.initialiseWindows() not called")
+
+    let pairNumber = find_pair(palette.foreground.rawValue, palette.background.rawValue)
+
+    return (pairNumber == ERR) ?  nil : colourPairs[pairNumber]
 }
 
 public func getColourPair(with attribute: attr_t) -> ColourPair? {
-    if let colourPair = _colourPairs[PAIR_NUMBER(CInt(attribute))] {
+    if let colourPair = colourPairs[PAIR_NUMBER(CInt(attribute))] {
         return colourPair
     }
 
     return nil
 }
 
-public struct ColourPair {
+public class ColourPair {
+    private var _free:  Bool
     public let palette: ColourPalette
 
     public init() {
+        _free = false
+        palette = ColourPalette.default
         rawValue = 0
-        palette = ColourPalette(foreground: .Default, background: .Default)
     }
 
-    public init(palette: ColourPalette) throws {
-        if let colourPair = getColourPair(with: palette) {
-            rawValue = colourPair.rawValue
-            self.palette = palette
+    public init(palette: ColourPalette, free: Bool = false) throws {
+        precondition(Terminal.initialised, "Terminal.initialiseWindows() not called")
+
+        if (palette == ColourPalette.default) {
+            precondition(!free, "default colour pair cannot be freed")
+
+            _free = false
+            self.palette = ColourPalette.default
+            rawValue = 0
         } else {
-            guard (_pairNumber <= Terminal.colourPairs) else {
-                throw NCurseswError.ColourPair
+            let pairNumber = alloc_pair(palette.foreground.rawValue, palette.background.rawValue)
+
+            guard (pairNumber != ERR) else {
+                throw NCurseswError.AllocatePair(palette: palette)
             }
 
-            guard (init_extended_pair(_pairNumber, palette.foreground.rawValue, palette.background.rawValue) == OK) else {
-                throw NCurseswError.InitialisePair(pair: _pairNumber, palette: palette)
-            }
-
-            rawValue = _pairNumber
+            _free = free
             self.palette = palette
+            rawValue = pairNumber
 
-            _colourPairs[_pairNumber] = self
-            _pairNumber = _pairNumber + 1
+            colourPairs[pairNumber] = self
+        }
+    }
+
+    deinit {
+        if (_free) {
+            wrapper(do: {
+                        guard (free_pair(self.rawValue) == OK) else {
+                            throw NCurseswError.FreePair(pair: self.rawValue)
+                        }
+                    },
+                    catch: { failure in
+                        ncurseswErrorLogger(failure)
+                    })
         }
     }
 

@@ -25,8 +25,7 @@ import Foundation
 import ISFLibrary
 
 public enum NCurseswError: Error {
-    case WindowsAlreadyInitialised
-    case WindowsNotInitialised
+    case AlreadyInitialised
     case AssumeDefaultColours
     case NCurseswSetup
 
@@ -49,7 +48,6 @@ public enum NCurseswError: Error {
     case ResetShellMode
     case ResetTTY
     case SaveTTY
-    case MaxRipOffLines(count: Int)
     case RipOffLine(from: Orientation, lines: Int)
     case SetCursor(to: CursorType)
     case Beep
@@ -97,18 +95,20 @@ public enum NCurseswError: Error {
     case InsertDelete(lines: Int)
     case DeleteLine
     case GetAttributes
-    case SetAttributes(attributes: Attributes, colourPair: ColourPair)
+    case AttributesTo(windowAttributes: WindowAttributes)
     case AttributesOn(attributes: Attributes)
     case AttributesOff(attributes: Attributes)
     case SetColour(colourPair: ColourPair)
-    case ChangeAttributes(count: Int, windowAttributes: WindowAttributes)
+    case WindowAttributesOn(windowAttributes: WindowAttributes)
+    case WindowAttributesOff(windowAttributes: WindowAttributes)
     case TouchWindow
     case TouchLine(start: Int, count: Int)
     case UnTouchWindow
     case WTouchLine(start: Int, count: Int, change: Bool)
 
     case StartColours
-    case InitialisePair(pair: CInt, palette: ColourPalette)
+    case AllocatePair(palette: ColourPalette)
+    case FreePair(pair: CInt)
     case InitialiseColour(colour: Colour, rgb: RGB)
     case ColourContent(colour: Colour)
 
@@ -137,10 +137,8 @@ extension NCurseswError: CustomStringConvertible {
         let errorCode = "failed: ERR (#\(ERR)"
 
         switch self {
-            case .WindowsAlreadyInitialised:
-                return "windows already initialised"
-            case .WindowsNotInitialised:
-                return "windows not initialised"
+            case .AlreadyInitialised:
+                return "already initialised"
             case .AssumeDefaultColours:
                 return "assume_default_colors(-1, -1) \(errorCode)"
             case .NCurseswSetup:
@@ -184,8 +182,6 @@ extension NCurseswError: CustomStringConvertible {
                 return "resetty() \(errorCode)"
             case .SaveTTY:
                 return "savetty() \(errorCode)"
-            case .MaxRipOffLines(let count):
-                return "Maximum number of \(count) rip-off lines reached"
             case .RipOffLine(let from, let lines):
                 return "ripoffline(\(from),\(lines)) \(errorCode)"
             case .SetCursor(let to):
@@ -279,16 +275,18 @@ extension NCurseswError: CustomStringConvertible {
                 return "wdeleteln() \(errorCode)"
             case .GetAttributes:
                 return "wattr_get() \(errorCode)"
-            case .SetAttributes(let attributes, let colourPair):
-                return "wattr_set(\(attributes),\(colourPair)) \(errorCode)"
+            case .AttributesTo(let windowAttributes):
+                return "wattr_set(\(windowAttributes)) \(errorCode)"
             case .AttributesOn(let attributes):
                 return "wattr_on(\(attributes)) \(errorCode)"
             case .AttributesOff(let attributes):
                 return "wattr_off(\(attributes)) \(errorCode)"
             case .SetColour(let colourPair):
                 return "wcolor_set(\(colourPair)) \(errorCode)"
-            case .ChangeAttributes(let count, let windowAttributes):
-                return "wchgat(\(count),\(windowAttributes)) \(errorCode)"
+            case .WindowAttributesOn(let windowAttributes):
+                return "wattr_on(\(windowAttributes)) \(errorCode)"
+            case .WindowAttributesOff(let windowAttributes):
+                return "wattr_off(\(windowAttributes)) \(errorCode)"
             case .TouchWindow:
                 return "touchwin() \(errorCode)"
             case .TouchLine(let start, let count):
@@ -300,8 +298,10 @@ extension NCurseswError: CustomStringConvertible {
 
             case .StartColours:
                 return "start_colour() \(errorCode)"
-            case .InitialisePair(let pair, let palette):
-                return "init_pair(\(pair),\(palette)) \(errorCode)"
+            case .AllocatePair(let palette):
+                return "alloc_pair(\(palette)) \(errorCode)"
+            case .FreePair(let pair):
+                return "free_pair(\(pair)) \(errorCode)"
             case .InitialiseColour(let colour, let rgb):
                 return "init_color(\(colour),\(rgb)) \(errorCode)"
             case .ColourContent(let colour):

@@ -589,6 +589,18 @@ extension NCurseswWindow {
         return try getAttributes()
     }
 
+    public func setAttributes(to windowAttributes: WindowAttributes) throws {
+        guard (wattr_set(_handle, windowAttributes.attributes.rawValue, CShort(windowAttributes.colourPair.rawValue), nil) == OK) else {
+            throw NCurseswError.AttributesTo(windowAttributes: windowAttributes)
+        }
+    }
+
+    public func setAttributes(to windowAttributes: WindowAttributes, origin: Coordinate) throws {
+        cursor = origin
+
+        try setAttributes(to: windowAttributes)
+    }
+
     public func setAttributes(on attributes: Attributes) throws {
         guard (wattr_on(_handle, attributes.rawValue, nil) == OK) else {
             throw NCurseswError.AttributesOn(attributes: attributes)
@@ -603,7 +615,7 @@ extension NCurseswWindow {
 
     public func setAttributes(off attributes: Attributes) throws {
         guard (wattr_off(_handle, attributes.rawValue, nil) == OK) else {
-            throw NCurseswError.AttributesOn(attributes: attributes)
+            throw NCurseswError.AttributesOff(attributes: attributes)
         }
     }
 
@@ -623,6 +635,44 @@ extension NCurseswWindow {
         cursor = origin
 
         try setColour(to: colourPair)
+    }
+}
+
+extension NCurseswWindow {
+    public func setAttributes(on windowAttributes: WindowAttributes) throws {
+        var colourPair = windowAttributes.colourPair.rawValue
+
+        try withUnsafePointer(to: &colourPair, { (ptr: UnsafePointer<CInt>) in
+            let vptr = UnsafeMutableRawPointer(mutating: ptr)
+
+            guard (wattr_on(_handle, windowAttributes.attributes.rawValue, vptr) == OK) else {
+                throw NCurseswError.WindowAttributesOn(windowAttributes: windowAttributes)
+            }
+        })
+    }
+
+    public func setAttributes(on windowAttributes: WindowAttributes, origin: Coordinate) throws {
+        cursor = origin
+
+        try setAttributes(on: windowAttributes)
+    }
+
+    public func setAttributes(off windowAttributes: WindowAttributes) throws {
+        var colourPair = windowAttributes.colourPair.rawValue
+
+        try withUnsafePointer(to: &colourPair, { (ptr: UnsafePointer<CInt>) in
+            let vptr = UnsafeMutableRawPointer(mutating: ptr)
+
+            guard (wattr_off(_handle, windowAttributes.attributes.rawValue, vptr) == OK) else {
+                throw NCurseswError.WindowAttributesOn(windowAttributes: windowAttributes)
+            }
+        })
+    }
+
+    public func setAttributes(off windowAttributes: WindowAttributes, origin: Coordinate) throws {
+        cursor = origin
+
+        try setAttributes(off: windowAttributes)
     }
 }
 

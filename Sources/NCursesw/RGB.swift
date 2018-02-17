@@ -21,9 +21,9 @@
 */
 
 public struct RGB {
-    public let red: Int
+    public let red:   Int
     public let green: Int
-    public let blue: Int
+    public let blue:  Int
 
     public init(red: Int, green: Int, blue: Int) throws {
         guard ((red >= 0 && red <= 1000) && (green >= 0 && green <= 1000) && (blue >= 0 && blue <= 1000)) else {

@@ -26,9 +26,7 @@ import ISFLibrary
 public class Window: NCurseswWindow, Moveable {
     // http://invisible-island.net/ncurses/man/curs_window.3x.html
     public init(size: Size, origin: Coordinate) throws {
-        guard (Terminal.initialised) else {
-            throw NCurseswError.WindowsNotInitialised
-        }
+        precondition(Terminal.initialised, "Terminal.initialiseWindows() not called")
 
         guard let handle = newwin(size._height, size._width, origin._y, origin._x) else {
             throw NCurseswError.NewWindow(size: size, origin: origin)

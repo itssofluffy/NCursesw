@@ -34,7 +34,7 @@ public struct ComplexCharacter {
     public let attributes: Attributes
     public let colourPair: ColourPair
 
-    internal var _rawValue: cchar_t
+    internal private(set) var _rawValue: cchar_t
 
     public init(_ wideCharacter: wchar_t, attributes: Attributes = .Normal, colourPair: ColourPair = ColourPair()) throws {
         _rawValue = cchar_t()

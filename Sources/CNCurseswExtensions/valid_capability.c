@@ -1,5 +1,5 @@
 /*
-    NCurseswLogger.swift
+    valid_capability.c
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -20,8 +20,10 @@
     IN THE SOFTWARE.
 */
 
-import ISFLibrary
+#include "include/CNCurseswExtensions.h"
 
-/// The logger to use for un-throwable errors, this can be overriden with the
-/// same signature as ISFLibrary.errorLogger
-public var ncurseswErrorLogger = errorLogger
+bool valid_capability(const char *name) {
+    char *value = tigetstr(name);
+
+    return (value != 0 && value != (char *) -1) ? true : false;
+}

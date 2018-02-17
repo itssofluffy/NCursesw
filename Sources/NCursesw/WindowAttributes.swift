@@ -23,4 +23,9 @@
 public struct WindowAttributes {
     public let attributes: Attributes
     public let colourPair: ColourPair
+
+    public init(attributes: Attributes, colourPair: ColourPair) {
+        self.attributes = attributes
+        self.colourPair = colourPair
+    }
 }

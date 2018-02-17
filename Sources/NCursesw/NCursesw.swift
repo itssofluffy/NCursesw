@@ -20,6 +20,10 @@
     IN THE SOFTWARE.
 */
 
+import CNCursesw
+import ISFLibrary
+import Foundation
+
 internal func _ncurseswBool(_ value: Bool) -> CInt {
     return (value) ? 1 : 0
 }
@@ -30,4 +34,10 @@ internal func _ncurseswBool(_ value: CInt) -> Bool {
 
 internal var _includeRGBs: Bool {
     return (Terminal.coloursStarted && Terminal.canChangeColours)
+}
+
+public var ncursesVersion: SemanticVersion {
+    let version = String(cString: curses_version()).components(separatedBy: CharacterSet(charactersIn: " "))
+
+    return SemanticVersion(rawValue: version[1])!
 }

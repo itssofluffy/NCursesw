@@ -42,13 +42,14 @@ do {
 
         let origin = Coordinate(y: 1, x: 1)
 
-        try window.setColour(to: ColourPair(palette: ColourPalette(foreground: .Red, background: windowBackground)), origin: origin)
-        try window.setAttributes(on: .Bold, origin: origin)
+        try window.setAttributes(to: WindowAttributes(attributes: .Bold,
+                                                      colourPair: ColourPair(palette: ColourPalette(foreground: .Red,
+                                                                                                    background: windowBackground))),
+                                 origin: origin)
 
         try window.print(string: "\(window.size)", origin: origin)
 
-        try window.setAttributes(off: .Bold)
-        try window.setColour(to: windowColourPair)
+        try window.setAttributes(off: WindowAttributes(attributes: .Bold, colourPair: windowColourPair))
 
         try window.print(character: BoxDrawing(boxDrawingType).graphic(.UpperLeftCorner), origin: Coordinate(y: 2, x: 1))
 
