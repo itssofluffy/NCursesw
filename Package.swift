@@ -33,11 +33,11 @@ let package = Package(
         .library(
             name: "NCursesw",
             type: .static,
-            targets: ["NCursesw"]),
+            targets: ["NCursesw", "NCurseswPlus"]),
         .library(
             name: "NCursesw",
             type: .dynamic,
-            targets: ["NCursesw"])
+            targets: ["NCursesw", "NCurseswPlus"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -53,6 +53,9 @@ let package = Package(
         .target(
             name: "NCursesw",
             dependencies: ["CNCurseswExtensions", "ISFLibrary"]),
+        .target(
+            name: "NCurseswPlus",
+            dependencies: ["NCursesw"]),
         .testTarget(
             name: "NCurseswTests",
             dependencies: ["NCursesw"]),

@@ -80,8 +80,8 @@ public enum NCurseswError: Error {
     case SetBackground(character: ComplexCharacter)
     case GetBackground
     case Border(boxDrawingType: BoxDrawingType, attributes: Attributes, colourPair: ColourPair)
-    case HorizontalLine(boxDrawingType: BoxDrawingType, attributes: Attributes, colourPair: ColourPair, length: Int)
-    case VerticalLine(boxDrawingType: BoxDrawingType, attributes: Attributes, colourPair: ColourPair, length: Int)
+    case HorizontalLine(boxDrawingGraphic: ComplexCharacter, length: Int)
+    case VerticalLine(boxDrawingGraphic: ComplexCharacter, length: Int)
     case PutCharacter(character: ComplexCharacter)
     case EchoCharacter(character: ComplexCharacter)
     case InsertCharacter(character: ComplexCharacter)
@@ -245,10 +245,10 @@ extension NCurseswError: CustomStringConvertible {
                 return "wgetbkgrnd() \(errorCode)"
             case .Border(let boxDrawingType, let attributes, let colourPair):
                 return "wborder_set(\(boxDrawingType),\(attributes),\(colourPair)) \(errorCode)"
-            case .HorizontalLine(let boxDrawingType, let attributes, let colourPair, let length):
-                return "whline_set(\(boxDrawingType),\(attributes),\(colourPair),\(length)) \(errorCode)"
-            case .VerticalLine(let boxDrawingType, let attributes, let colourPair, let length):
-                return "wvline_set(\(boxDrawingType),\(attributes),\(colourPair),\(length)) \(errorCode)"
+            case .HorizontalLine(let boxDrawingGraphic, let length):
+                return "whline_set(\(boxDrawingGraphic),\(length)) \(errorCode)"
+            case .VerticalLine(let boxDrawingGraphic, let length):
+                return "wvline_set(\(boxDrawingGraphic),\(length)) \(errorCode)"
             case .PutCharacter(let character):
                 return "wadd_ch(\(character)) \(errorCode)"
             case .EchoCharacter(let character):

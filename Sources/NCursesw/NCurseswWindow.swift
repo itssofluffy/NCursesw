@@ -260,19 +260,31 @@ extension NCurseswWindow {
         }
     }
 
+    public func horizontalLine(_ boxDrawingGraphic: ComplexCharacter, length: Int) throws {
+        var hl = boxDrawingGraphic._rawValue
+
+        guard (whline_set(_handle, &hl, CInt(length)) == OK) else {
+            throw NCurseswError.HorizontalLine(boxDrawingGraphic: boxDrawingGraphic, length: length)
+        }
+    }
+
+    public func horizontalLine(_ boxDrawingGraphic: ComplexCharacter, origin: Coordinate, length: Int) throws {
+        cursor = origin
+
+        try horizontalLine(boxDrawingGraphic, length: length)
+    }
+
     public func horizontalLine(_ boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
                                attributes: Attributes = .Normal,
                                colourPair: ColourPair = ColourPair(),
                                length: Int) throws {
-        var hl = try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair)._graphic(.HorizontalLine)
+        let hl = try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair).graphic(.HorizontalLine)
 
-        guard (whline_set(_handle, &hl, CInt(length)) == OK) else {
-            throw NCurseswError.HorizontalLine(boxDrawingType: boxDrawingType, attributes: attributes, colourPair: colourPair, length: length)
-        }
+        try horizontalLine(hl, length: length)
     }
 
-    public func horizontalLine(origin: Coordinate,
-                               _ boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
+    public func horizontalLine(_ boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
+                               origin: Coordinate,
                                attributes: Attributes = .Normal,
                                colourPair: ColourPair = ColourPair(),
                                length: Int) throws {
@@ -281,19 +293,31 @@ extension NCurseswWindow {
         try horizontalLine(boxDrawingType, length: length)
     }
 
+    public func verticalLine(_ boxDrawingGraphic: ComplexCharacter, length: Int) throws {
+        var vl = boxDrawingGraphic._rawValue
+
+        guard (wvline_set(_handle, &vl, CInt(length)) == OK) else {
+            throw NCurseswError.VerticalLine(boxDrawingGraphic: boxDrawingGraphic, length: length)
+        }
+    }
+
+    public func verticalLine(_ boxDrawingGraphic: ComplexCharacter, origin: Coordinate, length: Int) throws {
+        cursor = origin
+
+        try verticalLine(boxDrawingGraphic, length: length)
+    }
+
     public func verticalLine(_ boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
                              attributes: Attributes = .Normal,
                              colourPair: ColourPair = ColourPair(),
                              length: Int) throws {
-        var vl = try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair)._graphic(.VerticalLine)
+        let vl = try BoxDrawing(boxDrawingType, attributes: attributes, colourPair: colourPair).graphic(.HorizontalLine)
 
-        guard (wvline_set(_handle, &vl, CInt(length)) == OK) else {
-            throw NCurseswError.VerticalLine(boxDrawingType: boxDrawingType, attributes: attributes, colourPair: colourPair, length: length)
-        }
+        try verticalLine(vl, length: length)
     }
 
-    public func verticalLine(origin: Coordinate,
-                             _ boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
+    public func verticalLine(_ boxDrawingType: BoxDrawingType = .Light(detail: .Normal),
+                             origin: Coordinate,
                              attributes: Attributes = .Normal,
                              colourPair: ColourPair = ColourPair(),
                              length: Int) throws {
