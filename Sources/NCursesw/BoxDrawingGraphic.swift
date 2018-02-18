@@ -53,9 +53,10 @@ public enum BoxDrawingGraphic {
                                                                             .RightVerticalLine,
                                                                             .Plus)
 
-    // base rawValue on a 3x3 matrix of a box character so we can OR two values together
-    // to determine the corrected screen character. for example:
+    // base the rawValue on a 3x3 matrix of a box character so we can OR two raw values
+    // together (see transform function) to determine the corrected BoxDrawingGraphic to use.
     //
+    // for example:
     //                        000
     // UpperLeftCorner : ┌ :  011 : 0b000011010
     //                        010
@@ -139,6 +140,24 @@ public enum BoxDrawingGraphic {
             case .Plus:
                 return 0b010111010
         }
+    }
+
+    // optional because of UpperHorizontalLine, LowerHorizontalLine, LeftVerticalLine and RightVertivalLine
+    // will not transfor to a BoxDrawingGraphic we can deal with the predefined BoxGraphicType graphics,
+    // this can be overriden by setting remap to true (default).
+    public func transform(with: BoxDrawingGraphic, remap: Bool = true) -> BoxDrawingGraphic? {
+        func _rawValue(of boxDrawingGraphic: BoxDrawingGraphic) -> Int {
+            switch boxDrawingGraphic {
+                case .UpperHorizontalLine, .LowerHorizontalLine:
+                    return (remap) ? BoxDrawingGraphic.HorizontalLine.rawValue : boxDrawingGraphic.rawValue
+                case .LeftVerticalLine, .RightVerticalLine:
+                    return (remap) ? BoxDrawingGraphic.VerticalLine.rawValue : boxDrawingGraphic.rawValue
+                default:
+                    return boxDrawingGraphic.rawValue
+            }
+        }
+
+        return BoxDrawingGraphic(rawValue: _rawValue(of: self) | _rawValue(of: with))
     }
 }
 
