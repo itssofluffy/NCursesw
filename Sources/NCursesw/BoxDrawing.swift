@@ -34,7 +34,7 @@ private struct GraphicsMatrixKey {
 
 extension GraphicsMatrixKey: Hashable {
     var hashValue: Int {
-        return (type << 8) + graphic
+        return (type << 16) + graphic
     }
 }
 

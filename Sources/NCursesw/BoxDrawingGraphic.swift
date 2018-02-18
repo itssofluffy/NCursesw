@@ -53,38 +53,91 @@ public enum BoxDrawingGraphic {
                                                                             .RightVerticalLine,
                                                                             .Plus)
 
+    // base rawValue on a 3x3 matrix of a box character so we can OR two values together
+    // to determine the corrected screen character. for example:
+    //
+    //                        000
+    // UpperLeftCorner : ┌ :  011 : 0b000011010
+    //                        010
+    //
+    //                        000
+    // HorizontalLine  : ─ :  111 : 0b000111000
+    //                        000
+    //
+    //
+    // input 1 : 0b000011010
+    //           0b000111010 result : ┬ : UpperTee
+    // input 2 : 0b000111000
+    //
+    public init?(rawValue: Int) {
+        switch rawValue {
+            case 0b000011010:
+                self = .UpperLeftCorner
+            case 0b010011000:
+                self = .LowerLeftCorner
+            case 0b000110010:
+                self = .UpperRightCorner
+            case 0b010110000:
+                self = .LowerRightCorner
+            case 0b010110010:
+                self = .RightTee
+            case 0b010011010:
+                self = .LeftTee
+            case 0b010111000:
+                self = .LowerTee
+            case 0b000111010:
+                self = .UpperTee
+            case 0b000111000:
+                self = .HorizontalLine
+            case 0b111000000:
+                self = .UpperHorizontalLine
+            case 0b000000111:
+                self = .LowerHorizontalLine
+            case 0b010010010:
+                self = .VerticalLine
+            case 0b100100100:
+                self = .LeftVerticalLine
+            case 0b001001001:
+                self = .RightVerticalLine
+            case 0b010111010:
+                self = .Plus
+            default:
+                return nil
+        }
+    }
+
     public var rawValue: Int {
         switch self {
             case .UpperLeftCorner:
-                return 0
+                return 0b000011010
             case .LowerLeftCorner:
-                return 1
+                return 0b010011000
             case .UpperRightCorner:
-                return 2
+                return 0b000110010
             case .LowerRightCorner:
-                return 3
+                return 0b010110000
             case .RightTee:
-                return 4
+                return 0b010110010
             case .LeftTee:
-                return 5
+                return 0b010011010
             case .LowerTee:
-                return 6
+                return 0b010111000
             case .UpperTee:
-                return 7
+                return 0b000111010
             case .HorizontalLine:
-                return 8
+                return 0b000111000
             case .UpperHorizontalLine:
-                return 9
+                return 0b111000000
             case .LowerHorizontalLine:
-                return 10
+                return 0b000000111
             case .VerticalLine:
-                return 11
+                return 0b010010010
             case .LeftVerticalLine:
-                return 12
+                return 0b100100100
             case .RightVerticalLine:
-                return 13
+                return 0b001001001
             case .Plus:
-                return 14
+                return 0b010111010
         }
     }
 }

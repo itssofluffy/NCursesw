@@ -27,17 +27,6 @@ public enum BoxDrawingType {
     case Double
     case UserDefined(graphics: UserDefinedBoxDrawing)
 
-    internal static let _allValues = Array<BoxDrawingType>(arrayLiteral: .Ascii,
-                                                                         .Light(detail: .Normal),
-                                                                         .Light(detail: .DoubleDash),
-                                                                         .Light(detail: .TripleDash),
-                                                                         .Light(detail: .QuadrupleDash),
-                                                                         .Heavy(detail: .Normal),
-                                                                         .Heavy(detail: .DoubleDash),
-                                                                         .Heavy(detail: .TripleDash),
-                                                                         .Heavy(detail: .QuadrupleDash),
-                                                                         .Double)
-
     public var rawValue: Int {
         switch self {
             case .Ascii:
