@@ -45,165 +45,229 @@ extension GraphicsMatrixKey: Equatable {
 }
 
 private let _graphicsMatrix: Dictionary<GraphicsMatrixKey, wchar_t> =
-    [GraphicsMatrixKey(.Ascii,                         .UpperLeftCorner     ) : 0x002b,
-     GraphicsMatrixKey(.Ascii,                         .LowerLeftCorner     ) : 0x002b,
-     GraphicsMatrixKey(.Ascii,                         .UpperRightCorner    ) : 0x002b,
-     GraphicsMatrixKey(.Ascii,                         .LowerRightCorner    ) : 0x002b,
-     GraphicsMatrixKey(.Ascii,                         .RightTee            ) : 0x002b,
-     GraphicsMatrixKey(.Ascii,                         .LeftTee             ) : 0x002b,
-     GraphicsMatrixKey(.Ascii,                         .LowerTee            ) : 0x002b,
-     GraphicsMatrixKey(.Ascii,                         .UpperTee            ) : 0x002b,
-     GraphicsMatrixKey(.Ascii,                         .HorizontalLine      ) : 0x002d,
-     GraphicsMatrixKey(.Ascii,                         .UpperHorizontalLine ) : 0x002d,
-     GraphicsMatrixKey(.Ascii,                         .LowerHorizontalLine ) : 0x002d,
-     GraphicsMatrixKey(.Ascii,                         .VerticalLine        ) : 0x007c,
-     GraphicsMatrixKey(.Ascii,                         .LeftVerticalLine    ) : 0x007c,
-     GraphicsMatrixKey(.Ascii,                         .RightVerticalLine   ) : 0x007c,
-     GraphicsMatrixKey(.Ascii,                         .Plus                ) : 0x002b,
+    [GraphicsMatrixKey(.Ascii,                         .UpperLeftCorner     ) : 0x002b, // #
+     GraphicsMatrixKey(.Ascii,                         .LowerLeftCorner     ) : 0x002b, // #
+     GraphicsMatrixKey(.Ascii,                         .UpperRightCorner    ) : 0x002b, // #
+     GraphicsMatrixKey(.Ascii,                         .LowerRightCorner    ) : 0x002b, // #
+     GraphicsMatrixKey(.Ascii,                         .RightTee            ) : 0x002b, // #
+     GraphicsMatrixKey(.Ascii,                         .LeftTee             ) : 0x002b, // #
+     GraphicsMatrixKey(.Ascii,                         .LowerTee            ) : 0x002b, // #
+     GraphicsMatrixKey(.Ascii,                         .UpperTee            ) : 0x002b, // #
+     GraphicsMatrixKey(.Ascii,                         .HorizontalLine      ) : 0x002d, // -
+     GraphicsMatrixKey(.Ascii,                         .UpperHorizontalLine ) : 0x002d, // -
+     GraphicsMatrixKey(.Ascii,                         .LowerHorizontalLine ) : 0x002d, // -
+     GraphicsMatrixKey(.Ascii,                         .VerticalLine        ) : 0x007c, // |
+     GraphicsMatrixKey(.Ascii,                         .LeftVerticalLine    ) : 0x007c, // |
+     GraphicsMatrixKey(.Ascii,                         .RightVerticalLine   ) : 0x007c, // |
+     GraphicsMatrixKey(.Ascii,                         .Plus                ) : 0x002b, // +
 
-     GraphicsMatrixKey(.Light(detail: .Normal),        .UpperLeftCorner     ) : 0x250c,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .LowerLeftCorner     ) : 0x2514,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .UpperRightCorner    ) : 0x2510,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .LowerRightCorner    ) : 0x2518,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .RightTee            ) : 0x2524,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .LeftTee             ) : 0x251c,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .LowerTee            ) : 0x2534,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .UpperTee            ) : 0x252c,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .HorizontalLine      ) : 0x2500,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .UpperHorizontalLine ) : 0x2500,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .LowerHorizontalLine ) : 0x2500,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .VerticalLine        ) : 0x2502,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .LeftVerticalLine    ) : 0x2502,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .RightVerticalLine   ) : 0x2502,
-     GraphicsMatrixKey(.Light(detail: .Normal),        .Plus                ) : 0x253c,
+     GraphicsMatrixKey(.Light(detail: .Normal),        .UpperLeftCorner     ) : 0x250c, // ┌
+     GraphicsMatrixKey(.Light(detail: .Normal),        .LowerLeftCorner     ) : 0x2514, // └
+     GraphicsMatrixKey(.Light(detail: .Normal),        .UpperRightCorner    ) : 0x2510, // ┐
+     GraphicsMatrixKey(.Light(detail: .Normal),        .LowerRightCorner    ) : 0x2518, // ┘
+     GraphicsMatrixKey(.Light(detail: .Normal),        .RightTee            ) : 0x2524, // ┤
+     GraphicsMatrixKey(.Light(detail: .Normal),        .LeftTee             ) : 0x251c, // ├
+     GraphicsMatrixKey(.Light(detail: .Normal),        .LowerTee            ) : 0x2534, // ┴
+     GraphicsMatrixKey(.Light(detail: .Normal),        .UpperTee            ) : 0x252c, // ┬
+     GraphicsMatrixKey(.Light(detail: .Normal),        .HorizontalLine      ) : 0x2500, // ─
+     GraphicsMatrixKey(.Light(detail: .Normal),        .UpperHorizontalLine ) : 0x2500, // ─
+     GraphicsMatrixKey(.Light(detail: .Normal),        .LowerHorizontalLine ) : 0x2500, // ─
+     GraphicsMatrixKey(.Light(detail: .Normal),        .VerticalLine        ) : 0x2502, // │
+     GraphicsMatrixKey(.Light(detail: .Normal),        .LeftVerticalLine    ) : 0x2502, // │
+     GraphicsMatrixKey(.Light(detail: .Normal),        .RightVerticalLine   ) : 0x2502, // │
+     GraphicsMatrixKey(.Light(detail: .Normal),        .Plus                ) : 0x253c, // ┼
 
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .UpperLeftCorner     ) : 0x250c,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LowerLeftCorner     ) : 0x2514,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .UpperRightCorner    ) : 0x2510,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LowerRightCorner    ) : 0x2518,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .RightTee            ) : 0x2524,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LeftTee             ) : 0x251c,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LowerTee            ) : 0x2534,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .UpperTee            ) : 0x252c,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .HorizontalLine      ) : 0x254c,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .UpperHorizontalLine ) : 0x254c,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LowerHorizontalLine ) : 0x254c,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .VerticalLine        ) : 0x254e,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LeftVerticalLine    ) : 0x254e,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .RightVerticalLine   ) : 0x254e,
-     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .Plus                ) : 0x253c,
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .UpperLeftCorner     ) : 0x2577, // ╷
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .LowerLeftCorner     ) : 0x2576, // ╶
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .UpperRightCorner    ) : 0x2574, // ╴
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .LowerRightCorner    ) : 0x2575, // ╵
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .RightTee            ) : 0x2518, // ┘
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .LeftTee             ) : 0x2514, // └
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .LowerTee            ) : 0x2514, // └
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .UpperTee            ) : 0x2510, // ┐
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .HorizontalLine      ) : 0x2574, // ╴
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .UpperHorizontalLine ) : 0x2574, // ╴
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .LowerHorizontalLine ) : 0x2576, // ╶
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .VerticalLine        ) : 0x2577, // ╷
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .LeftVerticalLine    ) : 0x2577, // ╷
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .RightVerticalLine   ) : 0x2575, // ╵
+     GraphicsMatrixKey(.Light(detail: .LeftDash),      .Plus                ) : 0x2518, // ┘
 
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .UpperLeftCorner     ) : 0x250c,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LowerLeftCorner     ) : 0x2514,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .UpperRightCorner    ) : 0x2510,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LowerRightCorner    ) : 0x2518,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .RightTee            ) : 0x2524,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LeftTee             ) : 0x251c,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LowerTee            ) : 0x2534,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .UpperTee            ) : 0x252c,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .HorizontalLine      ) : 0x2504,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .UpperHorizontalLine ) : 0x2504,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LowerHorizontalLine ) : 0x2504,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .VerticalLine        ) : 0x2506,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LeftVerticalLine    ) : 0x2506,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .RightVerticalLine   ) : 0x2506,
-     GraphicsMatrixKey(.Light(detail: .TripleDash),    .Plus                ) : 0x253c,
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .UpperLeftCorner     ) : 0x2575, // ╵
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .LowerLeftCorner     ) : 0x2574, // ╴
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .UpperRightCorner    ) : 0x2576, // ╶
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .LowerRightCorner    ) : 0x2577, // ╷
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .RightTee            ) : 0x2510, // ┐
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .LeftTee             ) : 0x2514, // └
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .LowerTee            ) : 0x2518, // ┘
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .UpperTee            ) : 0x250c, // ┌
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .HorizontalLine      ) : 0x2576, // ╶
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .UpperHorizontalLine ) : 0x2576, // ╶
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .LowerHorizontalLine ) : 0x2574, // ╴
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .VerticalLine        ) : 0x2575, // ╵
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .LeftVerticalLine    ) : 0x2575, // ╵
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .RightVerticalLine   ) : 0x2577, // ╷
+     GraphicsMatrixKey(.Light(detail: .RightDash),     .Plus                ) : 0x2514, // └
 
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .UpperLeftCorner     ) : 0x250c,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LowerLeftCorner     ) : 0x2514,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .UpperRightCorner    ) : 0x2510,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LowerRightCorner    ) : 0x2518,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .RightTee            ) : 0x2524,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LeftTee             ) : 0x251c,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LowerTee            ) : 0x2534,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .UpperTee            ) : 0x252c,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .HorizontalLine      ) : 0x2508,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .UpperHorizontalLine ) : 0x2508,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LowerHorizontalLine ) : 0x2508,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .VerticalLine        ) : 0x250a,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LeftVerticalLine    ) : 0x250a,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .RightVerticalLine   ) : 0x250a,
-     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .Plus                ) : 0x253c,
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .UpperLeftCorner     ) : 0x250c, // ┌
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LowerLeftCorner     ) : 0x2514, // └
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .UpperRightCorner    ) : 0x2510, // ┐
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LowerRightCorner    ) : 0x2518, // ┘
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .RightTee            ) : 0x2524, // ┤
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LeftTee             ) : 0x251c, // ├
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LowerTee            ) : 0x2534, // ┴
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .UpperTee            ) : 0x252c, // ┬
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .HorizontalLine      ) : 0x254c, // ╌
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .UpperHorizontalLine ) : 0x254c, // ╌
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LowerHorizontalLine ) : 0x254c, // ╌
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .VerticalLine        ) : 0x254e, // ╎
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .LeftVerticalLine    ) : 0x254e, // ╎
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .RightVerticalLine   ) : 0x254e, // ╎
+     GraphicsMatrixKey(.Light(detail: .DoubleDash),    .Plus                ) : 0x253c, // ┼
 
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .UpperLeftCorner     ) : 0x250f,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LowerLeftCorner     ) : 0x2517,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .UpperRightCorner    ) : 0x2513,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LowerRightCorner    ) : 0x251b,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .RightTee            ) : 0x252b,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LeftTee             ) : 0x2523,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LowerTee            ) : 0x253b,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .UpperTee            ) : 0x2533,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .HorizontalLine      ) : 0x2501,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .UpperHorizontalLine ) : 0x2501,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LowerHorizontalLine ) : 0x2501,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .VerticalLine        ) : 0x2503,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LeftVerticalLine    ) : 0x2503,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .RightVerticalLine   ) : 0x2503,
-     GraphicsMatrixKey(.Heavy(detail: .Normal),        .Plus                ) : 0x254b,
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .UpperLeftCorner     ) : 0x250c, // ┌
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LowerLeftCorner     ) : 0x2514, // └
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .UpperRightCorner    ) : 0x2510, // ┐
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LowerRightCorner    ) : 0x2518, // ┘
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .RightTee            ) : 0x2524, // ┤
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LeftTee             ) : 0x251c, // ├
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LowerTee            ) : 0x2534, // ┴
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .UpperTee            ) : 0x252c, // ┬
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .HorizontalLine      ) : 0x2504, // ┄
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .UpperHorizontalLine ) : 0x2504, // ┄
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LowerHorizontalLine ) : 0x2504, // ┄
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .VerticalLine        ) : 0x2506, // ┆
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .LeftVerticalLine    ) : 0x2506, // ┆
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .RightVerticalLine   ) : 0x2506, // ┆
+     GraphicsMatrixKey(.Light(detail: .TripleDash),    .Plus                ) : 0x253c, // ┼
 
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .UpperLeftCorner     ) : 0x250f,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LowerLeftCorner     ) : 0x2517,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .UpperRightCorner    ) : 0x2513,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LowerRightCorner    ) : 0x251b,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .RightTee            ) : 0x252b,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LeftTee             ) : 0x2523,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LowerTee            ) : 0x253b,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .UpperTee            ) : 0x2533,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .HorizontalLine      ) : 0x254d,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .UpperHorizontalLine ) : 0x254d,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LowerHorizontalLine ) : 0x254d,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .VerticalLine        ) : 0x254f,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LeftVerticalLine    ) : 0x254f,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .RightVerticalLine   ) : 0x254f,
-     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .Plus                ) : 0x254b,
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .UpperLeftCorner     ) : 0x250c, // ┌
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LowerLeftCorner     ) : 0x2514, // └
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .UpperRightCorner    ) : 0x2510, // ┐
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LowerRightCorner    ) : 0x2518, // ┘
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .RightTee            ) : 0x2524, // ┤
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LeftTee             ) : 0x251c, // ├
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LowerTee            ) : 0x2534, // ┴
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .UpperTee            ) : 0x252c, // ┬
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .HorizontalLine      ) : 0x2508, // ┈
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .UpperHorizontalLine ) : 0x2508, // ┈
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LowerHorizontalLine ) : 0x2508, // ┈
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .VerticalLine        ) : 0x250a, // ┊
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .LeftVerticalLine    ) : 0x250a, // ┊
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .RightVerticalLine   ) : 0x250a, // ┊
+     GraphicsMatrixKey(.Light(detail: .QuadrupleDash), .Plus                ) : 0x253c, // ┼
 
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .UpperLeftCorner     ) : 0x250f,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LowerLeftCorner     ) : 0x2517,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .UpperRightCorner    ) : 0x2513,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LowerRightCorner    ) : 0x251b,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .RightTee            ) : 0x252b,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LeftTee             ) : 0x2523,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LowerTee            ) : 0x253b,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .UpperTee            ) : 0x2533,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .HorizontalLine      ) : 0x2505,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .UpperHorizontalLine ) : 0x2505,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LowerHorizontalLine ) : 0x2505,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .VerticalLine        ) : 0x2507,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LeftVerticalLine    ) : 0x2507,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .RightVerticalLine   ) : 0x2507,
-     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .Plus                ) : 0x254b,
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .UpperLeftCorner     ) : 0x250f, // ┏
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LowerLeftCorner     ) : 0x2517, // ┗
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .UpperRightCorner    ) : 0x2513, // ┓
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LowerRightCorner    ) : 0x251b, // ┛
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .RightTee            ) : 0x252b, // ┫
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LeftTee             ) : 0x2523, // ┣
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LowerTee            ) : 0x253b, // ┻
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .UpperTee            ) : 0x2533, // ┳
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .HorizontalLine      ) : 0x2501, // ━
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .UpperHorizontalLine ) : 0x2501, // ━
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LowerHorizontalLine ) : 0x2501, // ━
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .VerticalLine        ) : 0x2503, // ┃
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .LeftVerticalLine    ) : 0x2503, // ┃
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .RightVerticalLine   ) : 0x2503, // ┃
+     GraphicsMatrixKey(.Heavy(detail: .Normal),        .Plus                ) : 0x254b, // ╋
 
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .UpperLeftCorner     ) : 0x250f,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LowerLeftCorner     ) : 0x2517,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .UpperRightCorner    ) : 0x2513,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LowerRightCorner    ) : 0x251b,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .RightTee            ) : 0x252b,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LeftTee             ) : 0x2523,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LowerTee            ) : 0x253b,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .UpperTee            ) : 0x2533,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .HorizontalLine      ) : 0x2509,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .UpperHorizontalLine ) : 0x2509,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LowerHorizontalLine ) : 0x2509,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .VerticalLine        ) : 0x250b,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LeftVerticalLine    ) : 0x250b,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .RightVerticalLine   ) : 0x250b,
-     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .Plus                ) : 0x254b,
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .UpperLeftCorner     ) : 0x257b, // ╻
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .LowerLeftCorner     ) : 0x257a, // ╺
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .UpperRightCorner    ) : 0x2578, // ╸
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .LowerRightCorner    ) : 0x2579, // ╹
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .RightTee            ) : 0x251b, // ┛
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .LeftTee             ) : 0x2517, // ┗
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .LowerTee            ) : 0x2517, // ┗
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .UpperTee            ) : 0x2513, // ┓
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .HorizontalLine      ) : 0x2578, // ╸
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .UpperHorizontalLine ) : 0x2578, // ╸
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .LowerHorizontalLine ) : 0x257a, // ╺
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .VerticalLine        ) : 0x257b, // ╻
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .LeftVerticalLine    ) : 0x257b, // ╻
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .RightVerticalLine   ) : 0x2579, // ╹
+     GraphicsMatrixKey(.Heavy(detail: .LeftDash),      .Plus                ) : 0x251b, // ┛
 
-     GraphicsMatrixKey(.Double,                        .UpperLeftCorner     ) : 0x2554,
-     GraphicsMatrixKey(.Double,                        .LowerLeftCorner     ) : 0x255a,
-     GraphicsMatrixKey(.Double,                        .UpperRightCorner    ) : 0x2557,
-     GraphicsMatrixKey(.Double,                        .LowerRightCorner    ) : 0x255d,
-     GraphicsMatrixKey(.Double,                        .RightTee            ) : 0x2563,
-     GraphicsMatrixKey(.Double,                        .LeftTee             ) : 0x2560,
-     GraphicsMatrixKey(.Double,                        .LowerTee            ) : 0x2569,
-     GraphicsMatrixKey(.Double,                        .UpperTee            ) : 0x2566,
-     GraphicsMatrixKey(.Double,                        .HorizontalLine      ) : 0x2550,
-     GraphicsMatrixKey(.Double,                        .UpperHorizontalLine ) : 0x2550,
-     GraphicsMatrixKey(.Double,                        .LowerHorizontalLine ) : 0x2550,
-     GraphicsMatrixKey(.Double,                        .VerticalLine        ) : 0x2551,
-     GraphicsMatrixKey(.Double,                        .LeftVerticalLine    ) : 0x2551,
-     GraphicsMatrixKey(.Double,                        .RightVerticalLine   ) : 0x2551,
-     GraphicsMatrixKey(.Double,                        .Plus                ) : 0x256c]
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .UpperLeftCorner     ) : 0x2579, // ╹
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .LowerLeftCorner     ) : 0x2578, // ╸
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .UpperRightCorner    ) : 0x257a, // ╺
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .LowerRightCorner    ) : 0x257b, // ╻
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .RightTee            ) : 0x2513, // ┓
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .LeftTee             ) : 0x2517, // ┗
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .LowerTee            ) : 0x251b, // ┛
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .UpperTee            ) : 0x250f, // ┏
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .HorizontalLine      ) : 0x257a, // ╺
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .UpperHorizontalLine ) : 0x257a, // ╺
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .LowerHorizontalLine ) : 0x2578, // ╸
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .VerticalLine        ) : 0x2579, // ╹
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .LeftVerticalLine    ) : 0x2579, // ╹
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .RightVerticalLine   ) : 0x257b, // ╻
+     GraphicsMatrixKey(.Heavy(detail: .RightDash),     .Plus                ) : 0x2517, // ┗
+
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .UpperLeftCorner     ) : 0x250f, // ┏
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LowerLeftCorner     ) : 0x2517, // ┗
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .UpperRightCorner    ) : 0x2513, // ┓
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LowerRightCorner    ) : 0x251b, // ┛
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .RightTee            ) : 0x252b, // ┫
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LeftTee             ) : 0x2523, // ┣
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LowerTee            ) : 0x253b, // ┻
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .UpperTee            ) : 0x2533, // ┳
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .HorizontalLine      ) : 0x254d, // ╍
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .UpperHorizontalLine ) : 0x254d, // ╍
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LowerHorizontalLine ) : 0x254d, // ╍
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .VerticalLine        ) : 0x254f, // ╏
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .LeftVerticalLine    ) : 0x254f, // ╏
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .RightVerticalLine   ) : 0x254f, // ╏
+     GraphicsMatrixKey(.Heavy(detail: .DoubleDash),    .Plus                ) : 0x254b, // ╋
+
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .UpperLeftCorner     ) : 0x250f, // ┏
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LowerLeftCorner     ) : 0x2517, // ┗
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .UpperRightCorner    ) : 0x2513, // ┓
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LowerRightCorner    ) : 0x251b, // ┛
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .RightTee            ) : 0x252b, // ┫
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LeftTee             ) : 0x2523, // ┣
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LowerTee            ) : 0x253b, // ┻
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .UpperTee            ) : 0x2533, // ┳
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .HorizontalLine      ) : 0x2505, // ┅
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .UpperHorizontalLine ) : 0x2505, // ┅
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LowerHorizontalLine ) : 0x2505, // ┅
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .VerticalLine        ) : 0x2507, // ┇
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .LeftVerticalLine    ) : 0x2507, // ┇
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .RightVerticalLine   ) : 0x2507, // ┇
+     GraphicsMatrixKey(.Heavy(detail: .TripleDash),    .Plus                ) : 0x254b, // ╋
+
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .UpperLeftCorner     ) : 0x250f, // ┏
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LowerLeftCorner     ) : 0x2517, // ┗
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .UpperRightCorner    ) : 0x2513, // ┓
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LowerRightCorner    ) : 0x251b, // ┛
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .RightTee            ) : 0x252b, // ┫
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LeftTee             ) : 0x2523, // ┣
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LowerTee            ) : 0x253b, // ┻
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .UpperTee            ) : 0x2533, // ┳
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .HorizontalLine      ) : 0x2509, // ┉
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .UpperHorizontalLine ) : 0x2509, // ┉
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LowerHorizontalLine ) : 0x2509, // ┉
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .VerticalLine        ) : 0x250b, // ┋
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .LeftVerticalLine    ) : 0x250b, // ┋
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .RightVerticalLine   ) : 0x250b, // ┋
+     GraphicsMatrixKey(.Heavy(detail: .QuadrupleDash), .Plus                ) : 0x254b, // ╋
+
+     GraphicsMatrixKey(.Double,                        .UpperLeftCorner     ) : 0x2554, // ╔
+     GraphicsMatrixKey(.Double,                        .LowerLeftCorner     ) : 0x255a, // ╚
+     GraphicsMatrixKey(.Double,                        .UpperRightCorner    ) : 0x2557, // ╗
+     GraphicsMatrixKey(.Double,                        .LowerRightCorner    ) : 0x255d, // ╝
+     GraphicsMatrixKey(.Double,                        .RightTee            ) : 0x2563, // ╣
+     GraphicsMatrixKey(.Double,                        .LeftTee             ) : 0x2560, // ╠
+     GraphicsMatrixKey(.Double,                        .LowerTee            ) : 0x2569, // ╩
+     GraphicsMatrixKey(.Double,                        .UpperTee            ) : 0x2566, // ╦
+     GraphicsMatrixKey(.Double,                        .HorizontalLine      ) : 0x2550, // ═
+     GraphicsMatrixKey(.Double,                        .UpperHorizontalLine ) : 0x2550, // ═
+     GraphicsMatrixKey(.Double,                        .LowerHorizontalLine ) : 0x2550, // ═
+     GraphicsMatrixKey(.Double,                        .VerticalLine        ) : 0x2551, // ║
+     GraphicsMatrixKey(.Double,                        .LeftVerticalLine    ) : 0x2551, // ║
+     GraphicsMatrixKey(.Double,                        .RightVerticalLine   ) : 0x2551, // ║
+     GraphicsMatrixKey(.Double,                        .Plus                ) : 0x256c] // ╬
 
 public struct BoxDrawing {
     private let _boxDrawingType: BoxDrawingType

@@ -22,11 +22,15 @@
 
 public enum BoxDrawingTypeDetail {
     case Normal
+    case LeftDash
+    case RightDash
     case DoubleDash
     case TripleDash
     case QuadrupleDash
 
     public static let allValues = Array<BoxDrawingTypeDetail>(arrayLiteral: .Normal,
+                                                                            .LeftDash,
+                                                                            .RightDash,
                                                                             .DoubleDash,
                                                                             .TripleDash,
                                                                             .QuadrupleDash)
@@ -35,12 +39,16 @@ public enum BoxDrawingTypeDetail {
         switch self {
             case .Normal:
                 return 0
-            case .DoubleDash:
+            case .LeftDash:
                 return 1
-            case .TripleDash:
+            case .RightDash:
                 return 2
-            case .QuadrupleDash:
+            case .DoubleDash:
                 return 3
+            case .TripleDash:
+                return 4
+            case .QuadrupleDash:
+                return 5
         }
     }
 }
@@ -50,6 +58,10 @@ extension BoxDrawingTypeDetail: CustomStringConvertible {
         switch self {
             case .Normal:
                 return "normal"
+            case .LeftDash:
+                return "left dash"
+            case .RightDash:
+                return "right dash"
             case .DoubleDash:
                 return "double dash"
             case .TripleDash:

@@ -48,13 +48,13 @@ extension NCurseswWindow {
         try print(boxDrawingGraphics.graphic(.LowerRightCorner), origin: lowerRight)
 
         if (lineWidth > 1) {
-            try horizontalLine(boxDrawingGraphics.graphic(.HorizontalLine), origin: Coordinate(y: origin.y, x: origin.x + 1), length: lineWidth)
-            try horizontalLine(boxDrawingGraphics.graphic(.HorizontalLine), origin: Coordinate(y: lowerLeft.y, x: lowerLeft.x + 1), length: lineWidth)
+            try horizontalLine(boxDrawingGraphics.graphic(.UpperHorizontalLine), origin: Coordinate(y: origin.y, x: origin.x + 1), length: lineWidth)
+            try horizontalLine(boxDrawingGraphics.graphic(.LowerHorizontalLine), origin: Coordinate(y: lowerLeft.y, x: lowerLeft.x + 1), length: lineWidth)
         }
 
         if (lineHeight > 1) {
-            try verticalLine(boxDrawingGraphics.graphic(.VerticalLine), origin: Coordinate(y: origin.y + 1, x: origin.x), length: lineHeight)
-            try verticalLine(boxDrawingGraphics.graphic(.VerticalLine), origin: Coordinate(y: upperRight.y + 1, x: upperRight.x), length: lineHeight)
+            try verticalLine(boxDrawingGraphics.graphic(.LeftVerticalLine), origin: Coordinate(y: origin.y + 1, x: origin.x), length: lineHeight)
+            try verticalLine(boxDrawingGraphics.graphic(.RightVerticalLine), origin: Coordinate(y: upperRight.y + 1, x: upperRight.x), length: lineHeight)
         }
     }
 }

@@ -55,7 +55,7 @@ do {
         try window.setColour(to: windowColourPair)
 
         try window.print(BoxDrawing(boxDrawingType).graphic(.UpperLeftCorner), origin: Coordinate(y: 2, x: 1))
-        try window.box(boxDrawingType, origin: Coordinate(y: 5, x: 10), size: Size(height: 5, width: 20))
+        try window.box(BoxDrawingType.Heavy(detail: .LeftDash), origin: Coordinate(y: 5, x: 10), size: Size(height: 5, width: 20))
 
         try doRefresh()
 
