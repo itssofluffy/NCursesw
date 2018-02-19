@@ -1,5 +1,5 @@
 /*
-    valid_capability.c
+    valid_terminal_capability.c
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -22,7 +22,7 @@
 
 #include "include/CNCurseswExtensions.h"
 
-bool valid_capability(const char *name) {
+bool valid_terminal_capability(const char *name) {
     char *value = tigetstr(name);
 
     return (value != 0 && value != (char *) -1) ? true : false;

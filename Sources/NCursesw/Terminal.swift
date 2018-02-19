@@ -311,42 +311,42 @@ extension Terminal {
     public class var hasStandout: Bool {
         precondition(initialised, "Terminal.initialiseWindows() not called")
 
-        return valid_capability("smso")
+        return valid_terminal_capability("smso")
     }
 
     public class var hasUnderline: Bool {
         precondition(initialised, "Terminal.initialiseWindows() not called")
 
-        return valid_capability("smul")
+        return valid_terminal_capability("smul")
     }
 
     public class var hasReverse: Bool {
         precondition(initialised, "Terminal.initialiseWindows() not called")
 
-        return valid_capability("rev")
+        return valid_terminal_capability("rev")
     }
 
     public class var hasBlink: Bool {
         precondition(initialised, "Terminal.initialiseWindows() not called")
 
-        return valid_capability("blink")
+        return valid_terminal_capability("blink")
     }
 
     public class var hasDim: Bool {
         precondition(initialised, "Terminal.initialiseWindows() not called")
 
-        return valid_capability("dim")
+        return valid_terminal_capability("dim")
     }
 
     public class var hasBold: Bool {
         precondition(initialised, "Terminal.initialiseWindows() not called")
 
-        return valid_capability("bold")
+        return valid_terminal_capability("bold")
     }
 
     public class var hasInvisible: Bool {
         precondition(initialised, "Terminal.initialiseWindows() not called")
 
-        return valid_capability("invis")
+        return valid_terminal_capability("invis")
     }
 }

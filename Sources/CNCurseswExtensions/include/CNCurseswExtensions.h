@@ -22,8 +22,8 @@
 
 #define _XOPEN_SOURCE_EXTENDED 1
 
-#ifndef _CNCURSESW_H
-#define _CNCURSESW_H
+#ifndef _CNCURSESWEXTENSIONS_H
+#define _CNCURSESWEXTENSIONS_H
 
 #include <ctype.h>
 #include <locale.h>
@@ -31,7 +31,7 @@
 #include <ncurses.h>
 
 bool ncursesw_setup();
-bool valid_capability(const char *);
+bool valid_terminal_capability(const char *);
 
 attr_t wa_attributes;            // attributes
 attr_t wa_normal;                // normal attribute
