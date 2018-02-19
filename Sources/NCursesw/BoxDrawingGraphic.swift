@@ -53,8 +53,10 @@ public enum BoxDrawingGraphic {
                                                                             .RightVerticalLine,
                                                                             .Plus)
 
-    // base the rawValue on a 3x3 matrix of a box character so we can OR two raw values
+    // Base the rawValue on a 3x3 matrix of a box character so we can OR two raw values
     // together (see transform function) to determine the corrected BoxDrawingGraphic to use.
+    // UpperHorizontalLine, LowerVerticalLine, LeftVerticalLine and RightVerticalLine have
+    // pseudo values to make them unique for rawValue purposes.
     //
     // for example:
     //                        000
@@ -70,6 +72,9 @@ public enum BoxDrawingGraphic {
     //           0b000111010 result : ┬ : UpperTee
     // input 2 : 0b000111000
     //
+    // This will work with the exception of the origin of the graphic, if it is on the border
+    // of the window we will calculate a Plus with horizontal and vertical line types so we
+    // will need to take this into account.
     public init?(rawValue: Int) {
         switch rawValue {
             case 0b000011010:
@@ -142,8 +147,8 @@ public enum BoxDrawingGraphic {
         }
     }
 
-    // optional because of UpperHorizontalLine, LowerHorizontalLine, LeftVerticalLine and RightVertivalLine
-    // will not transfor to a BoxDrawingGraphic we can deal with the predefined BoxGraphicType graphics,
+    // optional because of UpperHorizontalLine, LowerHorizontalLine, LeftVerticalLine and RightVerticalLine
+    // may not transform to a BoxDrawingGraphic we can deal with the predefined BoxGraphicType graphics,
     // this can be overriden by setting remap to true (default).
     public func transform(with: BoxDrawingGraphic, remap: Bool = true) -> BoxDrawingGraphic? {
         func _rawValue(of boxDrawingGraphic: BoxDrawingGraphic) -> Int {

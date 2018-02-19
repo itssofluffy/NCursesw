@@ -79,12 +79,12 @@ public enum Colour {
                 self = .CYAN
             case COLOR_WHITE + 8:
                 self = .WHITE
-            default:
+            default: // >= 16
                 guard (rawValue > 255) else {
                     fatalError("colour rawValue of \(rawValue) can not be > 255")
                 }
 
-                self = .UserDefined(code: Int(rawValue) - 16)
+                self = .UserDefined(code: Int(rawValue - (COLOR_WHITE + 1 + 8)))
         }
     }
 
@@ -129,7 +129,7 @@ public enum Colour {
                     fatalError("user defined colour code must be between 0 and 239")
                 }
 
-                return CInt(code + Int(COLOR_WHITE) + 8)
+                return CInt(code + Int(COLOR_WHITE) + 1 + 8)
         }
     }
 

@@ -74,7 +74,7 @@ public class ColourPair {
         precondition(Terminal.initialised, "Terminal.initialiseWindows() not called")
 
         if (palette == ColourPalette.default) {
-            precondition(!free, "default colour pair cannot be freed")
+            precondition(!free, "default colour pair cannot be made free")
 
             _free = false
             self.palette = ColourPalette.default
@@ -100,6 +100,8 @@ public class ColourPair {
                         guard (free_pair(self.rawValue) == OK) else {
                             throw NCurseswError.FreePair(pair: self.rawValue)
                         }
+
+                        colourPairs.removeValue(forKey: self.rawValue)
                     },
                     catch: { failure in
                         ncurseswErrorLogger(failure)
