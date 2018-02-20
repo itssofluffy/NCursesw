@@ -4,7 +4,7 @@ import ISFLibrary
 
 do {
     do {
-        let window = try Terminal.initialiseWindows()
+        let window = try Terminal.initialise()
 
         let graphicsColourPair = try ColourPair(palette: ColourPalette(foreground: .Green, background: .Default))
 

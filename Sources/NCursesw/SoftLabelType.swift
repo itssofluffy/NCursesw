@@ -1,5 +1,5 @@
 /*
-    Window.swift
+    SoftLabelType.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -20,38 +20,22 @@
     IN THE SOFTWARE.
 */
 
-import CNCursesw
-import ISFLibrary
+public enum SoftLabelType {
+    case ThreeTwoThree      //  indicates a 3-2-3 arrangement of the labels.
+    case FourFour           //  indicates a 4-4 arrangement
+    case FourFourFour       //  indicates the PC-like 4-4-4 mode.
+    case FourFourFourIndex  //  is again the PC-like 4-4-4 mode, but in addition an index line is generated.
 
-public class Window: NCurseswWindow, Moveable {
-    // http://invisible-island.net/ncurses/man/curs_window.3x.html
-    public init(size: Size, origin: Coordinate) throws {
-        precondition(Terminal.initialised, "Terminal.initialise() not called")
-
-        guard let handle = newwin(size._height, size._width, origin._y, origin._x) else {
-            throw NCurseswError.NewWindow(size: size, origin: origin)
-        }
-
-        super.init(handle: handle)
-    }
-
-    //http://invisible-island.net/ncurses/man/curs_window.3x.html
-    deinit {
-        wrapper(do: {
-                    guard (delwin(self._handle) == OK) else {
-                        throw NCurseswError.DeleteWindow
-                    }
-                },
-                catch: { failure in
-                    ncurseswErrorLogger(failure)
-                })
-    }
-}
-
-extension Window {
-    public func move(to origin: Coordinate) throws {
-        guard (mvwin(_handle, origin._y, origin._x) == OK) else {
-            throw NCurseswError.MoveWindow(origin: origin)
+    public var rawValue: CInt {
+        switch self {
+            case .ThreeTwoThree:
+                return 0
+            case .FourFour:
+                return 1
+            case .FourFourFour:
+                return 2
+            case .FourFourFourIndex:
+                return 3
         }
     }
 }

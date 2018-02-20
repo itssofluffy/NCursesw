@@ -1,5 +1,5 @@
 /*
-    Window.swift
+    Justification.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -20,38 +20,19 @@
     IN THE SOFTWARE.
 */
 
-import CNCursesw
-import ISFLibrary
+public enum Justification {
+    case Left
+    case Centered
+    case Right
 
-public class Window: NCurseswWindow, Moveable {
-    // http://invisible-island.net/ncurses/man/curs_window.3x.html
-    public init(size: Size, origin: Coordinate) throws {
-        precondition(Terminal.initialised, "Terminal.initialise() not called")
-
-        guard let handle = newwin(size._height, size._width, origin._y, origin._x) else {
-            throw NCurseswError.NewWindow(size: size, origin: origin)
-        }
-
-        super.init(handle: handle)
-    }
-
-    //http://invisible-island.net/ncurses/man/curs_window.3x.html
-    deinit {
-        wrapper(do: {
-                    guard (delwin(self._handle) == OK) else {
-                        throw NCurseswError.DeleteWindow
-                    }
-                },
-                catch: { failure in
-                    ncurseswErrorLogger(failure)
-                })
-    }
-}
-
-extension Window {
-    public func move(to origin: Coordinate) throws {
-        guard (mvwin(_handle, origin._y, origin._x) == OK) else {
-            throw NCurseswError.MoveWindow(origin: origin)
+    public var rawValue: CInt {
+        switch self {
+            case .Left:
+                return 0
+            case .Centered:
+                return 1
+            case .Right:
+                return 2
         }
     }
 }

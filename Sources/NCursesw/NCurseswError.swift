@@ -53,6 +53,18 @@ public enum NCurseswError: Error {
     case Beep
     case Flash
 
+    case SoftLabelInitialise(with: SoftLabelType)
+    case SoftLabelSet(number: Int, label: String, justification: Justification)
+    case SoftLabelRefresh
+    case SoftLabelUpdateWithoutRefresh
+    case SoftLabelClear
+    case SoftLabelRestore
+    case SoftLabelTouch
+    case SoftLabelAttributesTo(windowAttributes: WindowAttributes)
+    case SoftLabelAttributesOn(attributes: Attributes)
+    case SoftLabelAttributesOff(attributes: Attributes)
+    case SoftLabelSetColour(colourPair: ColourPair)
+
     case NewWindow(size: Size, origin: Coordinate)
     case RegionAlreadyExists
     case Region(size: Size, origin: Coordinate)
@@ -134,7 +146,7 @@ public enum NCurseswError: Error {
 
 extension NCurseswError: CustomStringConvertible {
     public var description: String {
-        let errorCode = "failed: ERR (#\(ERR)"
+        let errorCode = "failed: ERR (#\(ERR))"
 
         switch self {
             case .AlreadyInitialised:
@@ -190,6 +202,29 @@ extension NCurseswError: CustomStringConvertible {
                 return "beep() \(errorCode)"
             case .Flash:
                 return "flash() \(errorCode)"
+
+            case .SoftLabelInitialise(let with):
+                return "slk_init(\(with)) \(errorCode)"
+            case .SoftLabelSet(let number, let label, let justification):
+                return "slk_wset(\(number),\(label),\(justification)) \(errorCode)"
+            case .SoftLabelRefresh:
+                return "slk_refresh() \(errorCode)"
+            case .SoftLabelUpdateWithoutRefresh:
+                return "slk_noutrefresh() \(errorCode)"
+            case .SoftLabelClear:
+                return "slk_clear() \(errorCode)"
+            case .SoftLabelRestore:
+                return "slk_restore() \(errorCode)"
+            case .SoftLabelTouch:
+                return "slk_touch() \(errorCode)"
+            case .SoftLabelAttributesTo(let windowAttributes):
+                return "slk_attr_set(\(windowAttributes)) \(errorCode)"
+            case .SoftLabelAttributesOn(let attributes):
+                return "slk_attr_on(\(attributes)) \(errorCode)"
+            case .SoftLabelAttributesOff(let attributes):
+                return "slk_attr_off(\(attributes)) \(errorCode)"
+            case .SoftLabelSetColour(let colourPair):
+                return "extended_slk_color(\(colourPair)) \(errorCode)"
 
             case .NewWindow(let size, let origin):
                 return "newwin(\(size),\(origin)) \(errorCode)"

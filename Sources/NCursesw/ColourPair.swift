@@ -36,7 +36,7 @@ internal func _getColourPair(with: CShort) throws -> ColourPair {
 }
 
 public func resetColourPairs() {
-    precondition(Terminal.initialised, "Terminal.initialiseWindows() not called")
+    precondition(Terminal.initialised, "Terminal.initialise() not called")
 
     reset_color_pairs()
 
@@ -45,7 +45,7 @@ public func resetColourPairs() {
 }
 
 public func getColourPair(with palette: ColourPalette) -> ColourPair? {
-    precondition(Terminal.initialised, "Terminal.initialiseWindows() not called")
+    precondition(Terminal.initialised, "Terminal.initialise() not called")
 
     let pairNumber = find_pair(palette.foreground.rawValue, palette.background.rawValue)
 
@@ -71,7 +71,7 @@ public class ColourPair {
     }
 
     public init(palette: ColourPalette, free: Bool = false) throws {
-        precondition(Terminal.initialised, "Terminal.initialiseWindows() not called")
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
 
         if (palette == ColourPalette.default) {
             precondition(!free, "default colour pair cannot be made free")

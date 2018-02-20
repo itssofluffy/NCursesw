@@ -6,6 +6,8 @@ import ISFLibrary
 var ripLine: NCurseswWindow?
 
 do {
+    try SoftLabels.initialise(with: .FourFourFour)
+
     try Terminal.ripOff(from: .Lower, lines: 1, initialiser: {
         ripLine = NCurseswWindow(handle: $0!)
 
@@ -21,11 +23,25 @@ do {
     })
 
     do {
-        let window = try Terminal.initialiseWindows()
+        let window = try Terminal.initialise()
+
+        try SoftLabels.setLabel(1,  label: "F1")
+        try SoftLabels.setLabel(2,  label: "F2")
+        try SoftLabels.setLabel(3,  label: "F3")
+        try SoftLabels.setLabel(4,  label: "F4")
+        try SoftLabels.setLabel(5,  label: "F5")
+        try SoftLabels.setLabel(6,  label: "F6")
+        try SoftLabels.setLabel(7,  label: "F7")
+        try SoftLabels.setLabel(8,  label: "F8")
+        try SoftLabels.setLabel(9,  label: "F9")
+        try SoftLabels.setLabel(10, label: "F10")
+        try SoftLabels.setLabel(11, label: "F11")
+        try SoftLabels.setLabel(12, label: "F12")
 
         try window.keypad(to: true)
 
         func doRefresh() throws {
+            try SoftLabels.refresh()
             try ripLine!.refresh()
             try window.refresh()
         }
