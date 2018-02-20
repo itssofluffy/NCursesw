@@ -101,7 +101,7 @@ public enum NCurseswError: Error {
     case InsertString(string: String, length: Int)
     case ReadCharacter
     case ReadCharacters(length: Int)
-    case UnReadCharacter(character: wchar_t)
+    case UnReadCharacter(character: Character)
     case DeleteCharacter
     case InsertLine
     case InsertDelete(lines: Int)

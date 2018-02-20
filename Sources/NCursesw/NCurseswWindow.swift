@@ -444,7 +444,7 @@ extension NCurseswWindow {
 }
 
 extension NCurseswWindow {
-    public func read() throws -> UIResult<UnicodeScalar?> {
+    public func read() throws -> UICharacter {
         var wch = wint_t()
 
         let returnCode = wget_wch(_handle, &wch)
@@ -457,27 +457,7 @@ extension NCurseswWindow {
             throw NCurseswError.ReadCharacter
         }
 
-        return (keyCode) ? UIResult(KeyCode(rawValue: wch)) : UIResult(UnicodeScalar(wch))
-    }
-
-    public func read(origin: Coordinate) throws -> UIResult<UnicodeScalar?> {
-        cursor = origin
-
-        return try read()
-    }
-
-    public func unRead(character: wchar_t) throws {
-        guard (unget_wch(character) == OK) else {
-            throw NCurseswError.UnReadCharacter(character: character)
-        }
-    }
-}
-
-extension NCurseswWindow {
-    public func read() throws -> UICharacter {
-        let result: UIResult<UnicodeScalar?> = try read()
-
-        return (result.isKeyCode) ? UICharacter(result.keyCode!) : UICharacter(result.value.map { Character($0!) })
+        return (keyCode) ? UICharacter(KeyCode(rawValue: wch)) : UICharacter(Character(UnicodeScalar(wch)!))
     }
 
     public func read(origin: Coordinate) throws -> UICharacter {
@@ -487,12 +467,16 @@ extension NCurseswWindow {
     }
 
     public func unRead(character: Character) throws {
-        try unRead(character: character._unicodeScalarCodePoint)
+        let wch = character._unicodeScalarCodePoint
+
+        guard (unget_wch(wch) == OK) else {
+            throw NCurseswError.UnReadCharacter(character: character)
+        }
     }
 }
 
 extension NCurseswWindow {
-    public func read(length: Int) throws -> Array<UnicodeScalar?> {
+    public func read(length: Int) throws -> String {
         precondition(length > 0, "length must be greater than 0")
 
         var wstr = Array<wint_t>()
@@ -503,30 +487,10 @@ extension NCurseswWindow {
             throw NCurseswError.ReadCharacters(length: length)
         }
 
-        return wstr.map { UnicodeScalar($0) }
+        return String(wstr.map { Character(UnicodeScalar($0)!) })
     }
 
-    public func read(origin: Coordinate, length: Int) throws -> Array<UnicodeScalar?> {
-        precondition(length > 0, "length must be greater than 0")
-
-        cursor = origin
-
-        return try read(length: length)
-    }
-}
-
-extension NCurseswWindow {
-    public func read(length: Int) throws -> Array<Character?> {
-        precondition(length > 0, "length must be greater than 0")
-
-        let unicodeScalars: Array<UnicodeScalar?> = try read(length: length)
-
-        return unicodeScalars.map { Character($0!) }
-    }
-
-    public func read(origin: Coordinate, length: Int) throws -> Array<Character?> {
-        precondition(length > 0, "length must be greater than 0")
-
+    public func read(origin: Coordinate, length: Int) throws -> String {
         cursor = origin
 
         return try read(length: length)
