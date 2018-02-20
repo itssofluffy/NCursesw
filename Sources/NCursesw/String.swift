@@ -1,5 +1,5 @@
 /*
-    Character.swift
+    String.swift
 
     Copyright (c) 2018 Stephen Whittle  All rights reserved.
 
@@ -22,10 +22,8 @@
 
 import CNCursesw
 
-extension Character {
-    internal var _unicodeScalarCodePoint: wchar_t {
-        let scalars = String(self).unicodeScalars
-
-        return wchar_t(scalars[scalars.startIndex].value)
+extension String {
+    internal var _unicodeScalarCodePoints: Array<wchar_t> {
+        return self.unicodeScalars.flatMap { wchar_t($0.value) }
     }
 }

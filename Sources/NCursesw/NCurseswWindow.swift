@@ -359,7 +359,7 @@ extension NCurseswWindow {
 
 extension NCurseswWindow {
     public func print(_ character: Character) throws {
-        try print(ComplexCharacter(character.unicodeScalarCodePoint))
+        try print(ComplexCharacter(character._unicodeScalarCodePoint))
     }
 
     public func print(_ character: Character, origin: Coordinate) throws {
@@ -369,7 +369,7 @@ extension NCurseswWindow {
     }
 
     public func echo(_ character: Character) throws {
-        try echo(ComplexCharacter(character.unicodeScalarCodePoint))
+        try echo(ComplexCharacter(character._unicodeScalarCodePoint))
     }
 
     public func echo(_ character: Character, origin: Coordinate) throws {
@@ -412,7 +412,7 @@ extension NCurseswWindow {
 extension NCurseswWindow {
     public func print(_ string: String, length: Int = -1) throws {
         let length = (length < 0) ? string.utf8.count : length
-        var wch = string.unicodeScalars.flatMap { wchar_t($0.value) }
+        var wch = string._unicodeScalarCodePoints
 
         guard (waddnwstr(_handle, &wch, CInt(length)) == OK) else {
             throw NCurseswError.PutString(string: string, length: length)
@@ -429,7 +429,7 @@ extension NCurseswWindow {
 extension NCurseswWindow {
     public func insert(string: String, length: Int = -1) throws {
         let length = (length < 0) ? string.utf8.count : length
-        var wch = string.unicodeScalars.flatMap { wchar_t($0.value) }
+        var wch = string._unicodeScalarCodePoints
 
         guard (wins_nwstr(_handle, &wch, CInt(length)) == OK) else {
             throw NCurseswError.InsertString(string: string, length: length)
@@ -487,7 +487,7 @@ extension NCurseswWindow {
     }
 
     public func unRead(character: Character) throws {
-        try unRead(character: character.unicodeScalarCodePoint)
+        try unRead(character: character._unicodeScalarCodePoint)
     }
 }
 
