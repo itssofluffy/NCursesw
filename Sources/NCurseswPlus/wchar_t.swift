@@ -22,33 +22,25 @@
 
 import CNCursesw
 
-private let _fullLowCodePoint:  wchar_t = 0xff00
-private let _fullHighCodePoint: wchar_t = 0xff5e
 private let _halfLowCodePoint:  wchar_t = 0x0020
 private let _halfHighCodePoint: wchar_t = 0x007e
+private let _fullLowCodePoint:  wchar_t = 0xff00
+private let _fullHighCodePoint: wchar_t = 0xff5e
 
 extension wchar_t {
-    internal var _isFullWidthCodePoint: Bool {
-        return (self >= _fullLowCodePoint && self <= _fullHighCodePoint)
-    }
-
     internal var _isNormalWidthCodePoint: Bool {
         return (self >= _halfLowCodePoint && self <= _halfHighCodePoint)
     }
 
-    internal var _toNormalWidthCodePoint: wchar_t? {
-        if (self._isFullWidthCodePoint) {
-            return (self - _fullLowCodePoint) + _halfLowCodePoint
-        }
-
-        return nil
+    internal var _isFullWidthCodePoint: Bool {
+        return (self >= _fullLowCodePoint && self <= _fullHighCodePoint)
     }
 
-    internal var _toFullWidthCodePoint: wchar_t? {
-        if (self._isNormalWidthCodePoint) {
-            return (self - _halfLowCodePoint) + _fullLowCodePoint
-        }
+    internal var _toNormalWidthCodePoint: wchar_t {
+        return (self._isFullWidthCodePoint) ? (self - _fullLowCodePoint) + _halfLowCodePoint : self
+    }
 
-        return nil
+    internal var _toFullWidthCodePoint: wchar_t {
+        return (self._isNormalWidthCodePoint) ? (self - _halfLowCodePoint) + _fullLowCodePoint : self
     }
 }

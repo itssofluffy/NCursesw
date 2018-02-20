@@ -10,7 +10,7 @@ do {
         ripLine = NCurseswWindow(handle: $0!)
 
         do {
-            try ripLine!.print("this is a rip-off line and has \($1) columns...", origin: Coordinate(y: 0, x: 0))
+            try ripLine!.print("this is a rip-off line and has \($1) columns and is in full width...".fullWidth, origin: Coordinate(y: 0, x: 0))
         } catch {
             ncurseswErrorLogger(ErrorLoggerResult(error: error))
 
@@ -65,7 +65,7 @@ do {
         print("result=\(result)", to: &errorStream)
 
         try ripLine!.clear()
-        try ripLine!.print("and now the rip-off line has changed!!!", origin: Coordinate(y: 0, x: 0))
+        try ripLine!.print("and now the rip-off line has changed!!!".fullWidth, origin: Coordinate(y: 0, x: 0))
 
         try doRefresh()
 
