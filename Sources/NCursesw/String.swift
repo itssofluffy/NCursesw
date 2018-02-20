@@ -24,6 +24,6 @@ import CNCursesw
 
 extension String {
     internal var _unicodeScalarCodePoints: Array<wchar_t> {
-        return self.unicodeScalars.flatMap { wchar_t($0.value) }
+        return self.unicodeScalars.flatMap { wchar_t($0.value) } + [wchar_t(0x00)]
     }
 }
