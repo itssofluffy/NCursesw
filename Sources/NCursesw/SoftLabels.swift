@@ -50,6 +50,7 @@ public class SoftLabels {
     }
 
     public class func setLabel(_ number: Int, label: String, justification: Justification = .Left) throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
         precondition(number > 0 && number <= _maximumLabels, "label number must be between 1 and \(_maximumLabels)")
         precondition(label.utf8.count <= _maximumLabelSize, "label length cannot be greater then \(_maximumLabelSize)")
 
@@ -63,54 +64,72 @@ public class SoftLabels {
     }
 
     public class func refresh() throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
+
         guard (slk_refresh() == OK) else {
             throw NCurseswError.SoftLabelRefresh
         }
     }
 
     public class func updateWithoutRefresh() throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
+
         guard (slk_noutrefresh() == OK) else {
             throw NCurseswError.SoftLabelUpdateWithoutRefresh
         }
     }
 
     public class func clear() throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
+
         guard (slk_clear() == OK) else {
             throw NCurseswError.SoftLabelClear
         }
     }
 
     public class func restore() throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
+
         guard (slk_restore() == OK) else {
             throw NCurseswError.SoftLabelRestore
         }
     }
 
     public class func touch() throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
+
         guard (slk_touch() == OK) else {
             throw NCurseswError.SoftLabelTouch
         }
     }
 
     public func setAttributes(to windowAttributes: WindowAttributes) throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
+
         guard (slk_attr_set(windowAttributes.attributes.rawValue, CShort(windowAttributes.colourPair.rawValue), nil) == OK) else {
             throw NCurseswError.SoftLabelAttributesTo(windowAttributes: windowAttributes)
         }
     }
 
     public func setAttributes(on attributes: Attributes) throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
+
         guard (slk_attr_on(attributes.rawValue, nil) == OK) else {
             throw NCurseswError.SoftLabelAttributesOn(attributes: attributes)
         }
     }
 
     public func setAttributes(off attributes: Attributes) throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
+
         guard (slk_attr_off(attributes.rawValue, nil) == OK) else {
             throw NCurseswError.SoftLabelAttributesOff(attributes: attributes)
         }
     }
 
     public func setColour(to colourPair: ColourPair) throws {
+        precondition(Terminal.initialised, "Terminal.initialise() not called")
+
         guard (extended_slk_color(colourPair.rawValue) == OK) else {
             throw NCurseswError.SoftLabelSetColour(colourPair: colourPair)
         }
