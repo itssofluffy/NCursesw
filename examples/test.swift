@@ -25,18 +25,13 @@ do {
     do {
         let window = try Terminal.initialise()
 
-        try SoftLabels.setLabel(1,  label: "F1")
-        try SoftLabels.setLabel(2,  label: "F2")
-        try SoftLabels.setLabel(3,  label: "F3")
-        try SoftLabels.setLabel(4,  label: "F4")
-        try SoftLabels.setLabel(5,  label: "F5")
-        try SoftLabels.setLabel(6,  label: "F6")
-        try SoftLabels.setLabel(7,  label: "F7")
-        try SoftLabels.setLabel(8,  label: "F8")
-        try SoftLabels.setLabel(9,  label: "F9")
-        try SoftLabels.setLabel(10, label: "F10")
-        try SoftLabels.setLabel(11, label: "F11")
-        try SoftLabels.setLabel(12, label: "F12")
+        var number = 1
+
+        while (number <= SoftLabels.labels.count) {
+            try SoftLabels.setLabel(number,  label: "F\(number)", justification: .Centered)
+
+            number = number + 1
+        }
 
         try window.keypad(to: true)
 

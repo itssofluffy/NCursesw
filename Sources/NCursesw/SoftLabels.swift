@@ -26,8 +26,7 @@ public class SoftLabels {
     public static let sharedInstance = SoftLabels()
 
     private static var _maximumLabels: Int = 0
-    private static var _maximumLabelSize: Int = 0
-
+    public private(set) static var maximumLabelSize: Int = 0
     public private(set) static var labels = Dictionary<Int, String>()
 
     private init() { }
@@ -42,17 +41,21 @@ public class SoftLabels {
         switch with {
             case .ThreeTwoThree, .FourFour:
                 _maximumLabels = 8
-                _maximumLabelSize = 8
+                maximumLabelSize = 8
             case .FourFourFour, .FourFourFourIndex:
                 _maximumLabels = 12
-                _maximumLabelSize = 5
+                maximumLabelSize = 5
+        }
+
+        for number in 1 ... _maximumLabels {
+            labels[number] = ""
         }
     }
 
     public class func setLabel(_ number: Int, label: String, justification: Justification = .Left) throws {
         precondition(Terminal.initialised, "Terminal.initialise() not called")
         precondition(number > 0 && number <= _maximumLabels, "label number must be between 1 and \(_maximumLabels)")
-        precondition(label.utf8.count <= _maximumLabelSize, "label length cannot be greater then \(_maximumLabelSize)")
+        precondition(label.utf8.count <= maximumLabelSize, "label length cannot be greater then \(maximumLabelSize)")
 
         var wch = label._unicodeScalarCodePoints
 
