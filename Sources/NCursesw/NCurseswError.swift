@@ -40,6 +40,8 @@ public enum NCurseswError: Error {
     case Raw
     case NoRaw
     case TypeAhead(fileDescriptor: CInt)
+    case Newline
+    case NoNewline
     case DoUpdate
     case MoveCursor(cursor: Coordinate)
     case SaveTerminalMode
@@ -117,6 +119,11 @@ public enum NCurseswError: Error {
     case TouchLine(start: Int, count: Int)
     case UnTouchWindow
     case WTouchLine(start: Int, count: Int, change: Bool)
+    case ClearOnRefresh(value: Bool)
+    case InsertDeleteLine(value: Bool)
+    case LeaveCursor(value: Bool)
+    case SetScrollRegion(top: Int, bottom: Int)
+    case ScrollRegionOnEnd(value: Bool)
 
     case StartColours
     case AllocatePair(palette: ColourPalette)
@@ -178,6 +185,10 @@ extension NCurseswError: CustomStringConvertible {
                 return "noraw() \(errorCode)"
             case .TypeAhead(let fileDescriptor):
                 return "typeahead(\(fileDescriptor)) \(errorCode)"
+            case .Newline:
+                return "nl() \(errorCode)"
+            case .NoNewline:
+                return "nonl() \(errorCode)"
             case .DoUpdate:
                 return "doupdate() \(errorCode)"
             case .MoveCursor(let cursor):
@@ -330,6 +341,16 @@ extension NCurseswError: CustomStringConvertible {
                 return "untouchwin() \(errorCode)"
             case .WTouchLine(let start, let count, let change):
                 return "wtouchln(\(start),\(count),\(change)) \(errorCode)"
+            case .ClearOnRefresh(let value):
+                return "clearok(\(value)) \(errorCode)"
+            case .InsertDeleteLine(let value):
+                return "idlok(\(value)) \(errorCode)"
+            case .LeaveCursor(let value):
+                return "leaveok(\(value)) \(errorCode)"
+            case .SetScrollRegion(let top, let bottom):
+                return "wsetscrreg(\(top),\(bottom)) \(errorCode)"
+            case .ScrollRegionOnEnd(let value):
+                return "scrollok(\(value)) \(errorCode)"
 
             case .StartColours:
                 return "start_colour() \(errorCode)"

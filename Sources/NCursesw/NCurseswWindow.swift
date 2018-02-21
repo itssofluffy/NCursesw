@@ -35,6 +35,8 @@ public class NCurseswWindow {
 
         return false
     }
+    private var _insertDeleteCharacter = false
+    private var _automaticallyRefresh = false
 
     public init(handle: WindowHandle) {
         _handle = handle
@@ -703,6 +705,64 @@ extension NCurseswWindow {
 
     public func isTouched() -> Bool {
         return is_wintouched(_handle)
+    }
+}
+
+extension NCurseswWindow {
+    public func clearOnRefresh(_ value: Bool) throws {
+        guard (clearok(_handle, value) == OK) else {
+            throw NCurseswError.ClearOnRefresh(value: value)
+        }
+    }
+
+    public func insertDeleteLine(_ value: Bool) throws {
+        guard (idlok(_handle, value) == OK) else {
+            throw NCurseswError.InsertDeleteLine(value: value)
+        }
+    }
+
+
+    public var insertDeleteCharacter: Bool {
+        get {
+            return _insertDeleteCharacter
+        }
+        set {
+            idcok(_handle, newValue)
+            _insertDeleteCharacter = newValue
+        }
+    }
+
+    public var automaticallyRefresh: Bool {
+        get {
+            return _automaticallyRefresh
+        }
+        set {
+            immedok(_handle, newValue)
+            _automaticallyRefresh = newValue
+        }
+    }
+
+    public func leaveCursor(_ value: Bool) throws {
+        guard (leaveok(_handle, value) == OK) else {
+            throw NCurseswError.LeaveCursor(value: value)
+        }
+    }
+
+    public func setScrollRegion(top: Int, bottom: Int, scroll: Bool = false) throws {
+        precondition(top >= 0, "top must be positive")
+        precondition(bottom > top, "bottom must be greater than top")
+
+        guard (wsetscrreg(_handle, CInt(top), CInt(bottom)) == OK) else {
+            throw NCurseswError.SetScrollRegion(top: top, bottom: bottom)
+        }
+
+        try scrollRegionOnEnd(scroll)
+    }
+
+    public func scrollRegionOnEnd(_ value: Bool) throws {
+        guard (scrollok(_handle, value) == OK) else {
+            throw NCurseswError.ScrollRegionOnEnd(value: value)
+        }
     }
 }
 

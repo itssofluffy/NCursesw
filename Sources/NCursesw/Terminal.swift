@@ -168,6 +168,18 @@ extension Terminal {
             throw NCurseswError.TypeAhead(fileDescriptor: fileDescriptor)
         }
     }
+
+    public class func newline() throws {
+        guard (nl() == OK) else {
+            throw NCurseswError.Newline
+        }
+    }
+
+    public class func noNewline() throws {
+        guard (nonl() == OK) else {
+            throw NCurseswError.NoNewline
+        }
+    }
 }
 
 // http://invisible-island.net/ncurses/man/curs_kernel.3x.html
