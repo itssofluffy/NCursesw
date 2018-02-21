@@ -20,48 +20,74 @@
     IN THE SOFTWARE.
 */
 
-/// Either a Value value or an KeyCode
+/// Either a Value of T, KeyCode, neither (Timeout) or T and KeyCode.
 public enum UIResult<T> {
-    case Value(T)             // Value wraps a T value
-    case KeyPressed(KeyCode)  // KeyPressed wraps an KeyCode
+    case Value(T)                         // Value wraps a T value
+    case KeyPressed(KeyCode)              // KeyPressed wraps an KeyCode
+    case Timeout                          // Timed out.
+    case ValueAndKeyPressed(T, KeyCode)   // ValueAndKeyPressed wraps a T value and KeyCode.
 
-    /// Constructs a wrapping of a `value`.
-    public init(_ value: T) {
+    /// Constructs a wrapping of a `T`.
+    internal init(_ value: T) {
         self = .Value(value)
     }
 
     /// Constructs a wrapping of `KeyCode`.
-    public init(_ keyCode: KeyCode) {
+    internal init(_ keyCode: KeyCode) {
         self = .KeyPressed(keyCode)
     }
 
-    /// Convenience getter for the value
+    /// Construct a wrapping for `Timeout`.
+    internal init() {
+        self = .Timeout
+    }
+
+    /// Construct a wrapping of a `T` and `KeyCode` combination.
+    internal init(_ value: T, _ keyCode: KeyCode) {
+        self = .ValueAndKeyPressed(value, keyCode)
+    }
+
+    /// Convenience getter for the `T`.
     public var value: T? {
         switch self {
             case .Value(let value):
                 return value
-            case .KeyPressed:
+            case .ValueAndKeyPressed(let value, _):
+                return value
+            default:
                 return nil
         }
     }
 
-    /// Convenience getter for the KeyCode
+    /// Convenience getter for the `KeyCode`.
     public var keyCode: KeyCode? {
         switch self {
-            case .Value:
-                return nil
             case .KeyPressed(let keyCode):
                 return keyCode
+            case .ValueAndKeyPressed(_, let keyCode):
+                return keyCode
+            default:
+                return nil
         }
     }
 
-    /// Test whether the result is a KeyCode.
-    public var isKeyCode: Bool {
+    /// Test whether the result is a `KeyCode`.
+    public var hasKeyCode: Bool {
         switch self {
-            case .Value:
+            case .Value, .Timeout:
                 return false
-            case .KeyPressed:
+            default:
                 return true
+        }
+    }
+
+    /// Test whether the result is a Timeout.
+    public var hasTimedout: Bool {
+        switch self {
+            case .Timeout:
+                return true
+            default:
+                return false
         }
     }
 }
