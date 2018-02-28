@@ -1,5 +1,4 @@
 import NCursesw
-import NCurseswPlus
 import Foundation
 import ISFLibrary
 
@@ -12,7 +11,7 @@ do {
         ripLine = NCurseswWindow(handle: $0!)
 
         do {
-            try ripLine!.print("this is a rip-off line and has \($1) columns and is in full width...".fullWidth, origin: Coordinate(y: 0, x: 0))
+            try ripLine!.print("this is a rip-off line and has \($1) columns and is in full width...", origin: Coordinate(y: 0, x: 0))
         } catch {
             ncurseswErrorLogger(ErrorLoggerResult(error: error))
 
@@ -66,7 +65,6 @@ do {
         try window.setColour(to: windowColourPair)
 
         try window.print(BoxDrawing(boxDrawingType).graphic(.UpperLeftCorner), origin: Coordinate(y: 2, x: 1))
-        try window.box(BoxDrawingType.Heavy(detail: .LeftDash), origin: Coordinate(y: 5, x: 10), size: Size(height: 5, width: 20))
 
         try doRefresh()
 
@@ -76,7 +74,7 @@ do {
         print("result=\(result)", to: &errorStream)
 
         try ripLine!.clear()
-        try ripLine!.print("and now the rip-off line has changed!!!".fullWidth, origin: Coordinate(y: 0, x: 0))
+        try ripLine!.print("and now the rip-off line has changed!!!", origin: Coordinate(y: 0, x: 0))
 
         try doRefresh()
 

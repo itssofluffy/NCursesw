@@ -20,4 +20,4 @@
     IN THE SOFTWARE.
 */
 
-public typealias UICharacter = UIResult<Character?>
+public typealias UICharacter = UIResult<Character>
